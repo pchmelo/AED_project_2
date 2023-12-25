@@ -1,0 +1,20 @@
+void listPairUcClass::read_file() {
+    std::string input = "../schedule/src/dataSet/classes_per_uc.csv";
+    std::ifstream MyReadFile(input);
+    std::string line;
+    pairUcClasses pucl;
+    std::getline(MyReadFile, line);
+
+    while (std::getline(MyReadFile, line)) {
+        std::vector<std::string> values;
+        std::stringstream ss(line);
+        while (ss.good()) {
+            std::string subtr;
+            getline(ss, subtr, ',');
+            values.push_back(subtr);
+        }
+        values[1].pop_back();
+        pucl = pairUcClasses(values[0], values[1]);
+        list_of_pairs.push_back(pucl);
+    }
+}
