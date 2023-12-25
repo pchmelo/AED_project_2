@@ -1,3 +1,0 @@
-/home/pchmelo/Desktop/AED/project_2/cmake-build-debug/CMakeFiles/project_2.dir
-/home/pchmelo/Desktop/AED/project_2/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/pchmelo/Desktop/AED/project_2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
