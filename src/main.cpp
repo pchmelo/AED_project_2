@@ -20,6 +20,9 @@ int main() {
     std::cout << "Finished the task of reading files \n";
 
     int res = flights.getFlightsPerCity(setAirports, "Paris");
+    res = flights.getFlightsPerCompany(setAirlines, "TAP");
+    res = flights.getFlightsPerCountry(setAirports, "Afghanistan");
+
     std::cout << res << "\n";
 
     return 0;

@@ -5,6 +5,7 @@
 #include "Flights.h"
 #include "sstream"
 #include "fstream"
+#include "iostream"
 
 
 void Flights::ReadLines() {
@@ -56,12 +57,20 @@ void Flights::ReadLines() {
 int Flights::getFlightsPerCountry(setAirports setAirports,string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
-        auto airports = setAirports.setAirports.find(a->getInfo());
-        if(airports != setAirports.setAirports.end()){
+        for(auto b :a->getAdj()){
+            auto airports = setAirports.setAirports.find(a->getInfo());
             if(airports->getCountry() == country){
+                //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
+                res ++;
+            }
+
+            airports = setAirports.setAirports.find(b.getDest()->getInfo());
+            if(airports->getCountry() == country){
+                //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res++;
             }
         }
+
     }
 
     return res;
@@ -70,12 +79,19 @@ int Flights::getFlightsPerCountry(setAirports setAirports,string country) {
 int Flights::getFlightsPerCity(setAirports setAirports, std::string city) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
-        auto airports = setAirports.setAirports.find(a->getInfo());
-        if(airports != setAirports.setAirports.end()){
+        for(auto b :a->getAdj()){
+
+            auto airports = setAirports.setAirports.find(a->getInfo());
+            if(airports->getCity() == city){
+                res ++;
+            }
+
+            airports = setAirports.setAirports.find(b.getDest()->getInfo());
             if(airports->getCity() == city){
                 res++;
             }
         }
+
     }
 
     return res;
