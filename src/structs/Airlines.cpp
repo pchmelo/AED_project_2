@@ -44,7 +44,7 @@ string Airlines::getCountry() const{
     return this->country;
 }
 
-void setAirlines::readLines() {
+void HashAirlines::readLines() {
     string input = "../src/structs/dataset/airlines.csv";
     ifstream MyReadFile(input);
 
@@ -64,6 +64,6 @@ void setAirlines::readLines() {
         }
 
         airlines = Airlines(values[0], values[1], values[2], values[3]);
-        this->setAirlines.insert(airlines);
+        this->airlinesTable.insert(airlines);
     }
 }

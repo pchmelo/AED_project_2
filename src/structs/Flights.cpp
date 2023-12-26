@@ -26,45 +26,45 @@ void Flights::ReadLines() {
             values.push_back(subtr);
         }
 
-        auto it_1 = flights.findVertex(values[0]);
-        auto it_2 = flights.findVertex(values[1]);
-
-        if(it_1 != nullptr){
-            if(it_2 != nullptr){
-                flights.addEdge(values[0], values[1], values[2]);
-            }
-            else{
-                flights.addVertex(values[1]);
-                flights.addEdge(values[0], values[1], values[2]);
-            }
-        }
-        else{
-            if(it_2 != nullptr){
-                flights.addVertex(values[0]);
-                flights.addEdge(values[0], values[1], values[2]);
-            }
-            else{
-                flights.addVertex(values[0]);
-                flights.addVertex(values[1]);
-                flights.addEdge(values[0], values[1], values[2]);
-            }
-        }
-
+        flights.addEdge(values[1], values[0], values[2]);
         values.clear();
     }
 }
 
-int Flights::getFlightsPerCountry(setAirports setAirports,string country) {
+int Flights::_2numViajensDeAirport(string code) {
+    auto it = this->flights.findVertex(code);
+    return it->getAdj().size();
+}
+
+int Flights::_2numViajensDeAirlines(string code) {
+    int res = 0;
+
+    auto it_1 = this->flights.findVertex(code);
+    set<string> set_t;
+
+    for(auto airline : it_1->getAdj()){
+        auto it_2 = set_t.find(airline.getAirline());
+
+        if(it_2 == set_t.end()){
+            res++;
+            set_t.insert(airline.getAirline());
+        }
+    }
+
+    return res;
+}
+
+int Flights::_3getFlightsPerCountry(HashAirports hashAirports,string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
-            auto airports = setAirports.setAirports.find(a->getInfo());
+            auto airports = hashAirports.airportTable.find(a->getInfo());
             if(airports->getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res ++;
             }
 
-            airports = setAirports.setAirports.find(b.getDest()->getInfo());
+            airports = hashAirports.airportTable.find(b.getDest()->getInfo());
             if(airports->getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res++;
@@ -76,17 +76,17 @@ int Flights::getFlightsPerCountry(setAirports setAirports,string country) {
     return res;
 }
 
-int Flights::getFlightsPerCity(setAirports setAirports, std::string city) {
+int Flights::_3getFlightsPerCity(HashAirports hashAirports, std::string city) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
 
-            auto airports = setAirports.setAirports.find(a->getInfo());
+            auto airports = hashAirports.airportTable.find(a->getInfo());
             if(airports->getCity() == city){
                 res ++;
             }
 
-            airports = setAirports.setAirports.find(b.getDest()->getInfo());
+            airports = hashAirports.airportTable.find(b.getDest()->getInfo());
             if(airports->getCity() == city){
                 res++;
             }
@@ -97,15 +97,15 @@ int Flights::getFlightsPerCity(setAirports setAirports, std::string city) {
     return res;
 }
 
-int Flights::getFlightsPerCompany(setAirlines setAirlines, string company) {
+int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
     int res = 0;
 
     for(auto code_1 : this->flights.getVertexSet()){
         for(auto code_2 : code_1->getAdj()){
 
-            auto airlines = setAirlines.setAirlines.find(code_2.getAirline());
+            auto airlines = hashAirlines.airlinesTable.find(code_2.getAirline());
 
-            if(airlines != setAirlines.setAirlines.end()){
+            if(airlines != hashAirlines.airlinesTable.end()){
                 if(company == airlines->getCode()){
                     res++;
                 }

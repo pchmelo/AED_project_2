@@ -54,7 +54,7 @@ string Airports::getLon() const{
     return this->lon;
 }
 
-void setAirports::readLines() {
+void HashAirports::readLines(Flights &flights) {
     string input = "../src/structs/dataset/airports.csv";
     ifstream MyReadFile(input);
 
@@ -62,13 +62,10 @@ void setAirports::readLines() {
     Airports airports;
 
     getline(MyReadFile, line);
-    bool flag = true;
 
     while (getline(MyReadFile, line)) {
         vector<string> values;
         stringstream ss(line);
-
-
 
         while (ss.good()) {
             string subtr;
@@ -76,7 +73,14 @@ void setAirports::readLines() {
             values.push_back(subtr);
         }
 
+        flights.flights.addVertex(values[0]);
         airports = Airports(values[0], values[1], values[2], values[3], values[4], values[5]);
-        this->setAirports.insert(airports);
+        this->airportTable.insert(airports);
     }
+
+
+}
+
+int HashAirports::_1numAirports() {
+    return this->airportTable.size();
 }
