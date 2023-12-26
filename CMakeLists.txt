@@ -7,4 +7,6 @@ add_executable(project_2 main.cpp
         Graph.h
         Structs/Airlines.cpp
         Structs/Airports.cpp
-        Structs/Flights.cpp)
+        Structs/Flights.cpp
+        Menu.cpp
+        Menu.h)
