@@ -31,6 +31,17 @@ void Flights::ReadLines() {
     }
 }
 
+int Flights::_1numViajens() {
+    int res = 0;
+    for(auto vertex : this->flights.getVertexSet()){
+        for(auto edge : vertex->getAdj()){
+            res++;
+        }
+    }
+
+    return res;
+}
+
 int Flights::_2numViajensDeAirport(string code) {
     auto it = this->flights.findVertex(code);
     return it->getAdj().size();
@@ -114,4 +125,87 @@ int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
     }
 
     return res;
+}
+
+vector<string> Flights::_4getVecCountriesAirport(string code, HashAirports hashAirports) {
+    vector<string> res;
+    set<string> set_country;
+    auto airport = this->flights.findVertex(code);
+
+    for(auto edge : airport->getAdj()){
+        auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
+        auto it_1 = set_country.find(country_t->getCountry());
+
+        if(it_1 == set_country.end()){
+            set_country.insert(country_t->getCountry());
+            res.push_back(country_t->getCountry());
+        }
+    }
+
+    return res;
+}
+
+int Flights::_4getNumCountriesAirport(std::string code, HashAirports hashAirports) {
+    vector<string> res = _4getVecCountriesAirport(code, hashAirports);
+    return res.size();
+}
+
+vector<string> Flights::_4getVecCountriesCity(std::string city, HashAirports hashAirports) {
+    vector<string> res;
+    set<string> set_country;
+    vector<Vertex<string>*> vertex_v;
+
+    for(auto vertex : this->flights.getVertexSet()){
+        auto airports = hashAirports.airportTable.find(vertex->getInfo());
+        if(airports->getCity() == city){
+            vertex_v.push_back(vertex);
+        }
+    }
+    for(auto vertex : vertex_v){
+        for(auto edge : vertex->getAdj()){
+            auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
+            auto it_1 = set_country.find(country_t->getCountry());
+
+            if(it_1 == set_country.end()){
+                set_country.insert(country_t->getCountry());
+                res.push_back(country_t->getCountry());
+            }
+        }
+    }
+    return res;
+}
+
+int Flights::_4getNumCountriesCity(std::string city, HashAirports hashAirports) {
+    vector<string> res = _4getVecCountriesCity(city, hashAirports);
+    return res.size();
+}
+
+vector<string> Flights::_4getVecCountriesCountry(std::string country, HashAirports hashAirports) {
+    vector<string> res;
+    set<string> set_country;
+    vector<Vertex<string>*> vertex_v;
+
+    for(auto vertex : this->flights.getVertexSet()){
+        auto airports = hashAirports.airportTable.find(vertex->getInfo());
+        if(airports->getCountry() == country){
+            vertex_v.push_back(vertex);
+        }
+    }
+    for(auto vertex : vertex_v){
+        for(auto edge : vertex->getAdj()){
+            auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
+            auto it_1 = set_country.find(country_t->getCountry());
+
+            if(it_1 == set_country.end()){
+                set_country.insert(country_t->getCountry());
+                res.push_back(country_t->getCountry());
+            }
+        }
+    }
+    return res;
+}
+
+int Flights::_4getNumCountriesCountry(std::string country, HashAirports hashAirports) {
+    vector<string> res = _4getVecCountriesCountry(country, hashAirports);
+    return res.size();
 }

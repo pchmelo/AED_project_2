@@ -25,5 +25,42 @@ int main() {
     res = hashAirports._1numAirports();
     std::cout << res << "\n";
 
+    res = flights._1numViajens();
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+/*
+    vector<string> vector1 = flights._4getVecCountriesAirport("OPO", hashAirports);
+    for(auto s : vector1){
+        cout << s << "\n";
+    }
+
+    std::cout << "------------------------" << "\n";
+*/
+    res = flights._4getNumCountriesAirport("ORY", hashAirports);
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+
+    res = flights._4getNumCountriesAirport("CDG", hashAirports);
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+/*
+    vector1 = flights._4getVecCountriesCity("Paris", hashAirports);
+    for(auto s : vector1){
+        cout << s << "\n";
+    }
+    std::cout << "------------------------" << "\n";
+*/
+
+    res = flights._4getNumCountriesCity("Paris", hashAirports);
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+
+    res = flights._4getNumCountriesCountry("Portugal", hashAirports);
+    std::cout << res << "\n";
+
     return 0;
 }

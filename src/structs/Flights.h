@@ -31,6 +31,14 @@ class Flights {
         int _3getFlightsPerCompany(HashAirlines hashAirlines, string airline);
 
         //4
+        vector<string> _4getVecCountriesAirport(string code, HashAirports hashAirports);
+        vector<string> _4getVecCountriesCity(string city, HashAirports hashAirports);
+        vector<string> _4getVecCountriesCountry(string country, HashAirports hashAirports);
+
+        int _4getNumCountriesAirport(string code, HashAirports hashAirports);
+        int _4getNumCountriesCity(string city, HashAirports hashAirports);
+        int _4getNumCountriesCountry(string country, HashAirports hashAirports);
+
         //5
         //6
         //7
