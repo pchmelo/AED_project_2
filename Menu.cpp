@@ -9,12 +9,23 @@ int Menu::Terminal() {
     int cap;
 
     cout << endl;
-    cout << "\033[1;34mOn a scale of 1 to 10 how gay are you? \033[0m";
-    cin >> cap;
+    cout << "\033[1;34m ______    __        __    ______    __   __   ________         _______           _______    ______    _____     __       ___\033[0m";
     cout << endl;
+    cout << "\033[1;34m|  ____|  |  |      |  |  |  ____|  |  | |  | |___  ___|       |  ___  |         |  ___  |  |  ____|  |  ___ |  |  |     /   |\033[0m";
+    cout << endl;
+    cout << "\033[1;34m|  |___   |  |      |  |  |  | __   |  |_|  |    |  |    ___   |  | |  |   ___   |  |_|  |  |  |___   |  | | |  |  |    / _  |\033[0m";
+    cout << endl;
+    cout << "\033[1;34m|  ____|  |  |      |  |  |  ||_ |  |   _   |    |  |   |___|  |  | |  |  |___|  |  _____|  |  ____|  |  | | |  |  |   / /_| |\033[0m";
+    cout << endl;
+    cout << "\033[1;34m|  |      |  |____  |  |  |  |__||  |  | |  |    |  |          |  |_|  |         |  |       |  |___   |  |_/ /  |  |  / ___  |\033[0m";
+    cout << endl;
+    cout << "\033[1;34m|__|      |______|  |__|  |______|  |__| |__|    |__|          |_______|         |__|       |______|  |_____/   |__| /_/  |__|\033[0m";
+    cout << endl;
+    cout << endl;
+
     cout << "\033[1;34mPlease choose a number for the desired functionality or perish:\033[0m\n";
-    cout << "\033[1;36m[ 1 ]\033[0m" << " Check door number 1" << endl;
-    cout << "\033[1;36m[ 2 ]\033[0m" << " Check door number 44444" << endl;
+    cout << "\033[1;36m[ 1 ]\033[0m" << " Check something" << endl;
+    cout << "\033[1;36m[ 2 ]\033[0m" << " Check something 2" << endl;
     cout << "\033[1;36m[ 3 ]\033[0m" << " Check" << endl;
     cout << "\033[1;36m[ 4 ]\033[0m" << " Door" << endl;
     cout << "\033[1;36m[ 5 ]\033[0m" << " Number" << endl;
