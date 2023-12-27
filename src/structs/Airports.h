@@ -70,4 +70,36 @@ class HashAirports{
         int _1numAirports();
 };
 
+struct AirportsGreatDistance{
+    Airports airport_source;
+    Airports airport_dest;
+    int distance;
+
+    AirportsGreatDistance(){
+        this->distance = 0;
+    }
+
+    AirportsGreatDistance(Airports a, Airports b, int distance){
+        this->airport_source = a;
+        this->airport_dest = b;
+        this->distance = distance;
+    }
+};
+
+struct AirportsTrafic{
+    pair<Airports, int> trafic;
+    AirportsTrafic(Airports airports, int n){
+        pair<Airports, int> res = pair(airports, n);
+        this->trafic = res;
+    }
+
+    bool operator==(Airports airports) const{
+        return this->trafic.first.getCode() == airports.getCode();
+    }
+
+    bool operator<(AirportsTrafic a) const{
+        return this->trafic.second < a.trafic.second;
+    }
+};
+
 #endif

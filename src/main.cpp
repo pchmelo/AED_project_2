@@ -62,5 +62,26 @@ int main() {
     res = flights._4getNumCountriesCountry("Portugal", hashAirports);
     std::cout << res << "\n";
 
+/*
+    std::cout << "------------------------" << "\n";
+    vector<string> vector1 = flights._6getVecStopsAirports("CDG", 3, hashAirports);
+    for(auto s : vector1){
+        cout << s << "\n";
+    }
+*/
+    std::cout << "------------------------" << "\n";
+    res = flights._6getIntStopsAirports("CDG", 3, hashAirports);
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+    res = flights._6getIntStopsCities("CDG", 3, hashAirports);
+    std::cout << res << "\n";
+
+    std::cout << "------------------------" << "\n";
+    res = flights._6getIntStopsCountries("CDG", 3, hashAirports);
+    std::cout << res << "\n";
+
+//    vector<AirportsTrafic> t = flights._8getTopVecDescAirports(hashAirports);
+
     return 0;
 }

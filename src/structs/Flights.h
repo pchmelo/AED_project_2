@@ -5,6 +5,7 @@
 #ifndef PROJECT_2_FLIGHTS_H
 #define PROJECT_2_FLIGHTS_H
 
+#include "list"
 #include "string"
 #include "Graph.h"
 #include "Airlines.h"
@@ -12,6 +13,8 @@
 
 class HashAirports;
 class HashAirlines;
+struct AirportsGreatDistance;
+struct AirportsTrafic;
 
 class Flights {
     public:
@@ -41,8 +44,23 @@ class Flights {
 
         //5
         //6
+        vector<string> _6getVecStopsAirports(string code, int x, HashAirports hashAirports);
+        vector<string> _6getVecStopsCities(string code, int x, HashAirports hashAirports);
+        vector<string> _6getVecStopsCountries(string code, int x, HashAirports hashAirports);
+
+        int _6getIntStopsAirports(string code, int x, HashAirports hashAirports);
+        int _6getIntStopsCities(string code, int x, HashAirports hashAirports);
+        int _6getIntStopsCountries(string code, int x, HashAirports hashAirports);
+
         //7
+        AirportsGreatDistance _7bstAuxiliar(HashAirports hashAirports);
+        AirportsGreatDistance _7getAirportsGreat(HashAirports hashAirports);
+
         //8
+        vector<AirportsTrafic> _8getTopVecAirports(HashAirports hashAirports);
+        vector<AirportsTrafic> _8getTopVecDescAirports(HashAirports hashAirports);
+        vector<AirportsTrafic> _8getTopVecAscAirports(HashAirports hashAirports);
+
         //9
 
 };
