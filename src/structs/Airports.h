@@ -37,6 +37,11 @@ class Airports {
     bool operator==(Airports airports) const{
         return this->code == airports.code;
     }
+
+    bool operator<(Airports airports) const{
+        return this->code < airports.code;
+    }
+
 };
 
 struct airportHash{

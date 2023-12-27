@@ -16,74 +16,58 @@ int main() {
 
     flights.ReadLines();
 
-    int res = flights._3getFlightsPerCountry(hashAirports, "Afghanistan");
-    std::cout << res << "\n";
-
-    res = flights._2numViajensDeAirlines("OPO");
-    std::cout << res << "\n";
+    int res = flights._1numViajens();
+    cout << res << "\n";
 
     res = hashAirports._1numAirports();
-    std::cout << res << "\n";
+    cout << res << "\n";
 
-    res = flights._1numViajens();
-    std::cout << res << "\n";
+    res = flights._2numViajensDeAirlines("CDG");
+    cout << res << "\n";
 
-    std::cout << "------------------------" << "\n";
-/*
-    vector<string> vector1 = flights._4getVecCountriesAirport("OPO", hashAirports);
-    for(auto s : vector1){
-        cout << s << "\n";
-    }
+    res = flights._2numViajensDeAirport("CDG");
+    cout << res << "\n";
 
-    std::cout << "------------------------" << "\n";
-*/
-    res = flights._4getNumCountriesAirport("ORY", hashAirports);
-    std::cout << res << "\n";
+    res = flights._3getFlightsPerCompany(hashAirlines, "CDG");
+    cout << res << "\n";
 
-    std::cout << "------------------------" << "\n";
+    res = flights._3getFlightsPerCity(hashAirports, "Kabul");
+    cout << res << "\n";
+
+    res = flights._3getFlightsPerCountry(hashAirports, "Portugal");
+    cout << res << "\n";
 
     res = flights._4getNumCountriesAirport("CDG", hashAirports);
-    std::cout << res << "\n";
-
-    std::cout << "------------------------" << "\n";
-/*
-    vector1 = flights._4getVecCountriesCity("Paris", hashAirports);
-    for(auto s : vector1){
-        cout << s << "\n";
-    }
-    std::cout << "------------------------" << "\n";
-*/
+    cout << res << "\n";
 
     res = flights._4getNumCountriesCity("Paris", hashAirports);
-    std::cout << res << "\n";
-
-    std::cout << "------------------------" << "\n";
+    cout << res << "\n";
 
     res = flights._4getNumCountriesCountry("Portugal", hashAirports);
-    std::cout << res << "\n";
+    cout << res << "\n";
 
-/*
-    std::cout << "------------------------" << "\n";
-    vector<string> vector1 = flights._6getVecStopsAirports("CDG", 3, hashAirports);
-    for(auto s : vector1){
-        cout << s << "\n";
+    res = flights._6getIntStopsAirports("THU", 4, hashAirports);
+    cout << res << "\n";
+
+    res = flights._6getIntStopsCities("THU", 4, hashAirports);
+    cout << res << "\n";
+
+    res = flights._6getIntStopsCountries("CGD", 3, hashAirports);
+    cout << res << "\n";
+
+ //   auto l = flights._8getTopVecDescAirports(hashAirports);
+
+    cout << "-------------------------" << "\n";
+    res = flights._9numArticulations(hashAirports);
+    cout << res << "\n";
+
+    /*
+    set<string> s = flights._9Articulations(hashAirports);
+
+    for(auto air : s){
+        cout << air << "\n";
     }
-*/
-    std::cout << "------------------------" << "\n";
-    res = flights._6getIntStopsAirports("CDG", 3, hashAirports);
-    std::cout << res << "\n";
-
-    std::cout << "------------------------" << "\n";
-    res = flights._6getIntStopsCities("CDG", 3, hashAirports);
-    std::cout << res << "\n";
-
-    std::cout << "------------------------" << "\n";
-    res = flights._6getIntStopsCountries("CDG", 3, hashAirports);
-    std::cout << res << "\n";
-
-    //vector<AirportsTrafic> t = flights._8getTopVecDescAirports(hashAirports);
-
-    auto res_1 = flights._7getAirportsGreat(hashAirports);
+     */
 
     return 0;
 }

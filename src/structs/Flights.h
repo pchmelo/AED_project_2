@@ -11,6 +11,7 @@
 #include "Airlines.h"
 #include "Airports.h"
 
+class Airports;
 class HashAirports;
 class HashAirlines;
 struct AirportsGreatDistance;
@@ -69,7 +70,9 @@ class Flights {
         vector<AirportsTrafic> _8getTopVecAscAirports(HashAirports hashAirports);
 
         //9
-
+        set<string> _9Articulations(HashAirports hashAirports);
+        void _9Auxiliar(Vertex<string>* vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inS, bool first);
+        int _9numArticulations(HashAirports hashAirports);
 };
 
 #endif //PROJECT_2_FLIGHTS_H
