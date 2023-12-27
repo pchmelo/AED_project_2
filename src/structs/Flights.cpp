@@ -112,13 +112,13 @@ int Flights::_3getFlightsPerCity(HashAirports hashAirports, std::string city) {
 int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
     int res = 0;
 
-    for(auto code_1 : this->flights.getVertexSet()){
-        for(auto code_2 : code_1->getAdj()){
+    for (auto code_1: this->flights.getVertexSet()) {
+        for (auto code_2: code_1->getAdj()) {
 
             auto airlines = hashAirlines.airlinesTable.find(code_2.getAirline());
 
-            if(airlines != hashAirlines.airlinesTable.end()){
-                if(company == airlines->getCode()){
+            if (airlines != hashAirlines.airlinesTable.end()) {
+                if (company == airlines->getCode()) {
                     res++;
                 }
             }
@@ -126,7 +126,125 @@ int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
     }
 
     return res;
+
 }
+    int Flights::Airports_per_airport(string code)
+    {
+        int res = 0;
+        for (auto vertex : this->flights.getVertexSet()) {
+            vertex->setVisited(false);
+        }
+
+        for(auto a: this->flights.getVertexSet())
+        {
+            if(a->getInfo()==code)
+            {
+                res+= air_per_air_aux(a);
+                return res;
+            }
+        }
+        return res;
+    }
+
+    int Flights:: air_per_air_aux(Vertex<string>*v)
+    {
+        int res = 1;
+        v->setVisited(true);
+        for (Edge<string> edge : v->getAdj()) {
+            if (!edge.getDest()->isVisited())
+                res += air_per_air_aux(edge.getDest());
+        }
+        return res;
+    }
+
+
+
+    int Flights:: Cities_per_airport(string code, HashAirports hashAirports)
+    {
+        int res = 0;
+        for (auto vertex : this->flights.getVertexSet()) {
+            vertex->setVisited(false);
+        }
+        list<string> cities;
+
+        for(auto a: this->flights.getVertexSet())
+        {
+            if(a->getInfo()==code)
+            {
+                res+= cit_per_air_aux(a, cities, hashAirports);
+                return res;
+            }
+        }
+        return res;
+    }
+    int Flights::cit_per_air_aux(Vertex<string> *v, list<string> &cities, HashAirports hashAirports) {
+        int res = 0;
+        v->setVisited(true);
+        for (Edge<string> edge : v->getAdj()) {
+            if (!edge.getDest()->isVisited())
+            {
+
+                auto airport = hashAirports.airportTable.find(edge.getDest()->getInfo());
+
+                if(find(cities.begin(), cities.end(),airport->getCity())->empty())
+                {
+
+                    res++;
+                    cities.push_back(airport->  getCity());
+                }
+                res+= cit_per_air_aux(edge.getDest(), cities, hashAirports);
+            }
+        }
+        return res;
+}
+
+
+
+    int Flights::Countries_per_airport(string code, HashAirports hashAirports)
+    {
+        int res = 0;
+        for (auto vertex : this->flights.getVertexSet()) {
+            vertex->setVisited(false);
+        }
+        list<string> countries;
+
+        for(auto a: this->flights.getVertexSet())
+        {
+            if(a->getInfo()==code)
+            {
+                res+= count_per_air_aux(a, countries, hashAirports);
+                return res;
+            }
+        }
+        return res;
+    }
+
+    int Flights:: count_per_air_aux(Vertex<string> *v, list<string> countries, HashAirports hashAirports)
+    {
+        int res = 0;
+        v->setVisited(true);
+        for (Edge<string> edge : v->getAdj()) {
+            if (!edge.getDest()->isVisited())
+            {
+
+                auto airport = hashAirports.airportTable.find(edge.getDest()->getInfo());
+
+                if(find(countries.begin(), countries.end(),airport->getCountry())->empty())
+                {
+
+                    res++;
+                    countries.push_back(airport->  getCity());
+                }
+                res+= cit_per_air_aux(edge.getDest(), countries, hashAirports);
+            }
+        }
+        return res;
+    }
+
+
+
+
+
 
 vector<string> Flights::_4getVecCountriesAirport(string code, HashAirports hashAirports) {
     vector<string> res;

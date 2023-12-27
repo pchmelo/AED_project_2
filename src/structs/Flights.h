@@ -43,6 +43,14 @@ class Flights {
         int _4getNumCountriesCountry(string country, HashAirports hashAirports);
 
         //5
+        int Airports_per_airport(string code);
+        int air_per_air_aux(Vertex<string>*v);
+
+        int Cities_per_airport(string code, HashAirports hashAirports);
+        int cit_per_air_aux(Vertex<string> *v, list<string> &cities, HashAirports hashAirports);
+
+        int Countries_per_airport(string code, HashAirports hashAirports);
+        int count_per_air_aux(Vertex<string> *v, list<string> countries, HashAirports hashAirports);
         //6
         vector<string> _6getVecStopsAirports(string code, int x, HashAirports hashAirports);
         vector<string> _6getVecStopsCities(string code, int x, HashAirports hashAirports);
