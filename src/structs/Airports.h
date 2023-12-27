@@ -84,6 +84,7 @@ struct AirportsGreatDistance{
         this->airport_dest = b;
         this->distance = distance;
     }
+
 };
 
 struct AirportsTrafic{

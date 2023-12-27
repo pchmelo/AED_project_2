@@ -81,7 +81,9 @@ int main() {
     res = flights._6getIntStopsCountries("CDG", 3, hashAirports);
     std::cout << res << "\n";
 
-//    vector<AirportsTrafic> t = flights._8getTopVecDescAirports(hashAirports);
+    //vector<AirportsTrafic> t = flights._8getTopVecDescAirports(hashAirports);
+
+    auto res_1 = flights._7getAirportsGreat(hashAirports);
 
     return 0;
 }

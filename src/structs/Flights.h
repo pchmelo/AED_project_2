@@ -61,8 +61,7 @@ class Flights {
         int _6getIntStopsCountries(string code, int x, HashAirports hashAirports);
 
         //7
-        AirportsGreatDistance _7bstAuxiliar(HashAirports hashAirports);
-        AirportsGreatDistance _7getAirportsGreat(HashAirports hashAirports);
+        list<AirportsGreatDistance> _7getAirportsGreat(HashAirports hashAirports);
 
         //8
         vector<AirportsTrafic> _8getTopVecAirports(HashAirports hashAirports);

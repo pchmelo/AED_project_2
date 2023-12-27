@@ -467,28 +467,21 @@ int Flights::_6getIntStopsCountries(std::string code, int x, HashAirports hashAi
     return res.size();
 }
 
-AirportsGreatDistance Flights::_7getAirportsGreat(HashAirports hashAirports) {
+list<AirportsGreatDistance> Flights::_7getAirportsGreat(HashAirports hashAirports) {
     int diameter = 0;
-    AirportsGreatDistance res;
-    list<AirportsGreatDistance> dist;
+    AirportsGreatDistance t;
+    list<AirportsGreatDistance> res;
 
     for(auto vertex : this->flights.getVertexSet()){
         map<Vertex<string>*, int> dist;
         queue<Vertex<string>*> q;
-        bool flag = true;
 
-        for(auto v : this->flights.getVertexSet()){
-            if(flag){
-                dist[v] = 0;
-                q.push(v);
-                flag = false;
-
-                continue;
-            }
-            else{
-                dist[v] = -1;
-            }
+        for(auto v : flights.getVertexSet()){
+            dist[v] = -1;
         }
+
+        dist[vertex] = 0;
+        q.push(vertex);
 
         while(!q.empty()){
             auto current = q.front();
@@ -505,15 +498,29 @@ AirportsGreatDistance Flights::_7getAirportsGreat(HashAirports hashAirports) {
 
         for(auto& pair : dist){
             if(pair.second > diameter){
+                res.clear();
                 diameter = pair.second;
 
+                auto air_1 = hashAirports.airportTable.find(vertex->getInfo());
+                auto air_2 = hashAirports.airportTable.find(pair.first->getInfo());
+
+                t = AirportsGreatDistance(*air_2, *air_1, diameter);
+                res.push_back(t);
+            }
+            else if(pair.second == diameter){
+                auto air_1 = hashAirports.airportTable.find(vertex->getInfo());
+                auto air_2 = hashAirports.airportTable.find(pair.first->getInfo());
+
+                t = AirportsGreatDistance(*air_2, *air_1, diameter);
+                res.push_back(t);
             }
         }
+
+        dist.clear();
 
     }
 
     return res;
-
 }
 
 
