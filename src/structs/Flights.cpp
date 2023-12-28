@@ -7,6 +7,7 @@
 #include "fstream"
 #include "iostream"
 #include "map"
+#include "math.h"
 
 
 void Flights::ReadLines(HashAirlines hashAirlines, HashAirports hashAirports) {
@@ -750,5 +751,161 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, V
     reverse(res.begin(), res.end());
 
     return res;
+}
+
+vector<list<AirportStop>> Flights::_10Commander(vector<Vertex<std::string> *> src, vector<Vertex<std::string> *> dest,HashAirports hashAirports, HashAirlines hashAirlines) {
+    bool flag = true;
+    list<AirportStop> t_1;
+    list<AirportStop> t_2;
+    vector<list<AirportStop>> res;
+
+
+    for(int i = 0; i < src.size(); i++){
+        auto a = src.at(i);
+        auto b = src.at(i);
+
+        if(flag){
+            t_1 = _10BestPathEntreDoisAeroportos(a, b, hashAirports, hashAirlines);
+            res.push_back(t_1);
+            flag = false;
+        }
+        else{
+            t_2 = _10BestPathEntreDoisAeroportos(a, b, hashAirports, hashAirlines);
+            if(t_2.size() < t_1.size()){
+                res.clear();
+                t_1 = t_2;
+                res.push_back(t_1);
+            }
+            else if(t_2.size() == t_1.size()){
+                res.push_back(t_2);
+            }
+        }
+    }
+
+    return res;
+}
+
+vector<Vertex<string>*> Flights::_10AirportsCity(string city, HashAirports hashAirports){
+    vector<Vertex<string>*> res;
+
+    for(auto vertex : flights.getVertexSet()){
+        auto airport = hashAirports.airportTable.find(vertex->getInfo());
+        if(airport->getCity() == city){
+            res.push_back(vertex);
+        }
+    }
+
+    return res;
+}
+
+vector<Vertex<string>*> Flights::_10AirportsPais(std::string country, HashAirports hashAirports) {
+    vector<Vertex<string>*> res;
+
+    for(auto vertex : flights.getVertexSet()){
+        auto airport = hashAirports.airportTable.find(vertex->getInfo());
+
+        if(airport->getCountry() == country){
+            res.push_back(vertex);
+        }
+    }
+
+    return res;
+}
+
+
+
+pair<vector<Vertex<string> *>, vector<Vertex<string> *>> Flights::_10Montador(vector<Vertex<std::string> *> src,vector<Vertex<std::string> *> dest) {
+    vector<Vertex<string> *> origem;
+    vector<Vertex<string> *> destino;
+
+    for(auto v_src : src){
+        for(auto v_dest : dest){
+            origem.push_back(v_src);
+            destino.push_back(v_dest);
+        }
+    }
+
+    return pair(origem, destino);
+}
+
+vector<Vertex<string>*> Flights::_10AirportsCoord(std::string lat, std::string log, HashAirports hashAirports) {
+    vector<Vertex<string>*> res;
+
+    double latitude_1 = ((stod(lat)) * M_PI) / 180.0;
+    double longitude_1 = ((stod(log)) * M_PI) / 180.0;
+
+    double latitude_2;
+    double longitude_2;
+
+    double dist = 0;
+    double t = 0;
+    bool flag = true;
+
+    for(auto vertex : flights.getVertexSet()){
+        auto airport = hashAirports.airportTable.find(vertex->getInfo());
+
+        latitude_2 = ((stod(airport->getLat())) * M_PI) / 180.0;
+        longitude_2 = ((stod(airport->getLon())) * M_PI) / 180.0;
+
+        if(flag){
+            dist = _10Haversine(latitude_1, longitude_1, latitude_2, longitude_2);
+            res.push_back(vertex);
+            flag = false;
+        }
+        else{
+            t = _10Haversine(latitude_1, longitude_1, latitude_2, longitude_2);
+            if(t < dist){
+                dist = t;
+                res.clear();
+                res.push_back(vertex);
+            }
+            else if(t == dist){
+                res.push_back(vertex);
+            }
+        }
+    }
+
+    return res;
+}
+
+vector<Vertex<string>*> Flights::_10AirportsCoordRaio(std::string lat, std::string log, int raio,HashAirports hashAirports) {
+    vector<Vertex<string>*> res;
+
+    double latitude_1 = ((stod(lat)) * M_PI) / 180.0;
+    double longitude_1 = ((stod(log)) * M_PI) / 180.0;
+
+    double latitude_2;
+    double longitude_2;
+
+    double dist = 0;
+
+    for(auto vertex : flights.getVertexSet()){
+        auto airport = hashAirports.airportTable.find(vertex->getInfo());
+
+        latitude_2 = ((stod(airport->getLat())) * M_PI) / 180.0;
+        longitude_2 = ((stod(airport->getLon())) * M_PI) / 180.0;
+
+        dist = _10Haversine(latitude_1, longitude_1, latitude_2, longitude_2);
+
+        if(dist <= raio){
+            res.push_back(vertex);
+        }
+    }
+
+    return res;
+}
+
+double Flights::_10Haversine(double lat_1, double log_1, double lat_2, double log_2) {
+    double raio_da_terra = 6371.0;
+
+    double disLat = lat_2 - lat_1;
+    double disLog = log_2 - log_1;
+
+    double a = sin(disLat / 2) * sin(disLat / 2) + cos(lat_1) * cos(lat_2) * sin(disLog / 2) * sin(disLog / 2);
+
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    double distancia = raio_da_terra * c;
+
+    return distancia;
 }
 
