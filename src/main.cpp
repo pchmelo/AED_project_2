@@ -15,6 +15,11 @@ int main() {
 
     flights.ReadLines(hashAirlines, hashAirports);
 
-    Menu::Terminal(flights, hashAirports, hashAirlines);
+    auto src = flights.flights.findVertex(Airports("THU"));
+    auto dest = flights.flights.findVertex(Airports("CDG"));
+
+    auto res = flights._10AllBestPathEntreDoisAeroportos(src, dest);
+
+    //Menu::Terminal(flights, hashAirports, hashAirlines);
     return 0;
 }
