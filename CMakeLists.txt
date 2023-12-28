@@ -9,4 +9,5 @@ add_executable(project_2 src/main.cpp
         src/structs/Graph.h
         src/structs/Airlines.cpp
         src/structs/Airports.cpp
-        src/structs/Flights.cpp)
+        src/structs/Flights.cpp
+        src/Menu.cpp)

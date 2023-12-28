@@ -2,6 +2,7 @@
 #include "structs/Airlines.h"
 #include "structs/Airports.h"
 #include "structs/Flights.h"
+#include "Menu.h"
 
 int main() {
     Flights flights;
@@ -74,6 +75,8 @@ int main() {
     */
 
     auto foda = flights._10AirportsCity("London", "United Kingdom");
+
+    Menu::Terminal();
 
     return 0;
 }
