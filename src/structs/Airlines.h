@@ -27,7 +27,7 @@ class Airlines {
         string getCode() const;
         string getName() const;
         string getCallSign() const;
-        string  getCountry() const;
+        string getCountry() const;
 
         bool operator==(const Airlines airlines) const{
             return this->code == airlines.code;

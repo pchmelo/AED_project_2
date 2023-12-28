@@ -59,7 +59,6 @@ int Flights::_2numViajensDeAirlines(string code) {
 
     for(auto airline : it_1->getAdj()){
         auto it_2 = set_t.find(airline.getAirline().getCode());
-
         if(it_2 == set_t.end()){
             res++;
             set_t.insert(airline.getAirline().getCode());
@@ -73,14 +72,12 @@ int Flights::_3getFlightsPerCountry(string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
-            auto airports = flights.findVertex(a->getInfo());
-            if(airports->getInfo().getCountry() == country){
+            if(a->getInfo().getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res ++;
             }
 
-            airports = flights.findVertex(b.getDest()->getInfo());
-            if(airports->getInfo().getCountry() == country){
+            if(b.getDest()->getInfo().getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res++;
             }
@@ -95,7 +92,6 @@ int Flights::_3getFlightsPerCity(string city, string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
-
             if(country == "k"){
                 if(a->getInfo().getCity() == city){
                     res ++;
