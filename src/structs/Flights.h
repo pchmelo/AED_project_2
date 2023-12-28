@@ -77,18 +77,18 @@ class Flights {
         int _9numArticulations( );
 
         //4.1
-        list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<string>* src, Vertex<string>* dest, HashAirports hashAirports, HashAirlines hashAirlines);
-        vector<list<AirportStop>> _10Commander(vector<Vertex<string>*> src, vector<Vertex<string>*> dest, HashAirports hashAirports, HashAirlines hashAirlines);
+        list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
+        vector<list<AirportStop>> _10Commander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 
-        vector<Vertex<string>*> _10AirportsCity(string city, HashAirports hashAirports);
-        vector<Vertex<string>*> _10AirportsPais(string city, HashAirports hashAirports);
+        vector<Vertex<Airports>*> _10AirportsCity(string city);
+        vector<Vertex<Airports>*> _10AirportsPais(string city);
 
-        vector<Vertex<string>*> _10AirportsCoord(string lat, string log, HashAirports hashAirports);
-        vector<Vertex<string>*> _10AirportsCoordRaio(string lat, string log,int raio, HashAirports hashAirports);
+        vector<Vertex<Airports>*> _10AirportsCoord(string lat, string log);
+        vector<Vertex<Airports>*> _10AirportsCoordRaio(string lat, string log,int raio);
 
         double _10Haversine(double lat_1, double log_1, double lat_2, double log_2);
 
-        pair<vector<Vertex<string> *>, vector<Vertex<string> *>> _10Montador(vector<Vertex<string>*> src, vector<Vertex<string>*> dest);
+        pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> _10Montador(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 };
 
 #endif //PROJECT_2_FLIGHTS_H

@@ -58,11 +58,6 @@ int main() {
 
 
 
-    //é lento
-
-  res = flights._9numArticulations();
-    cout << res << "\n";
-
 
 
 
