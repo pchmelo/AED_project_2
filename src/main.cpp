@@ -14,6 +14,7 @@ int main() {
 
     flights.ReadLines(hashAirlines, hashAirports);
 
+    /*
     int res = flights._1numViajens();
     cout << res << "\n";
 
@@ -57,12 +58,6 @@ int main() {
     auto l = flights._8getTopVecDescAirports();
 
 
-
-
-
-
-
-
    std::cout << "------------------------" << "\n";
     res = flights.air_per_air_aux("CDG");
     std::cout << res << "\n";
@@ -75,6 +70,10 @@ int main() {
     cout << "-------------------------" << "\n";
     res = flights._9numArticulations();
     cout << res << "\n";
+
+    */
+
+    auto foda = flights._10AirportsCity("London", "United Kingdom");
 
     return 0;
 }

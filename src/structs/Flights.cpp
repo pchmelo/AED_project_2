@@ -91,18 +91,28 @@ int Flights::_3getFlightsPerCountry(string country) {
     return res;
 }
 
-int Flights::_3getFlightsPerCity(string city) {
+int Flights::_3getFlightsPerCity(string city, string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
 
-            if(a->getInfo().getCity() == city){
-                res ++;
+            if(country == "k"){
+                if(a->getInfo().getCity() == city){
+                    res ++;
+                }
+                if(b.getDest()->getInfo().getCity() == city){
+                    res++;
+                }
+            }
+            else{
+                if(a->getInfo().getCity() == city || a->getInfo().getCountry() == country){
+                    res ++;
+                }
+                if(b.getDest()->getInfo().getCity() == city || a->getInfo().getCountry() == country){
+                    res++;
+                }
             }
 
-            if(b.getDest()->getInfo().getCity() == city){
-                res++;
-            }
         }
 
     }
@@ -176,10 +186,11 @@ vector<Airports> Flights::Airports_per_airport(string code ){
 
 
 
-vector<Airports> Flights:: Cities_per_airport(string code )
+vector<Airports> Flights::Cities_per_airport(string code)
     {
         vector<Airports> res;
-        set<string> set_t;
+        set<string> set_cidades;
+        set<string> set_paises;
 
         auto s = this->flights.findVertex(code);
 
@@ -199,10 +210,17 @@ vector<Airports> Flights:: Cities_per_airport(string code )
             q.pop();
             if(v.second != 0){
                 auto airport = flights.findVertex(v.first->getInfo());
-                auto it = set_t.find(airport->getInfo().getCity());
-                if(it == set_t.end()){
-                    set_t.insert(airport->getInfo().getCity());
-                    res.push_back(airport->getInfo().getCity());
+                auto it_1 = set_cidades.find(airport->getInfo().getCity());
+                if(it_1 == set_cidades.end()){
+                    set_cidades.insert(airport->getInfo().getCity());
+                    res.push_back(airport->getInfo());
+                }
+                else{
+                    auto it_2 = set_paises.find(airport->getInfo().getCountry());
+                    if(it_2 == set_paises.end()){
+                        set_paises.insert(airport->getInfo().getCountry());
+                        res.push_back(airport->getInfo());
+                    }
                 }
             }
 
@@ -298,15 +316,23 @@ int Flights::_4getNumCountriesAirport(string code) {
     return res.size();
 }
 
-vector<Airports> Flights::_4getVecCountriesCity(string city ) {
+vector<Airports> Flights::_4getVecCountriesCity(string city, string country) {
     vector<Airports> res;
     set<string> set_country;
     vector<Vertex<Airports>*> vertex_v;
 
     for(auto vertex : this->flights.getVertexSet()){
-        if(vertex->getInfo().getCity() == city){
-            vertex_v.push_back(vertex);
+        if(country == "k"){
+            if(vertex->getInfo().getCity() == city){
+                vertex_v.push_back(vertex);
+            }
         }
+        else{
+            if(vertex->getInfo().getCity() == city && vertex->getInfo().getCountry() == country){
+                vertex_v.push_back(vertex);
+            }
+        }
+
     }
 
     for(auto vertex : vertex_v){
@@ -323,8 +349,8 @@ vector<Airports> Flights::_4getVecCountriesCity(string city ) {
     return res;
 }
 
-int Flights::_4getNumCountriesCity(string city ) {
-    vector<Airports> res = _4getVecCountriesCity(city);
+int Flights::_4getNumCountriesCity(string city, string country) {
+    vector<Airports> res = _4getVecCountriesCity(city, country);
     return res.size();
 }
 
@@ -409,9 +435,10 @@ int Flights::_6getIntStopsAirports(std::string code, int x ) {
     return res.size();
 }
 
-vector<Airports> Flights::_6getVecStopsCities(std::string code, int x ) {
+vector<Airports> Flights::_6getVecStopsCities(std::string code, int x, string country) {
     vector<Airports> res;
-    set<string> set_t;
+    set<string> set_cidades;
+    set<string> set_paises;
 
     auto s = this->flights.findVertex(code);
 
@@ -436,10 +463,17 @@ vector<Airports> Flights::_6getVecStopsCities(std::string code, int x ) {
 
         if(v.second != 0){
             auto airport = flights.findVertex(v.first->getInfo());
-            auto it = set_t.find(airport->getInfo().getCity());
-            if(it == set_t.end()){
-                set_t.insert(airport->getInfo().getCity());
-                res.push_back(airport->getInfo().getCity());
+            auto it_1 = set_cidades.find(airport->getInfo().getCity());
+            if(it_1 == set_cidades.end()){
+                set_cidades.insert(airport->getInfo().getCity());
+                res.push_back(airport->getInfo());
+            }
+            else{
+                auto it_2 = set_cidades.find(airport->getInfo().getCountry());
+                if(it_2 == set_cidades.end()){
+                    set_cidades.insert(airport->getInfo().getCountry());
+                    res.push_back(airport->getInfo());
+                }
             }
         }
 
@@ -455,8 +489,8 @@ vector<Airports> Flights::_6getVecStopsCities(std::string code, int x ) {
     return res;
 }
 
-int Flights::_6getIntStopsCities(std::string code, int x ) {
-    vector<Airports> res = this->_6getVecStopsCities(code, x);
+int Flights::_6getIntStopsCities(std::string code, int x, string country) {
+    vector<Airports> res = this->_6getVecStopsCities(code, x, country);
     return res.size();
 }
 
@@ -785,13 +819,20 @@ vector<list<AirportStop>> Flights::_10Commander(vector<Vertex<Airports> *> src, 
     return res;
 }
 
-vector<Vertex<Airports>*> Flights::_10AirportsCity(string city){
+vector<Vertex<Airports>*> Flights::_10AirportsCity(string city, string pais){
     vector<Vertex<Airports>*> res;
 
     for(auto vertex : flights.getVertexSet()){
-        if(vertex->getInfo().getCity() == city){
-            res.push_back(vertex);
+        if(pais == "k"){
+            if(vertex->getInfo().getCity() == city){
+                res.push_back(vertex);
+            }
+        } else{
+            if(vertex->getInfo().getCity() == city && vertex->getInfo().getCountry() == pais){
+                res.push_back(vertex);
+            }
         }
+
     }
     return res;
 }
