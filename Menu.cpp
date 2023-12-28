@@ -1,8 +1,8 @@
 #include <iostream>
 #include <list>
 #include "Menu.h"
-#include "Flights.h"
-#include "Airports.h"
+/*#include "Flights.h"
+#include "Airports.h"*/
 
 
 using namespace std;
@@ -28,7 +28,7 @@ int Menu::Terminal() {
 
     cout << "\033[1;34mPlease choose your desired functionality:\033[0m\n";
     cout << "\033[1;36m[ 1 ]\033[0m" << " Statistics" << endl;
-    cout << "\033[1;36m[ 2 ]\033[0m" << " Best flight option" << endl;
+    cout << "\033[1;36m[ 2 ]\033[0m" << " Best flight options" << endl;
     cout << "\033[0;31m[ 0 ]\033[0m" << "\033[0;31m Quit\033[0m" << endl;
     cout << endl;
 
@@ -39,9 +39,9 @@ int Menu::Terminal() {
 
     string code;
     int code_aux;
-    list<AirportsGreatDistance> aux;
+    /*list<AirportsGreatDistance> aux;
     vector<AirportsTrafic> frango;
-    set<Airports>
+    set<Airports>*/
 
     while (true) {
 
@@ -58,6 +58,7 @@ int Menu::Terminal() {
                 cout << "\033[1;36m[ 8 ]\033[0m" << " Identify the top-k airport with the greatest number of flights" << endl;
                 cout << "\033[1;36m[ 9 ]\033[0m" << " Identify the airports that are essential to the network’s circulation capability" << endl;
                 cout << "\033[1;31m[ 0 ]\033[0m" << " Go back" << endl;
+                cout << endl;
 
                 cout << "\033[1;34mDecision: \033[0m";
                 cin >> decision;
@@ -258,9 +259,11 @@ int Menu::Terminal() {
                 switch (decision) {
                     case 1:
 
+                        
                         break;
 
                     case 2:
+
 
                         break;
 
@@ -281,7 +284,7 @@ int Menu::Terminal() {
 
         cout << "\033[1;34mWish to do anything else?\033[0m\n";
         cout << "\033[1;36m[ 1 ]\033[0m" << " Statistics" << endl;
-        cout << "\033[1;36m[ 2 ]\033[0m" << " Best flight option" << endl;
+        cout << "\033[1;36m[ 2 ]\033[0m" << " Best flight options" << endl;
         cout << "\033[0;31m[ 0 ]\033[0m" << "\033[0;31m Quit\033[0m" << endl;
         cout << endl;
 
