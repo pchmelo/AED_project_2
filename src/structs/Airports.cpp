@@ -73,8 +73,9 @@ void HashAirports::readLines(Flights &flights) {
             values.push_back(subtr);
         }
 
-        flights.flights.addVertex(values[0]);
+
         airports = Airports(values[0], values[1], values[2], values[3], values[4], values[5]);
+        flights.flights.addVertex(airports);
         this->airportTable.insert(airports);
     }
 

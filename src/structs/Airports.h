@@ -47,17 +47,17 @@ class Airports {
 struct airportHash{
 
     int operator() (const Airports& b) const {
-        int res = 0;
-        int i = 1;
+            const string& code = b.getCode();
+            unsigned  int hash = 5381;
 
-        for(char c: b.getCode()){
-            res += c*i;
-            i++;
+            for(char c: b.getCode()){
+                hash = 33*hash + static_cast<unsigned int>(c);
+            }
+
+            return hash % 3019;
         }
 
-        return res % 6000;
 
-    }
 
     bool operator() (const Airports& b1, const Airports& b2) const {
         return b1.getCode() == b2.getCode();

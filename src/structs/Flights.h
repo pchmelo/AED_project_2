@@ -20,8 +20,8 @@ struct AirportStop;
 
 class Flights {
     public:
-        Graph<string> flights;
-        void ReadLines();
+        Graph<Airports> flights;   //trocar string para airport
+        void ReadLines(HashAirlines hashAirlines, HashAirports hashAirports);  //corrigir readlines
 
         //3.1
         int _1numViajens();
@@ -31,50 +31,50 @@ class Flights {
         int _2numViajensDeAirlines(string code);
 
         //3.3
-        int _3getFlightsPerCountry(HashAirports hashAirports, string country);
-        int _3getFlightsPerCity(HashAirports hashAirports, string city);
-        int _3getFlightsPerCompany(HashAirlines hashAirlines, string airline);
+        int _3getFlightsPerCountry(string country);
+        int _3getFlightsPerCity(string city);
+        int _3getFlightsPerCompany(string airline);
 
         //3.4
-        vector<string> _4getVecCountriesAirport(string code, HashAirports hashAirports);
-        vector<string> _4getVecCountriesCity(string city, HashAirports hashAirports);
-        vector<string> _4getVecCountriesCountry(string country, HashAirports hashAirports);
+        vector<Airports> _4getVecCountriesAirport(string code );
+        vector<Airports> _4getVecCountriesCity(string city );
+        vector<Airports> _4getVecCountriesCountry(string country);
 
-        int _4getNumCountriesAirport(string code, HashAirports hashAirports);
-        int _4getNumCountriesCity(string city, HashAirports hashAirports);
-        int _4getNumCountriesCountry(string country, HashAirports hashAirports);
+        int _4getNumCountriesAirport(string code);
+        int _4getNumCountriesCity(string city );
+        int _4getNumCountriesCountry(string country);
 
         //3.5
-        int Airports_per_airport(string code);
-        int air_per_air_aux(Vertex<string>*v);
+        vector<Airports> Airports_per_airport(string code);
+        int air_per_air_aux(string code);
 
-        int Cities_per_airport(string code, HashAirports hashAirports);
-        int cit_per_air_aux(Vertex<string> *v, list<string> &cities, HashAirports hashAirports);
+        vector<Airports> Cities_per_airport(string code );
+        int cit_per_air_aux(string code);
 
-        int Countries_per_airport(string code, HashAirports hashAirports);
-        int count_per_air_aux(Vertex<string> *v, list<string> countries, HashAirports hashAirports);
+        vector<Airports> Countries_per_airport(string code);
+        int count_per_air_aux(string cide);
 
         //3.6
-        vector<string> _6getVecStopsAirports(string code, int x, HashAirports hashAirports);
-        vector<string> _6getVecStopsCities(string code, int x, HashAirports hashAirports);
-        vector<string> _6getVecStopsCountries(string code, int x, HashAirports hashAirports);
+        vector<Airports> _6getVecStopsAirports(string code, int x );
+        vector<Airports> _6getVecStopsCities(string code, int x );
+        vector<Airports> _6getVecStopsCountries(string code, int x );
 
-        int _6getIntStopsAirports(string code, int x, HashAirports hashAirports);
-        int _6getIntStopsCities(string code, int x, HashAirports hashAirports);
-        int _6getIntStopsCountries(string code, int x, HashAirports hashAirports);
+        int _6getIntStopsAirports(string code, int x );
+        int _6getIntStopsCities(string code, int x);
+        int _6getIntStopsCountries(string code, int x);
 
         //3.7
-        list<AirportsGreatDistance> _7getAirportsGreat(HashAirports hashAirports);
+        list<AirportsGreatDistance> _7getAirportsGreat();
 
         //3.8
-        vector<AirportsTrafic> _8getTopVecAirports(HashAirports hashAirports);
-        vector<AirportsTrafic> _8getTopVecDescAirports(HashAirports hashAirports);
-        vector<AirportsTrafic> _8getTopVecAscAirports(HashAirports hashAirports);
+        vector<AirportsTrafic> _8getTopVecAirports( );
+        vector<AirportsTrafic> _8getTopVecDescAirports( );
+        vector<AirportsTrafic> _8getTopVecAscAirports( );
 
         //3.9
-        set<string> _9Articulations(HashAirports hashAirports);
-        void _9Auxiliar(Vertex<string>* vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inS, bool first);
-        int _9numArticulations(HashAirports hashAirports);
+        set<Airports> _9Articulations();
+        void _9Auxiliar(Vertex<Airports>* vertex, stack<Vertex<Airports>*> &s, set<Airports> &res, int &i, set<Vertex<Airports>*> &inS, bool first);
+        int _9numArticulations( );
 
         //4.1
         list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<string>* src, Vertex<string>* dest, HashAirports hashAirports, HashAirlines hashAirlines);

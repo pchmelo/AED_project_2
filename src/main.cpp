@@ -8,13 +8,11 @@ int main() {
 
     HashAirlines hashAirlines;
     hashAirlines.readLines();
-    auto it_1 = hashAirlines.airlinesTable.find(Airlines("KLM"));
 
     HashAirports hashAirports;
     hashAirports.readLines(flights);
-    auto it_2 = hashAirports.airportTable.find(Airports("CDG"));
 
-    flights.ReadLines();
+    flights.ReadLines(hashAirlines, hashAirports);
 
     int res = flights._1numViajens();
     cout << res << "\n";
@@ -28,53 +26,60 @@ int main() {
     res = flights._2numViajensDeAirport("CDG");
     cout << res << "\n";
 
-    res = flights._3getFlightsPerCompany(hashAirlines, "CDG");
+    res = flights._3getFlightsPerCompany( "CDG");
     cout << res << "\n";
 
-    res = flights._3getFlightsPerCity(hashAirports, "Kabul");
+    //pode estar mal
+    res = flights._3getFlightsPerCity( "Kabul");
+    cout << res << "\n";
+//here fica lento
+    res = flights._3getFlightsPerCountry( "Portugal");
     cout << res << "\n";
 
-    res = flights._3getFlightsPerCountry(hashAirports, "Portugal");
+    res = flights._4getNumCountriesAirport("CDG");
     cout << res << "\n";
 
-    res = flights._4getNumCountriesAirport("CDG", hashAirports);
+    res = flights._4getNumCountriesCity("Paris");
     cout << res << "\n";
 
-    res = flights._4getNumCountriesCity("Paris", hashAirports);
+    res = flights._4getNumCountriesCountry("Portugal");
     cout << res << "\n";
 
-    res = flights._4getNumCountriesCountry("Portugal", hashAirports);
+    res = flights._6getIntStopsAirports("CDG", 3);
     cout << res << "\n";
 
-    res = flights._6getIntStopsAirports("THU", 4, hashAirports);
+    res = flights._6getIntStopsCities("CDG", 3);
     cout << res << "\n";
 
-    res = flights._6getIntStopsCities("THU", 4, hashAirports);
+    res = flights._6getIntStopsCountries("CDG", 3);
     cout << res << "\n";
 
-    res = flights._6getIntStopsCountries("CGD", 3, hashAirports);
+    auto l = flights._8getTopVecDescAirports();
+
+
+
+    //é lento
+
+  res = flights._9numArticulations();
     cout << res << "\n";
 
- //   auto l = flights._8getTopVecDescAirports(hashAirports);
+
+
+
+
+
+   std::cout << "------------------------" << "\n";
+    res = flights.air_per_air_aux("CDG");
+    std::cout << res << "\n";
+    res = flights.cit_per_air_aux("CDG");
+    std::cout << res << "\n";
+    res = flights.count_per_air_aux("CDG");
+    std::cout << res << "\n";
+
 
     cout << "-------------------------" << "\n";
-    res = flights._9numArticulations(hashAirports);
+    res = flights._9numArticulations();
     cout << res << "\n";
-
-    /*
-    set<string> s = flights._9Articulations(hashAirports);
-
-    for(auto air : s){
-        cout << air << "\n";
-    }
-     */
-
-
-    auto src = flights.flights.findVertex("THU");
-    auto dest = flights.flights.findVertex("CDG");
-
-    auto g = flights._10BestPathEntreDoisAeroportos(src, dest, hashAirports, hashAirlines);
-
 
     return 0;
 }

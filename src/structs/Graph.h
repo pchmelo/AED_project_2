@@ -10,6 +10,7 @@
 #include <stack>
 #include <list>
 #include "algorithm"
+#include "Airlines.h"
 
 using namespace std;
 
@@ -30,7 +31,7 @@ class Vertex {
     int num;               // auxiliary field
     int low;               // auxiliary field
 
-    void addEdge(Vertex<T> *dest, string w);
+    void addEdge(Vertex<T> *dest, Airlines w);
     bool removeEdgeTo(Vertex<T> *d);
 public:
     Vertex(T in);
@@ -61,13 +62,13 @@ public:
 template <class T>
 class Edge {
     Vertex<T> * dest;      // destination vertex
-    string airline;         // edge weight
+    Airlines airline;         // edge weight   //trocar string por airline
 public:
-    Edge(Vertex<T> *d, string w);
+    Edge(Vertex<T> *d, Airlines w);
     Vertex<T> *getDest() const;
     void setDest(Vertex<T> *dest);
-    string getAirline() const;
-    void setAirline(string airline);
+    Airlines getAirline() const;
+    void setAirline(Airlines airline);
     friend class Graph<T>;
     friend class Vertex<T>;
 };
@@ -86,7 +87,7 @@ public:
     int getNumVertex() const;
     bool addVertex(const T &in);
     bool removeVertex(const T &in);
-    bool addEdge(const T &sourc, const T &dest, string w);
+    bool addEdge(const T &sourc, const T &dest, Airlines w);
     bool removeEdge(const T &sourc, const T &dest);
     vector<Vertex<T> * > getVertexSet() const;
     vector<T> dfs() const;
@@ -102,7 +103,7 @@ template <class T>
 Vertex<T>::Vertex(T in): info(in) {}
 
 template <class T>
-Edge<T>::Edge(Vertex<T> *d, string w): dest(d), airline(w) {}
+Edge<T>::Edge(Vertex<T> *d, Airlines w): dest(d), airline(w) {}
 
 
 template <class T>
@@ -146,12 +147,12 @@ void Edge<T>::setDest(Vertex<T> *d) {
 }
 
 template<class T>
-string Edge<T>::getAirline() const {
+Airlines Edge<T>::getAirline() const {
     return airline;
 }
 
 template<class T>
-void Edge<T>::setAirline(string airline) {
+void Edge<T>::setAirline(Airlines airline) {
     Edge::airline = airline;
 }
 
@@ -236,7 +237,7 @@ bool Graph<T>::addVertex(const T &in) {
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
 template <class T>
-bool Graph<T>::addEdge(const T &sourc, const T &dest, string w) {
+bool Graph<T>::addEdge(const T &sourc, const T &dest, Airlines w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == NULL || v2 == NULL)
@@ -250,7 +251,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, string w) {
  * with a given destination vertex (d) and edge weight (w).
  */
 template <class T>
-void Vertex<T>::addEdge(Vertex<T> *d, string w) {
+void Vertex<T>::addEdge(Vertex<T> *d, Airlines w) {
     adj.push_back(Edge<T>(d, w));
 }
 

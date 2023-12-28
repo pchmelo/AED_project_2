@@ -9,7 +9,7 @@
 #include "map"
 
 
-void Flights::ReadLines() {
+void Flights::ReadLines(HashAirlines hashAirlines, HashAirports hashAirports) {
     string input = "../src/structs/dataset/flights.csv";
     ifstream MyReadFile(input);
 
@@ -26,8 +26,10 @@ void Flights::ReadLines() {
             getline(ss, subtr, ',');
             values.push_back(subtr);
         }
-
-        flights.addEdge(values[0], values[1], values[2]);
+        auto airport_1 = hashAirports.airportTable.find(values[0]) ;
+        auto airport_2 = hashAirports.airportTable.find(values[1]);
+        auto airline_1 = hashAirlines.airlinesTable.find(values[2]);
+        flights.addEdge(*airport_1, *airport_2, *airline_1);
         values.clear();
     }
 }
@@ -55,29 +57,29 @@ int Flights::_2numViajensDeAirlines(string code) {
     set<string> set_t;
 
     for(auto airline : it_1->getAdj()){
-        auto it_2 = set_t.find(airline.getAirline());
+        auto it_2 = set_t.find(airline.getAirline().getCode());
 
         if(it_2 == set_t.end()){
             res++;
-            set_t.insert(airline.getAirline());
+            set_t.insert(airline.getAirline().getCode());
         }
     }
 
     return res;
 }
 
-int Flights::_3getFlightsPerCountry(HashAirports hashAirports,string country) {
+int Flights::_3getFlightsPerCountry(string country) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
-            auto airports = hashAirports.airportTable.find(a->getInfo());
-            if(airports->getCountry() == country){
+            auto airports = flights.findVertex(a->getInfo());
+            if(airports->getInfo().getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res ++;
             }
 
-            airports = hashAirports.airportTable.find(b.getDest()->getInfo());
-            if(airports->getCountry() == country){
+            airports = flights.findVertex(b.getDest()->getInfo());
+            if(airports->getInfo().getCountry() == country){
                 //cout << a->getInfo() << ", " << b.getDest()->getInfo() << ", " << b.getAirline() << "\n";
                 res++;
             }
@@ -88,18 +90,16 @@ int Flights::_3getFlightsPerCountry(HashAirports hashAirports,string country) {
     return res;
 }
 
-int Flights::_3getFlightsPerCity(HashAirports hashAirports, std::string city) {
+int Flights::_3getFlightsPerCity(string city) {
     int res = 0;
     for(auto a: this->flights.getVertexSet()){
         for(auto b :a->getAdj()){
 
-            auto airports = hashAirports.airportTable.find(a->getInfo());
-            if(airports->getCity() == city){
+            if(a->getInfo().getCity() == city){
                 res ++;
             }
 
-            airports = hashAirports.airportTable.find(b.getDest()->getInfo());
-            if(airports->getCity() == city){
+            if(b.getDest()->getInfo().getCity() == city){
                 res++;
             }
         }
@@ -109,18 +109,16 @@ int Flights::_3getFlightsPerCity(HashAirports hashAirports, std::string city) {
     return res;
 }
 
-int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
+int Flights::_3getFlightsPerCompany(string company) {
     int res = 0;
 
     for (auto code_1: this->flights.getVertexSet()) {
         for (auto code_2: code_1->getAdj()) {
 
-            auto airlines = hashAirlines.airlinesTable.find(code_2.getAirline());
 
-            if (airlines != hashAirlines.airlinesTable.end()) {
-                if (company == airlines->getCode()) {
+                if (company == code_2.getAirline().getCode()) {
                     res++;
-                }
+
             }
         }
     }
@@ -128,117 +126,148 @@ int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
     return res;
 
 }
-    int Flights::Airports_per_airport(string code)
-    {
-        int res = 0;
-        for (auto vertex : this->flights.getVertexSet()) {
-            vertex->setVisited(false);
+vector<Airports> Flights::Airports_per_airport(string code ){
+
+    vector<Airports> res;
+    set<string> set_t;
+
+    auto s = this->flights.findVertex(code);
+
+    if (s == NULL)
+    return res;
+
+    queue<Vertex<Airports>*> q;
+
+    for (auto v : this->flights.getVertexSet())
+    v->setVisited(false);
+
+    q.push(s);
+    s->setVisited(true);
+
+    while (!q.empty()) {
+    auto v = q.front();
+    q.pop();
+
+        auto airport = flights.findVertex(v->getInfo());
+        auto it = set_t.find(airport->getInfo().getCode());
+        if(it == set_t.end()){
+            set_t.insert(airport->getInfo().getCode());
+            res.push_back(airport->getInfo().getName());
         }
 
-        for(auto a: this->flights.getVertexSet())
-        {
-            if(a->getInfo()==code)
-            {
-                res+= air_per_air_aux(a);
-                return res;
+
+    for (auto & e : v->getAdj()) {
+        auto w = e.getDest();
+        if ( ! w->isVisited() ) {
+            q.push(w);
+            w->setVisited(true);
             }
         }
-        return res;
     }
+    return res;
+}
 
-    int Flights:: air_per_air_aux(Vertex<string>*v)
+    int Flights:: air_per_air_aux(string code)
     {
-        int res = 1;
-        v->setVisited(true);
-        for (Edge<string> edge : v->getAdj()) {
-            if (!edge.getDest()->isVisited())
-                res += air_per_air_aux(edge.getDest());
-        }
-        return res;
+
+        return Airports_per_airport(code).size();
     }
 
 
 
-    int Flights:: Cities_per_airport(string code, HashAirports hashAirports)
+vector<Airports> Flights:: Cities_per_airport(string code )
     {
-        int res = 0;
-        for (auto vertex : this->flights.getVertexSet()) {
-            vertex->setVisited(false);
-        }
-        list<string> cities;
+        vector<Airports> res;
+        set<string> set_t;
 
-        for(auto a: this->flights.getVertexSet())
-        {
-            if(a->getInfo()==code)
-            {
-                res+= cit_per_air_aux(a, cities, hashAirports);
-                return res;
-            }
-        }
-        return res;
-    }
-    int Flights::cit_per_air_aux(Vertex<string> *v, list<string> &cities, HashAirports hashAirports) {
-        int res = 0;
-        v->setVisited(true);
-        for (Edge<string> edge : v->getAdj()) {
-            if (!edge.getDest()->isVisited())
-            {
+        auto s = this->flights.findVertex(code);
 
-                auto airport = hashAirports.airportTable.find(edge.getDest()->getInfo());
+        if (s == NULL)
+            return res;
 
-                if(find(cities.begin(), cities.end(),airport->getCity())->empty())
-                {
+        queue<pair<Vertex<Airports>*, int>> q;
 
-                    res++;
-                    cities.push_back(airport->  getCity());
+        for (auto v : this->flights.getVertexSet())
+            v->setVisited(false);
+
+        q.push(pair(s, 0));
+        s->setVisited(true);
+
+        while (!q.empty()) {
+            auto v = q.front();
+            q.pop();
+            if(v.second != 0){
+                auto airport = flights.findVertex(v.first->getInfo());
+                auto it = set_t.find(airport->getInfo().getCity());
+                if(it == set_t.end()){
+                    set_t.insert(airport->getInfo().getCity());
+                    res.push_back(airport->getInfo().getCity());
                 }
-                res+= cit_per_air_aux(edge.getDest(), cities, hashAirports);
+            }
+
+            for (auto & e : v.first->getAdj()) {
+                auto w = e.getDest();
+                if(!w->isVisited()){
+                    q.push(pair(w, v.second + 1));
+                    w->setVisited(true);
+                }
+
             }
         }
         return res;
+    }
+int Flights::cit_per_air_aux(string code) {
+    return Cities_per_airport(code).size();
+
 }
 
 
 
-    int Flights::Countries_per_airport(string code, HashAirports hashAirports)
+vector<Airports>Flights::Countries_per_airport(string code )
     {
-        int res = 0;
-        for (auto vertex : this->flights.getVertexSet()) {
-            vertex->setVisited(false);
-        }
-        list<string> countries;
+        vector<Airports> res;
+        set<string> set_t;
 
-        for(auto a: this->flights.getVertexSet())
-        {
-            if(a->getInfo()==code)
-            {
-                res+= count_per_air_aux(a, countries, hashAirports);
-                return res;
-            }
-        }
-        return res;
-    }
+        auto s = this->flights.findVertex(code);
 
-    int Flights:: count_per_air_aux(Vertex<string> *v, list<string> countries, HashAirports hashAirports)
-    {
-        int res = 0;
-        v->setVisited(true);
-        for (Edge<string> edge : v->getAdj()) {
-            if (!edge.getDest()->isVisited())
-            {
+        if (s == NULL)
+            return res;
 
-                auto airport = hashAirports.airportTable.find(edge.getDest()->getInfo());
+        queue<pair<Vertex<Airports>*, int>> q;
 
-                if(find(countries.begin(), countries.end(),airport->getCountry())->empty())
-                {
+        for (auto v : this->flights.getVertexSet())
+            v->setVisited(false);
 
-                    res++;
-                    countries.push_back(airport->  getCity());
+        q.push(pair(s, 0));
+        s->setVisited(true);
+
+        while (!q.empty()) {
+            auto v = q.front();
+            q.pop();
+
+
+            if(v.second != 0){
+                auto airport = flights.findVertex(v.first->getInfo());
+                auto it = set_t.find(airport->getInfo().getCountry());
+                if(it == set_t.end()){
+                    set_t.insert(airport->getInfo().getCountry());
+                    res.push_back(airport->getInfo().getCountry());
                 }
-                res+= cit_per_air_aux(edge.getDest(), countries, hashAirports);
+            }
+
+            for (auto & e : v.first->getAdj()) {
+                auto w = e.getDest();
+                if(!w->isVisited()){
+                    q.push(pair(w, v.second + 1));
+                    w->setVisited(true);
+                }
             }
         }
         return res;
+    }
+
+int Flights:: count_per_air_aux(string code)    {
+    return Countries_per_airport(code).size();
     }
 
 
@@ -246,91 +275,90 @@ int Flights::_3getFlightsPerCompany(HashAirlines hashAirlines, string company) {
 
 
 
-vector<string> Flights::_4getVecCountriesAirport(string code, HashAirports hashAirports) {
-    vector<string> res;
+vector<Airports> Flights::_4getVecCountriesAirport(string code) {
+    vector<Airports> res;
     set<string> set_country;
     auto airport = this->flights.findVertex(code);
 
     for(auto edge : airport->getAdj()){
-        auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
-        auto it_1 = set_country.find(country_t->getCountry());
+        auto country_t = flights.findVertex(edge.getDest()->getInfo());
+        auto it_1 = set_country.find(country_t->getInfo().getCountry());
 
         if(it_1 == set_country.end()){
-            set_country.insert(country_t->getCountry());
-            res.push_back(country_t->getCountry());
+            set_country.insert(country_t->getInfo().getCountry());
+            res.push_back(airport->getInfo());
         }
     }
-
     return res;
 }
 
-int Flights::_4getNumCountriesAirport(std::string code, HashAirports hashAirports) {
-    vector<string> res = _4getVecCountriesAirport(code, hashAirports);
+int Flights::_4getNumCountriesAirport(string code) {
+    vector<Airports> res = _4getVecCountriesAirport(code);
     return res.size();
 }
 
-vector<string> Flights::_4getVecCountriesCity(std::string city, HashAirports hashAirports) {
-    vector<string> res;
+vector<Airports> Flights::_4getVecCountriesCity(string city ) {
+    vector<Airports> res;
     set<string> set_country;
-    vector<Vertex<string>*> vertex_v;
+    vector<Vertex<Airports>*> vertex_v;
 
     for(auto vertex : this->flights.getVertexSet()){
-        auto airports = hashAirports.airportTable.find(vertex->getInfo());
-        if(airports->getCity() == city){
+        if(vertex->getInfo().getCity() == city){
+            vertex_v.push_back(vertex);
+        }
+    }
+
+    for(auto vertex : vertex_v){
+        for(auto edge : vertex->getAdj()){
+            auto country_t = flights.findVertex(edge.getDest()->getInfo());
+            auto it_1 = set_country.find(country_t->getInfo().getCountry());
+
+            if(it_1 == set_country.end()){
+                set_country.insert(country_t->getInfo().getCountry());
+                res.push_back(country_t->getInfo());
+            }
+        }
+    }
+    return res;
+}
+
+int Flights::_4getNumCountriesCity(string city ) {
+    vector<Airports> res = _4getVecCountriesCity(city);
+    return res.size();
+}
+
+vector<Airports> Flights::_4getVecCountriesCountry(std::string country) {
+    vector<Airports> res;
+    set<string> set_country;
+    vector<Vertex<Airports>*> vertex_v;
+
+    for(auto vertex : this->flights.getVertexSet()){
+        auto airports = flights.findVertex(vertex->getInfo());
+        if(airports->getInfo().getCountry() == country){
             vertex_v.push_back(vertex);
         }
     }
     for(auto vertex : vertex_v){
         for(auto edge : vertex->getAdj()){
-            auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
-            auto it_1 = set_country.find(country_t->getCountry());
+            auto country_t = flights.findVertex(edge.getDest()->getInfo());
+            auto it_1 = set_country.find(country_t->getInfo().getCountry());
 
             if(it_1 == set_country.end()){
-                set_country.insert(country_t->getCountry());
-                res.push_back(country_t->getCountry());
+                set_country.insert(country_t->getInfo().getCountry());
+                res.push_back(country_t->getInfo());
             }
         }
     }
     return res;
 }
 
-int Flights::_4getNumCountriesCity(std::string city, HashAirports hashAirports) {
-    vector<string> res = _4getVecCountriesCity(city, hashAirports);
+int Flights::_4getNumCountriesCountry(std::string country ) {
+    vector<Airports> res = _4getVecCountriesCountry(country);
     return res.size();
 }
 
-vector<string> Flights::_4getVecCountriesCountry(std::string country, HashAirports hashAirports) {
-    vector<string> res;
-    set<string> set_country;
-    vector<Vertex<string>*> vertex_v;
-
-    for(auto vertex : this->flights.getVertexSet()){
-        auto airports = hashAirports.airportTable.find(vertex->getInfo());
-        if(airports->getCountry() == country){
-            vertex_v.push_back(vertex);
-        }
-    }
-    for(auto vertex : vertex_v){
-        for(auto edge : vertex->getAdj()){
-            auto country_t = hashAirports.airportTable.find(edge.getDest()->getInfo());
-            auto it_1 = set_country.find(country_t->getCountry());
-
-            if(it_1 == set_country.end()){
-                set_country.insert(country_t->getCountry());
-                res.push_back(country_t->getCountry());
-            }
-        }
-    }
-    return res;
-}
-
-int Flights::_4getNumCountriesCountry(std::string country, HashAirports hashAirports) {
-    vector<string> res = _4getVecCountriesCountry(country, hashAirports);
-    return res.size();
-}
-
-vector<string> Flights::_6getVecStopsAirports(string code, int x, HashAirports hashAirports) {
-    vector<string> res;
+vector<Airports> Flights::_6getVecStopsAirports(string code, int x) {
+    vector<Airports> res;
     set<string> set_t;
 
     auto s = this->flights.findVertex(code);
@@ -338,7 +366,7 @@ vector<string> Flights::_6getVecStopsAirports(string code, int x, HashAirports h
     if (s == NULL)
         return res;
 
-    queue<pair<Vertex<string>*, int>> q;
+    queue<pair<Vertex<Airports>*, int>> q;
 
     for (auto v : this->flights.getVertexSet())
         v->setVisited(false);
@@ -355,12 +383,12 @@ vector<string> Flights::_6getVecStopsAirports(string code, int x, HashAirports h
         }
 
         if(v.second != 0){
-            auto airport = hashAirports.airportTable.find(v.first->getInfo());
-            auto it = set_t.find(airport->getCode());
+            auto airport = flights.findVertex(v.first->getInfo());
+            auto it = set_t.find(airport->getInfo().getCode());
 
             if(it == set_t.end()){
-                set_t.insert(airport->getCode());
-                res.push_back(airport->getName());
+                set_t.insert(airport->getInfo().getCode());
+                res.push_back(airport->getInfo().getName());
             }
         }
 
@@ -375,13 +403,13 @@ vector<string> Flights::_6getVecStopsAirports(string code, int x, HashAirports h
     return res;
 }
 
-int Flights::_6getIntStopsAirports(std::string code, int x, HashAirports hashAirports) {
-    vector<string> res = this->_6getVecStopsAirports(code, x, hashAirports);
+int Flights::_6getIntStopsAirports(std::string code, int x ) {
+    vector<Airports> res = this->_6getVecStopsAirports(code, x);
     return res.size();
 }
 
-vector<string> Flights::_6getVecStopsCities(std::string code, int x, HashAirports hashAirports) {
-    vector<string> res;
+vector<Airports> Flights::_6getVecStopsCities(std::string code, int x ) {
+    vector<Airports> res;
     set<string> set_t;
 
     auto s = this->flights.findVertex(code);
@@ -389,7 +417,7 @@ vector<string> Flights::_6getVecStopsCities(std::string code, int x, HashAirport
     if (s == NULL)
         return res;
 
-    queue<pair<Vertex<string>*, int>> q;
+    queue<pair<Vertex<Airports>*, int>> q;
 
     for (auto v : this->flights.getVertexSet())
         v->setVisited(false);
@@ -406,11 +434,11 @@ vector<string> Flights::_6getVecStopsCities(std::string code, int x, HashAirport
         }
 
         if(v.second != 0){
-            auto airport = hashAirports.airportTable.find(v.first->getInfo());
-            auto it = set_t.find(airport->getCity());
+            auto airport = flights.findVertex(v.first->getInfo());
+            auto it = set_t.find(airport->getInfo().getCity());
             if(it == set_t.end()){
-                set_t.insert(airport->getCity());
-                res.push_back(airport->getCity());
+                set_t.insert(airport->getInfo().getCity());
+                res.push_back(airport->getInfo().getCity());
             }
         }
 
@@ -426,13 +454,13 @@ vector<string> Flights::_6getVecStopsCities(std::string code, int x, HashAirport
     return res;
 }
 
-int Flights::_6getIntStopsCities(std::string code, int x, HashAirports hashAirports) {
-    vector<string> res = this->_6getVecStopsCities(code, x, hashAirports);
+int Flights::_6getIntStopsCities(std::string code, int x ) {
+    vector<Airports> res = this->_6getVecStopsCities(code, x);
     return res.size();
 }
 
-vector<string> Flights::_6getVecStopsCountries(std::string code, int x, HashAirports hashAirports) {
-    vector<string> res;
+vector<Airports> Flights::_6getVecStopsCountries(std::string code, int x ) {
+    vector<Airports> res;
     set<string> set_t;
 
     auto s = this->flights.findVertex(code);
@@ -440,7 +468,7 @@ vector<string> Flights::_6getVecStopsCountries(std::string code, int x, HashAirp
     if (s == NULL)
         return res;
 
-    queue<pair<Vertex<string>*, int>> q;
+    queue<pair<Vertex<Airports>*, int>> q;
 
     for (auto v : this->flights.getVertexSet())
         v->setVisited(false);
@@ -457,11 +485,11 @@ vector<string> Flights::_6getVecStopsCountries(std::string code, int x, HashAirp
         }
 
         if(v.second != 0){
-            auto airport = hashAirports.airportTable.find(v.first->getInfo());
-            auto it = set_t.find(airport->getCountry());
+            auto airport = flights.findVertex(v.first->getInfo());
+            auto it = set_t.find(airport->getInfo().getCountry());
             if(it == set_t.end()){
-                set_t.insert(airport->getCountry());
-                res.push_back(airport->getCountry());
+                set_t.insert(airport->getInfo().getCountry());
+                res.push_back(airport->getInfo().getCountry());
             }
         }
 
@@ -476,19 +504,19 @@ vector<string> Flights::_6getVecStopsCountries(std::string code, int x, HashAirp
     return res;
 }
 
-int Flights::_6getIntStopsCountries(std::string code, int x, HashAirports hashAirports) {
-    vector<string> res = this->_6getVecStopsCountries(code, x, hashAirports);
+int Flights::_6getIntStopsCountries(std::string code, int x ) {
+    vector<Airports> res = this->_6getVecStopsCountries(code, x);
     return res.size();
 }
 
-list<AirportsGreatDistance> Flights::_7getAirportsGreat(HashAirports hashAirports) {
+list<AirportsGreatDistance> Flights::_7getAirportsGreat() {
     int diameter = 0;
     AirportsGreatDistance t;
     list<AirportsGreatDistance> res;
 
     for(auto vertex : this->flights.getVertexSet()){
-        map<Vertex<string>*, int> dist;
-        queue<Vertex<string>*> q;
+        map<Vertex<Airports>*, int> dist;
+        queue<Vertex<Airports>*> q;
 
         for(auto v : flights.getVertexSet()){
             dist[v] = -1;
@@ -515,17 +543,17 @@ list<AirportsGreatDistance> Flights::_7getAirportsGreat(HashAirports hashAirport
                 res.clear();
                 diameter = pair.second;
 
-                auto air_1 = hashAirports.airportTable.find(vertex->getInfo());
-                auto air_2 = hashAirports.airportTable.find(pair.first->getInfo());
+                auto air_1 = flights.findVertex(vertex->getInfo());
+                auto air_2 = flights.findVertex(pair.first->getInfo());
 
-                t = AirportsGreatDistance(*air_2, *air_1, diameter);
+                t = AirportsGreatDistance(air_2->getInfo(), air_1->getInfo(), diameter);
                 res.push_back(t);
             }
             else if(pair.second == diameter){
-                auto air_1 = hashAirports.airportTable.find(vertex->getInfo());
-                auto air_2 = hashAirports.airportTable.find(pair.first->getInfo());
+                auto air_1 =flights.findVertex(vertex->getInfo());
+                auto air_2 = flights.findVertex(pair.first->getInfo());
 
-                t = AirportsGreatDistance(*air_1, *air_2, diameter);
+                t = AirportsGreatDistance(air_1->getInfo(), air_2->getInfo(), diameter);
                 res.push_back(t);
             }
         }
@@ -539,28 +567,28 @@ list<AirportsGreatDistance> Flights::_7getAirportsGreat(HashAirports hashAirport
 
 
 
-vector<AirportsTrafic> Flights::_8getTopVecAirports(HashAirports hashAirports) {
+vector<AirportsTrafic> Flights::_8getTopVecAirports( ) {
     vector<AirportsTrafic> res;
 
     for(auto vertex : flights.getVertexSet()){
-        auto airport_1 = hashAirports.airportTable.find(vertex->getInfo());
-        auto it_1 = std::find(res.begin(), res.end(), *airport_1);
+        auto airport_1 = flights.findVertex(vertex->getInfo());
+        auto it_1 = find(res.begin(), res.end(), airport_1->getInfo());
 
         if(it_1 == res.end()){
-            AirportsTrafic airportsTrafic_1 = AirportsTrafic(*airport_1, 0);
+            AirportsTrafic airportsTrafic_1 = AirportsTrafic(airport_1->getInfo(), 0);
             res.push_back(airportsTrafic_1);
         }
         for(auto edge : vertex->getAdj()){
-            auto airport_2 = hashAirports.airportTable.find(edge.getDest()->getInfo());
-            auto it_2 = std::find(res.begin(), res.end(), *airport_2);
+            auto airport_2 = flights.findVertex(edge.getDest()->getInfo());
+            auto it_2 = std::find(res.begin(), res.end(), airport_2->getInfo());
 
             if(it_2 == res.end()){
-                AirportsTrafic airportsTrafic_2 = AirportsTrafic(*airport_2, 0);
+                AirportsTrafic airportsTrafic_2 = AirportsTrafic(airport_2->getInfo(), 0);
                 res.push_back(airportsTrafic_2);
             }
 
-            it_1 = std::find(res.begin(), res.end(), *airport_1);
-            it_2 = std::find(res.begin(), res.end(), *airport_2);
+            it_1 = std::find(res.begin(), res.end(), airport_1->getInfo());
+            it_2 = std::find(res.begin(), res.end(), airport_2->getInfo());
 
             it_1->trafic.second = it_1->trafic.second + 1;
             it_2->trafic.second = it_2->trafic.second + 1;
@@ -569,22 +597,22 @@ vector<AirportsTrafic> Flights::_8getTopVecAirports(HashAirports hashAirports) {
     return res;
 }
 
-vector<AirportsTrafic> Flights::_8getTopVecDescAirports(HashAirports hashAirports) {
-    vector<AirportsTrafic> res = _8getTopVecAirports(hashAirports);
+vector<AirportsTrafic> Flights::_8getTopVecDescAirports( ) {
+    vector<AirportsTrafic> res = _8getTopVecAirports();
     sort(res.rbegin(), res.rend());
     return res;
 }
 
-vector<AirportsTrafic> Flights::_8getTopVecAscAirports(HashAirports hashAirports) {
-    vector<AirportsTrafic> res = _8getTopVecAirports(hashAirports);
+vector<AirportsTrafic> Flights::_8getTopVecAscAirports( ) {
+    vector<AirportsTrafic> res = _8getTopVecAirports();
     sort(res.begin(), res.end());
     return res;
 }
 
-set<string > Flights::_9Articulations(HashAirports hashAirports) {
-    set<string> res;
-    stack<Vertex<string>*> s;
-    set<Vertex<string>*> inStack;
+set<Airports > Flights::_9Articulations() {
+    set<Airports> res;
+    stack<Vertex<Airports>*> s;
+    set<Vertex<Airports>*> inStack;
     bool first = true;
     int i = 1;
 
@@ -596,7 +624,7 @@ set<string > Flights::_9Articulations(HashAirports hashAirports) {
 
     for (auto vertex : flights.getVertexSet()) {
         if(!vertex->isVisited()) {
-            _9Auxiliar(vertex, s, res, i, hashAirports, inStack, first);
+            _9Auxiliar(vertex, s, res, i, inStack, first);
             first = false;
         }
     }
@@ -604,7 +632,7 @@ set<string > Flights::_9Articulations(HashAirports hashAirports) {
     return res;
 }
 
-void Flights::_9Auxiliar(Vertex<string> *vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inStack, bool first) {
+void Flights::_9Auxiliar(Vertex<Airports> *vertex, stack<Vertex<Airports>*> &s, set<Airports> &res, int &i, set<Vertex<Airports>*> &inStack, bool first) {
     vertex->setVisited(true);
     vertex->setNum(i);
     vertex->setLow(i);
@@ -624,7 +652,7 @@ void Flights::_9Auxiliar(Vertex<string> *vertex, stack<Vertex<string>*> &s, set<
 
         if(!w->isVisited()){
             children++;
-            _9Auxiliar(w, s, res, i, hashAirports, inStack, first);
+            _9Auxiliar(w, s, res, i, inStack, first);
             vertex->setLow(min(vertex->getLow(), w->getLow()));
 
             if(w->getLow() >= vertex->getNum()){
@@ -642,8 +670,8 @@ void Flights::_9Auxiliar(Vertex<string> *vertex, stack<Vertex<string>*> &s, set<
 
 }
 
-int Flights::_9numArticulations(HashAirports hashAirports) {
-    set<string> res = _9Articulations(hashAirports);
+int Flights::_9numArticulations() {
+    set<Airports> res = _9Articulations();
     return res.size();
 }
 
@@ -656,11 +684,11 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, V
 
     queue<Vertex<string>*> fila;
 
-    for(auto& vertex : this->flights.getVertexSet()){
+   /* for(auto& vertex : this->flights.getVertexSet()){
         paragens[vertex] = -1;
         previo[vertex] = nullptr;
     }
-
+*/
     paragens[src] = 0;
     fila.push(src);
 
@@ -688,7 +716,7 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, V
     bool flag = true;
     string airport_1;
     string airport_2;
-    string airline = "";
+    Airlines airlines;
 
     for(auto vertex = dest; vertex != nullptr; vertex = previo[vertex]){
         if(flag){
@@ -703,11 +731,11 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, V
 
             for(auto edge : vertex->getAdj()){
                 if(edge.getDest()->getInfo() == airport_2){
-                    airline = edge.getAirline();
+                    airlines = edge.getAirline();
                 }
             }
 
-            auto ail = hashAirlines.airlinesTable.find(airline);
+            auto ail = hashAirlines.airlinesTable.find(airlines);
             t = AirportStop(*air_1, *air_2, *ail);
             res.push_back(t);
 
@@ -723,3 +751,4 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, V
 
     return res;
 }
+
