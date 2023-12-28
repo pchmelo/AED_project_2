@@ -55,7 +55,7 @@ int main() {
     res = flights._6getIntStopsCountries("CDG", 3);
     cout << res << "\n";
 
-    auto l = flights._8getTopVecDescAirports();
+   // auto l = flights._8getTopVecDescAirports();
 
 
    std::cout << "------------------------" << "\n";

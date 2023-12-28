@@ -646,63 +646,54 @@ vector<AirportsTrafic> Flights::_8getTopVecAscAirports( ) {
 
 set<Airports > Flights::_9Articulations() {
     set<Airports> res;
-    stack<Vertex<Airports>*> s;
-    set<Vertex<Airports>*> inStack;
-    bool first = true;
     int i = 1;
 
     for (auto &vertex : flights.getVertexSet()) {
         vertex->setVisited(false);
         vertex->setLow(0);
         vertex->setNum(0);
+        vertex->setProcessing(false);
     }
 
     for (auto vertex : flights.getVertexSet()) {
         if(!vertex->isVisited()) {
-            _9Auxiliar(vertex, s, res, i, inStack, first);
-            first = false;
+            _9Auxiliar(vertex, res, i);
         }
     }
 
     return res;
 }
 
-void Flights::_9Auxiliar(Vertex<Airports> *vertex, stack<Vertex<Airports>*> &s, set<Airports> &res, int &i, set<Vertex<Airports>*> &inStack, bool first) {
+void Flights::_9Auxiliar(Vertex<Airports> *vertex, set<Airports> &res, int &i) {
     vertex->setVisited(true);
     vertex->setNum(i);
     vertex->setLow(i);
-
+    vertex->setProcessing(true);
     i++;
 
     int children = 0;
     bool art = false;
 
-    s.push(vertex);
-    inStack.insert(vertex);
-
-
-
-    for(auto &edge : vertex->getAdj()) {
+    for (auto &edge : vertex->getAdj()) {
         auto w = edge.getDest();
 
-        if(!w->isVisited()){
+        if (!w->isVisited()) {
             children++;
-            _9Auxiliar(w, s, res, i, inStack, first);
+            _9Auxiliar(w, res, i);
             vertex->setLow(min(vertex->getLow(), w->getLow()));
 
-            if(w->getLow() >= vertex->getNum()){
+            if (w->getLow() >= vertex->getNum()) {
                 art = true;
             }
-        }
-        else{
+        } else if (w->isProcessing()) {
             vertex->setLow(min(vertex->getLow(), w->getNum()));
         }
     }
 
-    if((vertex->getLow() == 1 && children > 1) || (vertex->getNum() > 1 && art)){
+        if ((vertex->getNum() == 1 && children > 1) || (vertex->getNum() > 1 && art)) {
         res.insert(vertex->getInfo());
     }
-
+    vertex->setProcessing(false);
 }
 
 int Flights::_9numArticulations() {

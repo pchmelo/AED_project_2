@@ -73,7 +73,7 @@ class Flights {
 
         //3.9
         set<Airports> _9Articulations();
-        void _9Auxiliar(Vertex<Airports>* vertex, stack<Vertex<Airports>*> &s, set<Airports> &res, int &i, set<Vertex<Airports>*> &inS, bool first);
+        void _9Auxiliar(Vertex<Airports>* vertex, set<Airports> &res, int &i);
         int _9numArticulations( );
 
         //4.all
