@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int Menu::Terminal() {
+int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hashAirlines) {
 
     int cap;
 
@@ -67,8 +67,8 @@ int Menu::Terminal() {
                 switch (decision) {
                     case 1:
 
-                        /*cout << endl << "\033[1;32mNumber of airports is \033[0m" << HashAirports::_1numAirports() << endl;
-                        cout << endl << "\033[1;32mNumber of available flights is \033[0m" << Flights::_1numviajens() << endl;*/
+                        cout<<"Numero de airports da rede "<< hashAirports._1numAirports()<<endl;
+                        cout<<"Numero de viagens da rede "<< flights._1numViajens()<<endl;
 
                         break;
 
@@ -77,12 +77,15 @@ int Menu::Terminal() {
                         cout << "\033[1;34mWhich airport? \033[0m";
                         cin >> code;
                         cout << endl;
+
+                        cout << flights._2numViajensDeAirlines(code) << endl;
+                        cout << flights._2numViajensDeAirport(code) << endl;
+
                         /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_2numViajensDeAirport(code) << "\033[1;32m flights from \033[0m" << Flights::_2numViajensDeAirlines(code) << "\033[1;32m different airlines in \033[0m" << code << endl;*/
 
                         break;
 
                     case 3:
-
                         cout << "\033[1;33m[ 1 ]\033[0m" << " City" << endl;
                         cout << "\033[1;33m[ 2 ]\033[0m" << " Airline" << endl;
                         cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
@@ -99,15 +102,24 @@ int Menu::Terminal() {
                                 cout << "\033[1;34mWhich city? \033[0m";
                                 cin >> code;
                                 cout << endl;
+
+                                cout << flights._3getFlightsPerCompany(code);
                                 /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCity(code) << "\033[1;32m flights in \033[0m" << code << endl;*/
 
                                 break;
 
                             case 2:
 
+                                //especificar o pais
+
                                 cout << "\033[1;34mWhich airline? \033[0m";
                                 cin >> code;
                                 cout << endl;
+                                string country = "Portugal";
+
+                                cout << flights._3getFlightsPerCity(code, "k");
+                                cout << flights._3getFlightsPerCity(code, country);
+
                                 /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCompany(code) << "\033[1;32m flights from the airline \033[0m" << code << endl;*/
 
                                 break;
@@ -117,6 +129,9 @@ int Menu::Terminal() {
                                 cout << "\033[1;34mWhich country? \033[0m";
                                 cin >> code;
                                 cout << endl;
+
+                                cout << flights._3getFlightsPerCountry(code);
+
                                 /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCountry(code) << "\033[1;32m flights in \033[0m" << code << endl;*/
 
                                 break;
@@ -147,19 +162,34 @@ int Menu::Terminal() {
 
                         switch (decision) {
                             case 1:
+                                //aparecer se ele quer que imprima a lista ou não
 
                                 cout << "\033[1;34mWhich city? \033[0m";
                                 cin >> code;
                                 cout << endl;
+
+                                auto res = flights._4getVecCountriesAirport(code);
+                                for(auto air : res){
+                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                                }
+
+                                cout << "------------------------------\n";
+                                cout << "Total: " << res.size() << endl;
+
                                 /*cout << Flights::_4getNumCountriesCity(code) << "\033[1;32m different countries flown to from city \033[0m" << code << endl;*/
 
                                 break;
 
                             case 2:
-
                                 cout << "\033[1;34mWhich airport? \033[0m";
                                 cin >> code;
                                 cout << endl;
+
+                                res = flights._4getVecCountriesCity(code, "k");
+                                for(auto air : res){
+                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                                }
+
                                 /*cout << Flights::_4getNumCountriesAirport(code) << "\033[1;32m different countries flown to from airport \033[0m" << code << endl;*/
 
                                 break;
@@ -169,6 +199,12 @@ int Menu::Terminal() {
                                 cout << "\033[1;34mWhich country? \033[0m";
                                 cin >> code;
                                 cout << endl;
+
+                                res = flights._4getVecCountriesCountry(code);
+                                for(auto air : res){
+                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                                }
+
                                 /*cout << Flights::_4getNumCountriesCountry(code) << "\033[1;32m different countries flown to from country \033[0m" << code << endl;*/
 
                                 break;
@@ -186,27 +222,67 @@ int Menu::Terminal() {
                         break;
 
                     case 5:
-
+                        //separar como no 4
                         cout << "\033[1;34mWhich airport? \033[0m";
                         cin >> code;
                         cout << endl;
+
+                        auto res = flights._5Airports_per_airport(code);
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
+                        res = flights._5Cities_per_airport(code, "k");
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
+                        res = flights._5Countries_per_airport(code);
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
                         /*cout << "\033[1;32mThere are \033[0m" << Flights::Airports_per_airport(code) << "\033[1;32m airports, \033[0m" << Flights::Cities_per_airport(code) << "\033[1;32m cities and \033[0m" << Flights::Countries_per_airport(code) << "\033[1;32m countries available as destinations from airport \033[0m" << code << endl;*/
 
                         break;
 
                     case 6:
-
+                        //separar como no 4 e 5
                         cout << "\033[1;34mWhich airport? \033[0m";
                         cin >> code;
                         cout << endl;
                         cout << "\033[1;34mHow many lay-overs? \033[0m";
                         cin >> code_aux;
                         cout << endl;
+
+                        res = flights._6getVecStopsAirports(code, code_aux);
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
+                        res = flights._6getVecStopsCities(code, code_aux, "k");
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
+                        res = flights._6getVecStopsCountries(code, code_aux);
+                        for(auto air : res){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
                         /*cout << "\033[1;32mThere are \033[0m" << Flights::_6getIntStopsAirports(code, code_aux    ) << "\033[1;32m airports, \033[0m" << Flights::_6getIntStopsCities(code, code_aux) << "\033[1;32m cities and \033[0m" << Flights::_6getIntStopsCountries(code, code_aux) << "\033[1;32m countries available as destinations from airport \033[0m" << code << "\033[1;32m in \033[0m" << code_aux << "\033[1;32m lay-overs\033[0m" << endl;*/
 
                         break;
 
                     case 7:
+
+                        list<AirportsGreatDistance> test = flights._7getAirportsGreat();
+                        for(auto air : test){
+                            cout << air.airport_source.getCode() << ", " << air.airport_source.getName() << ", " << air.airport_source.getCity() << ", " << air.airport_source.getCountry() << endl;
+                            cout << air.airport_dest.getCode() << ", " << air.airport_dest.getName() << ", " << air.airport_dest.getCity() << ", " << air.airport_dest.getCountry() << endl;
+                            cout << "-------------------\n";
+                            cout << air.distance;
+                        }
 
                         /*aux = _7getAirportsGreat();
                         while (!aux.empty()) {
@@ -218,9 +294,25 @@ int Menu::Terminal() {
 
                     case 8:
 
+                        //perguntar se quer o top em ordem ascendete ou descendente
+
                         cout << "\033[1;34mHow many airports do you wish to be presented with? \033[0m";
                         cin >> code_aux;
                         cout << endl;
+
+                        vector<AirportsTrafic> t = flights._8getTopVecDescAirports();
+
+                        for(int i = 0; i < code_aux; i++){
+                            cout << t.at(i).trafic.first.getCode() << ", " << t.at(i).trafic.first.getName() << ", " << t.at(i).trafic.first.getCity() << ", " << t.at(i).trafic.first.getCountry() << endl;
+                            cout << t.at(i).trafic.second << endl;
+                        }
+
+                        t = flights._8getTopVecAscAirports();
+
+                        for(int i = 0; i < code_aux; i++){
+                            cout << t.at(i).trafic.first.getCode() << ", " << t.at(i).trafic.first.getName() << ", " << t.at(i).trafic.first.getCity() << ", " << t.at(i).trafic.first.getCountry() << endl;
+                            cout << t.at(i).trafic.second << endl;
+                        }
 
                         /*frango = _8getTopVecAirports();
 
@@ -232,7 +324,16 @@ int Menu::Terminal() {
 
                     case 9:
 
+                        //imprimir o set de aeroportos e perguntar se ele so quer o numero<3
 
+                        auto y = flights._9Articulations();
+
+                        for(auto air: y){
+                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        }
+
+                        cout << "--------\n";
+                        cout << y.size() << endl;
 
                         break;
 
@@ -260,6 +361,54 @@ int Menu::Terminal() {
 
                 switch (decision) {
                     case 1:
+                        vector<Vertex<Airports>*> src;
+                        vector<Vertex<Airports>*> dest;
+
+                        //Decedir a forma de começo
+                        //1- receber o aeroporto, depois perguntar se quer code ou name
+                        src = flights._10AirportsAirport("OPO", true);
+
+                        //2- receber cidade, depois se quer especificar o pais da cidade escolhida
+                        src = flights._10AirportsCity("Porto", "k");
+
+                        //3- receber pais
+                        src = flights._10AirportsPais("Portugal");
+
+                        //4- receber coordenadas, string lat e string long, de seguida vai perguntar se quer raio ou nao, se quiser perguntar pelo raio
+                        src = flights._10AirportsCoord("-13920,2190812093", "281,1291236");
+                        src = flights._10AirportsCoordRaio("-13920,2190812093", "281,1291236", 10);
+
+                        //5- back
+
+
+                        //Decedir a forma de fim
+                        //1- receber o aeroporto, depois perguntar se quer code ou name
+                        dest = flights._10AirportsAirport("OPO", true);
+
+                        //2- receber cidade, depois se quer especificar o pais da cidade escolhida
+                        dest = flights._10AirportsCity("Porto", "k");
+
+                        //3- receber pais
+                        dest = flights._10AirportsPais("Portugal");
+
+                        //4- receber coordenadas, string lat e string long, de seguida vai perguntar se quer raio ou nao, se quiser perguntar pelo raio
+                        //5- back
+
+                        //depois destes dois passos fazer o q vem asseguir
+
+                        dest = flights._10AirportsCoord("-13920,2190812093", "281,1291236");
+                        dest = flights._10AirportsCoordRaio("-13920,2190812093", "281,1291236", 10);
+
+                        pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> p = flights._10Montador(src, dest);
+                        auto l = flights._10Commander(p.first, p.second);
+
+
+                        for(auto k : l){
+                            for(auto air : k){
+                                cout << air.src.getCode() << ", " << air.src.getName() << ", " << air.src.getCity() << ", " << air.src.getCountry() << endl;
+
+                            }
+                        }
 
 
                         break;

@@ -137,7 +137,7 @@ int Flights::_3getFlightsPerCompany(string company) {
     return res;
 
 }
-vector<Airports> Flights::Airports_per_airport(string code ){
+vector<Airports> Flights::_5Airports_per_airport(string code ){
 
     vector<Airports> res;
     set<string> set_t;
@@ -178,15 +178,13 @@ vector<Airports> Flights::Airports_per_airport(string code ){
     return res;
 }
 
-    int Flights:: air_per_air_aux(string code)
-    {
-
-        return Airports_per_airport(code).size();
+    int Flights:: _5air_per_air_aux(string code){
+        return _5Airports_per_airport(code).size();
     }
 
 
 
-vector<Airports> Flights::Cities_per_airport(string code)
+vector<Airports> Flights::_5Cities_per_airport(string code, string country)
     {
         vector<Airports> res;
         set<string> set_cidades;
@@ -235,14 +233,14 @@ vector<Airports> Flights::Cities_per_airport(string code)
         }
         return res;
     }
-int Flights::cit_per_air_aux(string code) {
-    return Cities_per_airport(code).size();
+int Flights::_5cit_per_air_aux(string code, string country) {
+    return _5Cities_per_airport(code, country).size();
 
 }
 
 
 
-vector<Airports>Flights::Countries_per_airport(string code )
+vector<Airports>Flights::_5Countries_per_airport(string code)
     {
         vector<Airports> res;
         set<string> set_t;
@@ -285,8 +283,8 @@ vector<Airports>Flights::Countries_per_airport(string code )
         return res;
     }
 
-int Flights:: count_per_air_aux(string code)    {
-    return Countries_per_airport(code).size();
+int Flights:: _5count_per_air_aux(string code)    {
+    return _5Countries_per_airport(code).size();
     }
 
 
@@ -710,11 +708,11 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<Airports>* src,
 
     queue<Vertex<Airports>*> fila;
 
-   /* for(auto& vertex : this->flights.getVertexSet()){
+    for(auto& vertex : this->flights.getVertexSet()){
         paragens[vertex] = -1;
         previo[vertex] = nullptr;
     }
-*/
+
     paragens[src] = 0;
     fila.push(src);
 
@@ -807,6 +805,25 @@ vector<list<AirportStop>> Flights::_10Commander(vector<Vertex<Airports> *> src, 
         }
     }
 
+    return res;
+}
+
+vector<Vertex<Airports>*> Flights::_10AirportsAirport(std::string code, bool flag) {
+    vector<Vertex<Airports>*> res;
+
+    for(auto vertex : flights.getVertexSet()){
+        if(flag){
+            if(vertex->getInfo().getCode() == code){
+                res.push_back(vertex);
+            }
+        }
+        else{
+            if(vertex->getInfo().getName() == code){
+                res.push_back(vertex);
+            }
+        }
+
+    }
     return res;
 }
 

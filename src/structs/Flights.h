@@ -45,14 +45,14 @@ class Flights {
         int _4getNumCountriesCountry(string country);
 
         //3.5
-        vector<Airports> Airports_per_airport(string code);
-        int air_per_air_aux(string code);
+        vector<Airports> _5Airports_per_airport(string code);
+        int _5air_per_air_aux(string code);
 
-        vector<Airports> Cities_per_airport(string code);
-        int cit_per_air_aux(string code);
+        vector<Airports> _5Cities_per_airport(string code, string country);
+        int _5cit_per_air_aux(string code, string country);
 
-        vector<Airports> Countries_per_airport(string code);
-        int count_per_air_aux(string cide);
+        vector<Airports> _5Countries_per_airport(string code);
+        int _5count_per_air_aux(string code);
 
         //3.6
         vector<Airports> _6getVecStopsAirports(string code, int x );
@@ -80,6 +80,7 @@ class Flights {
         list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
         vector<list<AirportStop>> _10Commander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 
+        vector<Vertex<Airports>*> _10AirportsAirport(string code, bool flag);
         vector<Vertex<Airports>*> _10AirportsCity(string city, string pais);
         vector<Vertex<Airports>*> _10AirportsPais(string pais);
 
@@ -87,7 +88,6 @@ class Flights {
         vector<Vertex<Airports>*> _10AirportsCoordRaio(string lat, string log,int raio);
 
         double _10Haversine(double lat_1, double log_1, double lat_2, double log_2);
-
         pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> _10Montador(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 };
 
