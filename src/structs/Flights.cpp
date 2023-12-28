@@ -585,65 +585,141 @@ set<string > Flights::_9Articulations(HashAirports hashAirports) {
     set<string> res;
     stack<Vertex<string>*> s;
     set<Vertex<string>*> inStack;
-    bool first = false;
-    int i = 0;
+    bool first = true;
+    int i = 1;
 
-    for (auto vertex : flights.getVertexSet()) {
-        vertex->setNum(-1);
+    for (auto &vertex : flights.getVertexSet()) {
+        vertex->setVisited(false);
+        vertex->setLow(0);
+        vertex->setNum(0);
     }
 
     for (auto vertex : flights.getVertexSet()) {
-        if(vertex->getNum() == -1) {
-            _9Auxiliar(vertex, s, res, i, hashAirports, inStack, !first);
-            first = true;
+        if(!vertex->isVisited()) {
+            _9Auxiliar(vertex, s, res, i, hashAirports, inStack, first);
+            first = false;
         }
     }
 
     return res;
 }
 
-void Flights::_9Auxiliar(Vertex<string> *vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inStack, bool first = false) {
+void Flights::_9Auxiliar(Vertex<string> *vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inStack, bool first) {
+    vertex->setVisited(true);
     vertex->setNum(i);
     vertex->setLow(i);
 
     i++;
 
+    int children = 0;
+    bool art = false;
+
     s.push(vertex);
     inStack.insert(vertex);
 
-    int children = 0;
+
 
     for(auto &edge : vertex->getAdj()) {
         auto w = edge.getDest();
 
-        if(w->getNum() == -1) {
+        if(!w->isVisited()){
+            children++;
             _9Auxiliar(w, s, res, i, hashAirports, inStack, first);
             vertex->setLow(min(vertex->getLow(), w->getLow()));
 
-            if (!first && w->getLow() >= vertex->getNum()){
-                //auto airport = hashAirports.airportTable.find(vertex->getInfo());
-                res.insert(vertex->getInfo());
+            if(w->getLow() >= vertex->getNum()){
+                art = true;
             }
-
-            children++;
         }
         else{
-            auto it = inStack.find(w);
-            if (it != inStack.end()){
-                vertex->setLow(min(vertex->getLow(), w->getNum()));
-            }
+            vertex->setLow(min(vertex->getLow(), w->getNum()));
         }
     }
 
-    if (first && children > 1) {
-        //auto airport = hashAirports.airportTable.find(vertex->getInfo());
+    if((vertex->getLow() == 1 && children > 1) || (vertex->getNum() > 1 && art)){
         res.insert(vertex->getInfo());
     }
-    s.pop();
-    inStack.erase(vertex);
+
 }
 
 int Flights::_9numArticulations(HashAirports hashAirports) {
     set<string> res = _9Articulations(hashAirports);
     return res.size();
+}
+
+list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<string>* src, Vertex<string>* dest, HashAirports hashAirports,HashAirlines hashAirlines) {
+    list<AirportStop> res;
+    AirportStop t;
+
+    unordered_map<Vertex<string>* , int> paragens;
+    unordered_map<Vertex<string>*, Vertex<string>*> previo;
+
+    queue<Vertex<string>*> fila;
+
+    for(auto& vertex : this->flights.getVertexSet()){
+        paragens[vertex] = -1;
+        previo[vertex] = nullptr;
+    }
+
+    paragens[src] = 0;
+    fila.push(src);
+
+    while(!fila.empty()){
+        auto vertex = fila.front();
+        fila.pop();
+
+        if(vertex->getInfo() == dest->getInfo()){
+            break;
+        }
+
+        for(auto &edge : vertex->getAdj()){
+            auto w = edge.getDest();
+            auto airline = edge.getAirline();
+
+            if(paragens[w] == -1){
+                paragens[w] = paragens[vertex] + 1;
+                previo[w] = vertex;
+
+                fila.push(w);
+            }
+        }
+    }
+
+    bool flag = true;
+    string airport_1;
+    string airport_2;
+    string airline = "";
+
+    for(auto vertex = dest; vertex != nullptr; vertex = previo[vertex]){
+        if(flag){
+            airport_2 = vertex->getInfo();
+            flag = false;
+        }
+        else{
+            airport_1 = vertex->getInfo();
+
+            auto air_1 = hashAirports.airportTable.find(airport_1);
+            auto air_2 = hashAirports.airportTable.find(airport_2);
+
+            for(auto edge : vertex->getAdj()){
+                if(edge.getDest()->getInfo() == airport_2){
+                    airline = edge.getAirline();
+                }
+            }
+
+            auto ail = hashAirlines.airlinesTable.find(airline);
+            t = AirportStop(*air_1, *air_2, *ail);
+            res.push_back(t);
+
+            if(airport_1 == src->getInfo()){
+                break;
+            }
+
+            airport_2 = airport_1;
+        }
+    }
+
+    reverse(res.begin(), res.end());
+
+    return res;
 }

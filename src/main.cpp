@@ -69,5 +69,12 @@ int main() {
     }
      */
 
+
+    auto src = flights.flights.findVertex("THU");
+    auto dest = flights.flights.findVertex("CDG");
+
+    auto g = flights._10BestPathEntreDoisAeroportos(src, dest, hashAirports, hashAirlines);
+
+
     return 0;
 }

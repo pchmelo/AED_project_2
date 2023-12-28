@@ -108,4 +108,18 @@ struct AirportsTrafic{
     }
 };
 
+struct AirportStop{
+    Airports src;
+    Airports dest;
+    Airlines airlines;
+
+    AirportStop(){}
+
+    AirportStop(Airports scr, Airports dest, Airlines airlines){
+        this->src = scr;
+        this->dest = dest;
+        this->airlines = airlines;
+    }
+};
+
 #endif

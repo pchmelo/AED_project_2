@@ -16,25 +16,26 @@ class HashAirports;
 class HashAirlines;
 struct AirportsGreatDistance;
 struct AirportsTrafic;
+struct AirportStop;
 
 class Flights {
     public:
         Graph<string> flights;
         void ReadLines();
 
-        //1
+        //3.1
         int _1numViajens();
 
-        //2
+        //3.2
         int _2numViajensDeAirport(string code);
         int _2numViajensDeAirlines(string code);
 
-        //3
+        //3.3
         int _3getFlightsPerCountry(HashAirports hashAirports, string country);
         int _3getFlightsPerCity(HashAirports hashAirports, string city);
         int _3getFlightsPerCompany(HashAirlines hashAirlines, string airline);
 
-        //4
+        //3.4
         vector<string> _4getVecCountriesAirport(string code, HashAirports hashAirports);
         vector<string> _4getVecCountriesCity(string city, HashAirports hashAirports);
         vector<string> _4getVecCountriesCountry(string country, HashAirports hashAirports);
@@ -43,7 +44,7 @@ class Flights {
         int _4getNumCountriesCity(string city, HashAirports hashAirports);
         int _4getNumCountriesCountry(string country, HashAirports hashAirports);
 
-        //5
+        //3.5
         int Airports_per_airport(string code);
         int air_per_air_aux(Vertex<string>*v);
 
@@ -52,7 +53,8 @@ class Flights {
 
         int Countries_per_airport(string code, HashAirports hashAirports);
         int count_per_air_aux(Vertex<string> *v, list<string> countries, HashAirports hashAirports);
-        //6
+
+        //3.6
         vector<string> _6getVecStopsAirports(string code, int x, HashAirports hashAirports);
         vector<string> _6getVecStopsCities(string code, int x, HashAirports hashAirports);
         vector<string> _6getVecStopsCountries(string code, int x, HashAirports hashAirports);
@@ -61,18 +63,21 @@ class Flights {
         int _6getIntStopsCities(string code, int x, HashAirports hashAirports);
         int _6getIntStopsCountries(string code, int x, HashAirports hashAirports);
 
-        //7
+        //3.7
         list<AirportsGreatDistance> _7getAirportsGreat(HashAirports hashAirports);
 
-        //8
+        //3.8
         vector<AirportsTrafic> _8getTopVecAirports(HashAirports hashAirports);
         vector<AirportsTrafic> _8getTopVecDescAirports(HashAirports hashAirports);
         vector<AirportsTrafic> _8getTopVecAscAirports(HashAirports hashAirports);
 
-        //9
+        //3.9
         set<string> _9Articulations(HashAirports hashAirports);
         void _9Auxiliar(Vertex<string>* vertex, stack<Vertex<string>*> &s, set<string> &res, int &i, HashAirports hashAirports, set<Vertex<string>*> &inS, bool first);
         int _9numArticulations(HashAirports hashAirports);
+
+        //4.1
+        list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<string>* src, Vertex<string>* dest, HashAirports hashAirports, HashAirlines hashAirlines);
 };
 
 #endif //PROJECT_2_FLIGHTS_H
