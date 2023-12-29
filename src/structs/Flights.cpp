@@ -236,8 +236,7 @@ int Flights::_5cit_per_air_aux(string code, string country) {
 
 
 
-vector<Airports>Flights::_5Countries_per_airport(string code)
-    {
+vector<Airports>Flights::_5Countries_per_airport(string code){
         vector<Airports> res;
         set<string> set_t;
 
@@ -264,7 +263,7 @@ vector<Airports>Flights::_5Countries_per_airport(string code)
                 auto it = set_t.find(airport->getInfo().getCountry());
                 if(it == set_t.end()){
                     set_t.insert(airport->getInfo().getCountry());
-                    res.push_back(airport->getInfo().getCountry());
+                    res.push_back(airport->getInfo());
                 }
             }
 
