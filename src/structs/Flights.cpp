@@ -722,7 +722,6 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<Airports>* src,
 
         for(auto &edge : vertex->getAdj()){
             auto w = edge.getDest();
-            auto airline = edge.getAirline();
 
             if(paragens[w] == -1){
                 paragens[w] = paragens[vertex] + 1;
@@ -771,6 +770,97 @@ list<AirportStop> Flights::_10BestPathEntreDoisAeroportos(Vertex<Airports>* src,
 
     return res;
 }
+
+vector<list<AirportStop2>> Flights::_10AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest) {
+    vector<list<AirportStop2>> res;
+    AirportStop2 t;
+
+    unordered_map<Vertex<Airports>* , int> paragens;
+    unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> previo;
+
+    queue<pair<Vertex<Airports>*, int>> fila;
+
+    for(auto& vertex : this->flights.getVertexSet()){
+        paragens[vertex] = 100;
+        previo[vertex] = set<Vertex<Airports>*>();
+    }
+
+    paragens[src] = 0;
+    fila.push(pair(src, 0));
+
+    while(!fila.empty()){
+        auto vertex = fila.front().first;
+        int paragem_atual = fila.front().second;
+        fila.pop();
+
+        if(paragens[vertex] < paragem_atual){
+            continue;
+        }
+
+        for(auto &edge : vertex->getAdj()){
+            auto w = edge.getDest();
+            int paragem_nova = paragens[vertex] + 1;
+
+            if(paragens[w] > paragem_nova){
+                paragens[w] = paragem_nova;
+                previo[w] = {vertex};
+                fila.push(pair(w, paragem_nova));
+
+            }
+            else if (paragens[w] == paragem_nova){
+                previo[w].insert(vertex);
+            }
+        }
+    }
+    bool flag = true;
+
+    list<AirportStop2> caminho_atual;
+    _10AuxReconstructor(src, dest, previo, caminho_atual, res, t, flag);
+
+    for(auto& p : res){
+        p.pop_front();
+    }
+
+    return res;
+}
+
+void Flights::_10AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,unordered_map<Vertex<Airports> *, set<Vertex<Airports> *>> &previo,list<AirportStop2> &caminhoAtual, vector<list<AirportStop2>> &res, AirportStop2 &t, bool &flag) {
+    if(flag){
+        t.setB(dest);
+        caminhoAtual.push_back(t);
+        flag = false;
+    }
+    else{
+        Airlines airlines;
+
+        for(auto edge : dest->getAdj()){
+            if(edge.getDest()->getInfo().getCode() == caminhoAtual.back().dest->getInfo().getCode()){
+                airlines = edge.getAirline();
+                break;
+            }
+        }
+
+        caminhoAtual.back().airlines = airlines;
+        caminhoAtual.back().src = dest;
+
+        t.setB(dest);
+        caminhoAtual.push_back(t);
+    }
+
+    if(dest->getInfo().getCode() == src->getInfo().getCode()){
+        res.push_back(caminhoAtual);
+        reverse(res.back().begin(), res.back().end());
+    }
+    else{
+        set<Vertex<Airports>*> &prevs = previo.at(dest);
+        for(Vertex<Airports>* prev : prevs){
+            _10AuxReconstructor(src, prev, previo, caminhoAtual, res, t, flag);
+        }
+    }
+
+    caminhoAtual.pop_back();
+}
+
 
 vector<list<AirportStop>> Flights::_10Commander(vector<Vertex<Airports> *> src, vector<Vertex<Airports> *> dest) {
     bool flag = true;

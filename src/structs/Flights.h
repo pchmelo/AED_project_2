@@ -17,6 +17,7 @@ class HashAirlines;
 struct AirportsGreatDistance;
 struct AirportsTrafic;
 struct AirportStop;
+struct AirportStop2;
 
 class Flights {
     public:
@@ -89,6 +90,9 @@ class Flights {
 
         double _10Haversine(double lat_1, double log_1, double lat_2, double log_2);
         pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> _10Montador(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
+
+        vector<list<AirportStop2>> _10AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
+        void _10AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, list<AirportStop2> &caminhoAtual, vector<list<AirportStop2>> &res, AirportStop2 &t, bool &flag);
 };
 
 #endif //PROJECT_2_FLIGHTS_H

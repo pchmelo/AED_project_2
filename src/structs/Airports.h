@@ -120,6 +120,47 @@ struct AirportStop{
         this->dest = dest;
         this->airlines = airlines;
     }
+
+    void setA(Airports a){
+        this->src = a;
+    }
+
+    void setB(Airports b){
+        this->dest = b;
+    }
+
+    void Airline(Airlines airlines1){
+        this->airlines = airlines1;
+    }
+
 };
+
+struct AirportStop2{
+    Vertex<Airports>* src;
+    Vertex<Airports>* dest;
+    Airlines airlines;
+
+    AirportStop2(){}
+
+    AirportStop2(Vertex<Airports>* scr, Vertex<Airports>* dest, Airlines airlines){
+        this->src = scr;
+        this->dest = dest;
+        this->airlines = airlines;
+    }
+
+    void setA(Vertex<Airports>* a){
+        this->src = a;
+    }
+
+    void setB(Vertex<Airports>* b){
+        this->dest = b;
+    }
+
+    void Airline(Airlines airlines1){
+        this->airlines = airlines1;
+    }
+
+};
+
 
 #endif
