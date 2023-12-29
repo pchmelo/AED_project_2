@@ -1036,6 +1036,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         break;
                     }
 
+                    //perguntar se ele quer todas as opções ou apenas uma
+
                     pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
                     auto stops = flights._10Commander(mount.first, mount.second);
 
@@ -1049,6 +1051,55 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                     }
 
                 } else if (answer == "y" || answer == "Y") {
+                    //fazer aquilo que esta anterior com o src e dest
+
+                    //qual filtro desejas adicionar
+                    //1-whitelist airlines
+                    //quais airlines desejas usar pode entregar o nome ou o codigo da airline
+                    //preencher uma lista com as airlines
+                    //no final perguntar se ele quer adicionar o filtro 3
+
+                    //2-blacklist airlines
+                    //quais airlines deseja não usar pode entregar o nome ou o codigo da airline
+                    //preencher uma lista com as airlines
+                    //no final perguntar se ele quer adicionar o filtro 3
+
+                    //3-Minimo numero de airlines
+                    //perguntar se ele quer adicionar o filtro 2 ou 3
+
+
+                    auto scr = flights.flights.findVertex(Airports("THU"));
+                    auto dest = flights.flights.findVertex(Airports("CDG"));
+                    set<string> lista_air;
+                    int input = 0;
+                    int num = 0;
+
+                    //se input = 0, sem list filter
+                    //se input = 1, com whitelist filter
+                    //se input = 2, com blacklist filter
+
+                    auto res = flights._11AllBestPathEntreDoisAeroportos(scr, dest, lista_air, input);
+
+                    //caso chame o filtro minimo
+                    auto fim = flights._11FilterMinimizer(res, num);
+
+                    int i = 1;
+
+                    //se ele selecionou o minimizer, o res = fim
+                    for(auto apoio : res){
+                        for(auto air : apoio){
+                            cout << i << "º opção\n";
+                            cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
+                            cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                            cout << air.airlines.front().getCode() << ", " << air.airlines.front().getName() << ", " << air.airlines.front().getCallSign() << ", " << air.airlines.front().getCountry() << endl;
+                            cout<<endl;
+                        }
+                    }
+                    cout << "---------------------\n";
+                    cout << "Existem " << res.size() << " opcoes\n";
+                    //se selecionou a opção de minimizer mostrar o seguinte cout
+                    cout << "As opcoes mostradas usam " << num << " companhias diferentes\n";
+
 
 
                 } else {
