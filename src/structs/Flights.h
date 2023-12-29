@@ -78,8 +78,8 @@ class Flights {
         int _9numArticulations( );
 
         //4.all
-        list<AirportStop> _10BestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
-        vector<list<AirportStop>> _10Commander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
+        list<AirportStop2> _10BestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
+        vector<list<AirportStop2>> _10Commander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 
         vector<Vertex<Airports>*> _10AirportsAirport(string code, bool flag);
         vector<Vertex<Airports>*> _10AirportsCity(string city, string pais);
@@ -91,8 +91,14 @@ class Flights {
         double _10Haversine(double lat_1, double log_1, double lat_2, double log_2);
         pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> _10Montador(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 
-        vector<list<AirportStop2>> _10AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
-        void _10AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, list<AirportStop2> &caminhoAtual, vector<list<AirportStop2>> &res, AirportStop2 &t, bool &flag);
+        //5.all
+        vector<vector<AirportStop2>> _11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
+        void _11AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag);
+        vector<vector<AirportStop2>> _11AllCommander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
+
+        vector<vector<AirportStop>> _11Separator(vector<vector<AirportStop2>> input);
+        vector<vector<AirportStop>> _11FilterMinimizer(vector<vector<AirportStop2>> input, int &num);
+
 };
 
 #endif //PROJECT_2_FLIGHTS_H

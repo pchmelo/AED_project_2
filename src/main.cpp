@@ -15,10 +15,13 @@ int main() {
 
     flights.ReadLines(hashAirlines, hashAirports);
 
-    auto src = flights.flights.findVertex(Airports("THU"));
-    auto dest = flights.flights.findVertex(Airports("CDG"));
+    auto src = flights.flights.findVertex(Airports("PDL"));
+    auto dest = flights.flights.findVertex(Airports("THU"));
 
-    auto res = flights._10AllBestPathEntreDoisAeroportos(src, dest);
+    int num = 0;
+
+    auto res = flights._11AllBestPathEntreDoisAeroportos(src, dest);
+    auto teste = flights._11FilterMinimizer(res, num);
 
     //Menu::Terminal(flights, hashAirports, hashAirlines);
     return 0;
