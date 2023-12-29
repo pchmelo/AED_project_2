@@ -60,11 +60,11 @@ int main() {
 
 
    std::cout << "------------------------" << "\n";
-    res = flights.air_per_air_aux("CDG");
+    res = flights._5air_per_air_aux("CDG");
     std::cout << res << "\n";
-    res = flights.cit_per_air_aux("CDG");
+    res = flights._5air_per_air_aux("CDG");
     std::cout << res << "\n";
-    res = flights.count_per_air_aux("CDG");
+    res = flights._5count_per_air_aux("CDG");
     std::cout << res << "\n";
 
 

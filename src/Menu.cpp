@@ -9,8 +9,6 @@ using namespace std;
 
 int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hashAirlines) {
 
-    int cap;
-
     cout << endl;
     cout << "\033[1;34m ______    __        __    ______    __   __   ________         _______           _______    ______    _____     __       ___\033[0m";
     cout << endl;
@@ -39,9 +37,15 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
     string code;
     int code_aux;
-    /*list<AirportsGreatDistance> aux;
-    vector<AirportsTrafic> frango;
-    set<Airports>*/
+    int sec_code_aux;
+    int tr_code_aux;
+    string country;
+    string answer;
+    vector<Airports> vec;
+    list<AirportsGreatDistance> grt;
+    vector<AirportsTrafic> top;
+    set<Airports> port;
+    bool check = false;
 
     while (true) {
 
@@ -57,7 +61,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                 cout << "\033[1;36m[ 7 ]\033[0m" << " Flight trip(s) with the greatest number of stops in between them" << endl;
                 cout << "\033[1;36m[ 8 ]\033[0m" << " Identify the top-k airport with the greatest number of flights" << endl;
                 cout << "\033[1;36m[ 9 ]\033[0m" << " Identify the airports that are essential to the network’s circulation capability" << endl;
-                cout << "\033[1;31m[ 0 ]\033[0m" << " Go back" << endl;
+                cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
                 cout << endl;
 
                 cout << "\033[1;34mDecision: \033[0m";
@@ -67,8 +71,15 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                 switch (decision) {
                     case 1:
 
-                        cout<<"Numero de airports da rede "<< hashAirports._1numAirports()<<endl;
-                        cout<<"Numero de viagens da rede "<< flights._1numViajens()<<endl;
+                        code_aux = hashAirports._1numAirports();
+                        sec_code_aux = flights._1numViajens();
+
+                        cout << "\033[1;32mThere are a total of \033[0m" << code_aux << "\033[1;32m airports on the network\033[0m" << endl;
+                        cout << "\033[1;32mThere are a total of \033[0m" << sec_code_aux << "\033[1;32m available flights on the network\033[0m" << endl;
+
+                        if (code_aux == 0 || sec_code_aux == 0) {
+                            cout << "\033[1;33mThere is a possibility that the input given was misspelled and thus giving a wrong output\033[0m" << endl;
+                        }
 
                         break;
 
@@ -78,18 +89,22 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         cin >> code;
                         cout << endl;
 
-                        cout << flights._2numViajensDeAirlines(code) << endl;
-                        cout << flights._2numViajensDeAirport(code) << endl;
+                        code_aux = flights._2numViajensDeAirport(code);
+                        sec_code_aux = flights._2numViajensDeAirlines(code);
 
-                        /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_2numViajensDeAirport(code) << "\033[1;32m flights from \033[0m" << Flights::_2numViajensDeAirlines(code) << "\033[1;32m different airlines in \033[0m" << code << endl;*/
+                        cout << "\033[1;32mThere are a total of \033[0m" << code_aux << "\033[1;32m flights from \033[0m" << sec_code_aux << "\033[1;32m different airlines in airport \033[0m" << code << endl;
+
+                        if (code_aux == 0 || sec_code_aux == 0) {
+                            cout << "\033[1;33mThere is a possibility that the input given was misspelled and thus giving a wrong output\033[0m" << endl;
+                        }
 
                         break;
 
                     case 3:
-                        cout << "\033[1;33m[ 1 ]\033[0m" << " City" << endl;
-                        cout << "\033[1;33m[ 2 ]\033[0m" << " Airline" << endl;
+                        cout << "\033[1;33m[ 1 ]\033[0m" << " Airline" << endl;
+                        cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
                         cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
-                        cout << "\033[1;31m[ 0 ]\033[0m" << " Go back" << endl;
+                        cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
                         cout << endl;
 
                         cout << "\033[1;34mDecision: \033[0m";
@@ -99,28 +114,54 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         switch (decision) {
                             case 1:
 
-                                cout << "\033[1;34mWhich city? \033[0m";
+                                cout << "\033[1;34mWhich airline? \033[0m";
                                 cin >> code;
                                 cout << endl;
 
-                                cout << flights._3getFlightsPerCompany(code);
-                                /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCity(code) << "\033[1;32m flights in \033[0m" << code << endl;*/
+                                code_aux = flights._3getFlightsPerCompany(code);
+
+                                cout << "\033[1;32mThere are a total of \033[0m" << code_aux << "\033[1;32m flights from the airline \033[0m" << code << endl;
+
+                                if (code_aux == 0) {
+                                    cout << "\033[1;33mThere is a possibility that the input given was misspelled and thus giving a wrong output\033[0m" << endl;
+                                }
 
                                 break;
 
                             case 2:
 
-                                //especificar o pais
-
-                                cout << "\033[1;34mWhich airline? \033[0m";
+                                cout << "\033[1;34mWhich city? \033[0m";
                                 cin >> code;
                                 cout << endl;
-                                string country = "Portugal";
 
-                                cout << flights._3getFlightsPerCity(code, "k");
-                                cout << flights._3getFlightsPerCity(code, country);
+                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
 
-                                /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCompany(code) << "\033[1;32m flights from the airline \033[0m" << code << endl;*/
+                                if (answer == "y" || answer == "Y") {
+
+                                    cout << "\033[1;34mWhich country? \033[0m";
+                                    cin >> country;
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    country = "k";
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                code_aux = flights._3getFlightsPerCity(code, country);
+
+                                cout << "\033[1;32mThere are a total of \033[0m" << code_aux << "\033[1;32m flights in \033[0m" << code << endl;
+
+                                if (code_aux == 0) {
+                                    cout << "\033[1;33mThere is a possibility that the input given was misspelled and thus giving a wrong output\033[0m" << endl;
+                                }
 
                                 break;
 
@@ -130,9 +171,13 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> code;
                                 cout << endl;
 
-                                cout << flights._3getFlightsPerCountry(code);
+                                code_aux = flights._3getFlightsPerCountry(code);
 
-                                /*cout << "\033[1;32mThere are a total of \033[0m" << Flights::_3getFlightsPerCountry(code) << "\033[1;32m flights in \033[0m" << code << endl;*/
+                                cout << "\033[1;32mThere are a total of \033[0m" << code_aux << "\033[1;32m flights in \033[0m" << code << endl;
+
+                                if (code_aux == 0) {
+                                    cout << "\033[1;33mThere is a possibility that the input given was misspelled and thus giving a wrong output\033[0m" << endl;
+                                }
 
                                 break;
 
@@ -143,6 +188,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             default:
 
                                 cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                country = "k";
                                 break;
                         }
 
@@ -150,10 +196,10 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                     case 4:
 
-                        cout << "\033[1;33m[ 1 ]\033[0m" << " City" << endl;
-                        cout << "\033[1;33m[ 2 ]\033[0m" << " Airport" << endl;
+                        cout << "\033[1;33m[ 1 ]\033[0m" << " Airport" << endl;
+                        cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
                         cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
-                        cout << "\033[1;31m[ 0 ]\033[0m" << " Go back" << endl;
+                        cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
                         cout << endl;
 
                         cout << "\033[1;34mDecision: \033[0m";
@@ -162,35 +208,92 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         switch (decision) {
                             case 1:
-                                //aparecer se ele quer que imprima a lista ou não
+
+                                cout << "\033[1;34mWhich airport? \033[0m";
+                                cin >> code;
+                                cout << endl;
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                vec = flights._4getVecCountriesAirport(code);
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCountry() << endl; //Pode haver países repetidos, a 4 na descrição do projeto é mostrar países não aeroportos
+                                    }
+                                    cout <<endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << vec.size() << endl;
+
+                                break;
+
+                            case 2:
 
                                 cout << "\033[1;34mWhich city? \033[0m";
                                 cin >> code;
                                 cout << endl;
 
-                                auto res = flights._4getVecCountriesAirport(code);
-                                for(auto air : res){
-                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                                }
-
-                                cout << "------------------------------\n";
-                                cout << "Total: " << res.size() << endl;
-
-                                /*cout << Flights::_4getNumCountriesCity(code) << "\033[1;32m different countries flown to from city \033[0m" << code << endl;*/
-
-                                break;
-
-                            case 2:
-                                cout << "\033[1;34mWhich airport? \033[0m";
-                                cin >> code;
+                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
                                 cout << endl;
 
-                                res = flights._4getVecCountriesCity(code, "k");
-                                for(auto air : res){
-                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                                if (answer == "y" || answer == "Y") {
+
+                                    cout << "\033[1;34mWhich country? \033[0m";
+                                    cin >> country;
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    country = "k";
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                    country = "k";
+                                    cout << endl;
+
                                 }
 
-                                /*cout << Flights::_4getNumCountriesAirport(code) << "\033[1;32m different countries flown to from airport \033[0m" << code << endl;*/
+                                vec = flights._4getVecCountriesCity(code, country);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCountry() << endl; //Pode haver países repetidos, a 4 na descrição do projeto é mostrar países não aeroportos
+                                    }
+                                    cout <<endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << vec.size() << endl;
 
                                 break;
 
@@ -200,12 +303,31 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> code;
                                 cout << endl;
 
-                                res = flights._4getVecCountriesCountry(code);
-                                for(auto air : res){
-                                    cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                                vec = flights._4getVecCountriesCountry(code);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCountry() << endl; //Pode haver países repetidos, a 4 na descrição do projeto é mostrar países não aeroportos
+                                    }
+                                    cout <<endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
                                 }
 
-                                /*cout << Flights::_4getNumCountriesCountry(code) << "\033[1;32m different countries flown to from country \033[0m" << code << endl;*/
+                                cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << vec.size() << endl;
 
                                 break;
 
@@ -222,118 +344,368 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         break;
 
                     case 5:
-                        //separar como no 4
-                        cout << "\033[1;34mWhich airport? \033[0m";
+
+                        cout << "\033[1;34mWhich airport as origin? \033[0m";
                         cin >> code;
                         cout << endl;
 
-                        auto res = flights._5Airports_per_airport(code);
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        cout << "\033[1;34mWhich elements would you like to see as available destinations? \033[0m" << endl;
+                        cout << "\033[1;33m[ 1 ]\033[0m" << " Airports" << endl;
+                        cout << "\033[1;33m[ 2 ]\033[0m" << " Cities" << endl;
+                        cout << "\033[1;33m[ 3 ]\033[0m" << " Countries" << endl;
+                        cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                        cout << endl;
 
-                        res = flights._5Cities_per_airport(code, "k");
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        cout << "\033[1;34mDecision: \033[0m";
+                        cin >> decision;
+                        cout << endl;
 
-                        res = flights._5Countries_per_airport(code);
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        switch (decision) {
+                            case 1:
 
-                        /*cout << "\033[1;32mThere are \033[0m" << Flights::Airports_per_airport(code) << "\033[1;32m airports, \033[0m" << Flights::Cities_per_airport(code) << "\033[1;32m cities and \033[0m" << Flights::Countries_per_airport(code) << "\033[1;32m countries available as destinations from airport \033[0m" << code << endl;*/
+                                cout << "\033[1;34mWould you like to be presented with a list of the available airports of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                vec = flights._5Airports_per_airport(code);
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getName() << "\033[1;32m airport of code \033[0m" << air.getCode() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available airports of destination is \033[0m" << vec.size() << endl << endl;
+
+                                break;
+
+                            case 2:
+
+                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    cout << "\033[1;34mWhich country? \033[0m";
+                                    cin >> country;
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    country = "k";
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                    country = "k";
+                                    cout << endl;
+
+                                }
+
+                                vec = flights._5Cities_per_airport(code, country);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the available cities of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCity() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available cities of destination is \033[0m" << vec.size() << endl << endl;
+
+                                break;
+
+                            case 3:
+
+                                vec = flights._5Countries_per_airport(code);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the available countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCountry() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available countries of destination is \033[0m" << vec.size() << endl << endl;
+
+                                break;
+
+                            case 0:
+
+                                break;
+
+                            default:
+
+                                cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                break;
+                        }
 
                         break;
 
                     case 6:
-                        //separar como no 4 e 5
-                        cout << "\033[1;34mWhich airport? \033[0m";
+
+                        cout << "\033[1;34mWhich airport as origin? \033[0m";
                         cin >> code;
                         cout << endl;
+
                         cout << "\033[1;34mHow many lay-overs? \033[0m";
                         cin >> code_aux;
                         cout << endl;
 
-                        res = flights._6getVecStopsAirports(code, code_aux);
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        cout << "\033[1;34mWhich elements would you like to see as available destinations? \033[0m";
+                        cout << "\033[1;33m[ 1 ]\033[0m" << " Airports" << endl;
+                        cout << "\033[1;33m[ 2 ]\033[0m" << " Cities" << endl;
+                        cout << "\033[1;33m[ 3 ]\033[0m" << " Countries" << endl;
+                        cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                        cout << endl;
 
-                        res = flights._6getVecStopsCities(code, code_aux, "k");
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        cout << "\033[1;34mDecision: \033[0m";
+                        cin >> decision;
+                        cout << endl;
 
-                        res = flights._6getVecStopsCountries(code, code_aux);
-                        for(auto air : res){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
-                        }
+                        switch (decision) {
+                            case 1:
 
-                        /*cout << "\033[1;32mThere are \033[0m" << Flights::_6getIntStopsAirports(code, code_aux    ) << "\033[1;32m airports, \033[0m" << Flights::_6getIntStopsCities(code, code_aux) << "\033[1;32m cities and \033[0m" << Flights::_6getIntStopsCountries(code, code_aux) << "\033[1;32m countries available as destinations from airport \033[0m" << code << "\033[1;32m in \033[0m" << code_aux << "\033[1;32m lay-overs\033[0m" << endl;*/
+                                cout << "\033[1;34mWould you like to be presented with a list of the available airports of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                vec = flights._6getVecStopsAirports(code, code_aux);
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getName() << "\033[1;32m airport of code \033[0m" << air.getCode() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available airports of destination is \033[0m" << vec.size() << endl;
+
+                                break;
+
+                            case 2:
+
+                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    cout << "\033[1;34mWhich country? \033[0m";
+                                    cin >> country;
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    country = "k";
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                    country = "k";
+                                    cout << endl;
+
+                                }
+
+                                vec = flights._6getVecStopsCities(code, code_aux, country);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the available cities of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCity() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available cities of destination is \033[0m" << vec.size() << endl;
+
+                                break;
+
+                            case 3:
+
+                                vec = flights._6getVecStopsCountries(code, code_aux);
+
+                                cout << "\033[1;34mWould you like to be presented with a list of the available countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                                cin >> answer;
+                                cout << endl;
+
+                                if (answer == "y" || answer == "Y") {
+
+                                    for(auto air : vec){
+                                        cout << air.getCountry() << endl;
+                                    }
+                                    cout << endl;
+
+                                } else if (answer == "n" || answer == "N") {
+
+                                    continue;
+
+                                } else {
+
+                                    cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
+                                    cout << endl;
+
+                                }
+
+                                cout << "\033[1;32mTotal number of available countries of destination is \033[0m" << vec.size() << endl;
+
+                                break;
+
+                            case 0:
+
+                                break;
+
+                            default:
+
+                                cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                break;
+                        }
 
                         break;
 
                     case 7:
 
-                        list<AirportsGreatDistance> test = flights._7getAirportsGreat();
-                        for(auto air : test){
-                            cout << air.airport_source.getCode() << ", " << air.airport_source.getName() << ", " << air.airport_source.getCity() << ", " << air.airport_source.getCountry() << endl;
-                            cout << air.airport_dest.getCode() << ", " << air.airport_dest.getName() << ", " << air.airport_dest.getCity() << ", " << air.airport_dest.getCountry() << endl;
-                            cout << "-------------------\n";
-                            cout << air.distance;
+                        grt = flights._7getAirportsGreat();
+
+                        for(auto air : grt){
+
+                            cout << "\033[1;32mFrom airport \033[0m" << air.airport_source.getName() << "\033[1;32m of code \033[0m" << air.airport_source.getCode() << "\033[1;32m in \033[0m" << air.airport_source.getCity() << "\033[1;32m, \033[0m" << air.airport_source.getCountry() << endl;
+                            cout << "\033[1;32mTo airport \033[0m" << air.airport_dest.getName() << "\033[1;32m of code \033[0m" << air.airport_dest.getCode() << "\033[1;32m in \033[0m" << air.airport_dest.getCity() << "\033[1;32m, \033[0m" << air.airport_dest.getCountry() << endl;
+
                         }
 
-                        /*aux = _7getAirportsGreat();
-                        while (!aux.empty()) {
-                            cout << "\033[1;32mTrip from \033[0m" << aux[0].first << "\033[1;32m to \033[0m" << aux[0].second << endl;
-                            aux.remove(aux[0]);
-                        }*/
+                        cout << endl;
+                        cout << "\033[1;32mWith a total distance of \033[0m" << code_aux << endl;
 
                         break;
 
                     case 8:
 
-                        //perguntar se quer o top em ordem ascendete ou descendente
-
                         cout << "\033[1;34mHow many airports do you wish to be presented with? \033[0m";
                         cin >> code_aux;
                         cout << endl;
 
-                        vector<AirportsTrafic> t = flights._8getTopVecDescAirports();
+                        cout << "\033[1;34mWould you like the top to be organized in ascending or descending order? \033[0m";
+                        cout << "\033[1;33m[ 1 ]\033[0m" << " Ascending" << endl;
+                        cout << "\033[1;33m[ 2 ]\033[0m" << " Descending" << endl;
+                        cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                        cin >> decision;
+                        cout << endl;
 
-                        for(int i = 0; i < code_aux; i++){
-                            cout << t.at(i).trafic.first.getCode() << ", " << t.at(i).trafic.first.getName() << ", " << t.at(i).trafic.first.getCity() << ", " << t.at(i).trafic.first.getCountry() << endl;
-                            cout << t.at(i).trafic.second << endl;
+                        if (decision == 1) {
+                            top = flights._8getTopVecAscAirports();
+                        } else if (decision == 2) {
+                            top = flights._8getTopVecDescAirports();
+                        } else if (decision == 0) {
+                            break;
+                        } else {
+                            cout << "\033[1;31mUnrecognised option - Continuing with ascending order\033[0m";
+                            top = flights._8getTopVecAscAirports();
+                            cout << endl;
                         }
-
-                        t = flights._8getTopVecAscAirports();
-
-                        for(int i = 0; i < code_aux; i++){
-                            cout << t.at(i).trafic.first.getCode() << ", " << t.at(i).trafic.first.getName() << ", " << t.at(i).trafic.first.getCity() << ", " << t.at(i).trafic.first.getCountry() << endl;
-                            cout << t.at(i).trafic.second << endl;
-                        }
-
-                        /*frango = _8getTopVecAirports();
 
                         for (int i = 0; i < code_aux; i++) {
-                            cout << frango[i] << endl;
-                        }*/
+                            cout << top.at(i).trafic.first.getName() << "\033[1;32m airport of code \033[0m" << top.at(i).trafic.first.getCode() << endl;
+                            cout << "\033[1;32mWith \033[0m" << top.at(i).trafic.second << "\033[1;32m flights\033[0m" << endl;
+                        }
 
                         break;
 
                     case 9:
 
-                        //imprimir o set de aeroportos e perguntar se ele so quer o numero<3
+                        cout << "\033[1;34mWould you like to have the total number of airports as well? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                        cin >> answer;
+                        cout << endl;
 
-                        auto y = flights._9Articulations();
+                        port = flights._9Articulations();
 
-                        for(auto air: y){
-                            cout << air.getCode() << ", " << air.getName() << ", " << air.getCity() << ", " << air.getCountry() << endl;
+                        for (auto air: port) {
+                            cout << "\033[1;32mAirport \033[0m" << air.getName() << "\033[1;32m of code \033[0m" << air.getCode() << "\033[1;32m in \033[0m" << air.getCity() << "\033[1;32m, \033[0m" << air.getCountry() << endl;
                         }
+                        cout << endl;
 
-                        cout << "--------\n";
-                        cout << y.size() << endl;
+                        if (answer == "y" || answer == "Y") {
+
+                            cout << "\033[1;32mTotal number of airports is \033[0m" << port.size() << endl;
+
+                        } else if (answer == "n" || answer == "N") {
+
+                            continue;
+
+                        } else {
+
+                            cout << "\033[1;31mUnrecognised option - No number presented\033[0m";
+                            cout << endl;
+
+                        }
 
                         break;
 
@@ -351,73 +723,334 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
             case 2:
 
-                cout << "\033[1;33m[ 1 ]\033[0m" << " Without filters" << endl;
-                cout << "\033[1;33m[ 2 ]\033[0m" << " With filters" << endl;
+                cout << "\033[1;34mWould you like to use filters for the search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                cin >> answer;
                 cout << endl;
 
-                cout << "\033[1;34mDecision: \033[0m";
-                cin >> decision;
-                cout << endl;
+                if (answer == "n" || answer == "N") {
 
-                switch (decision) {
-                    case 1:
-                        vector<Vertex<Airports>*> src;
-                        vector<Vertex<Airports>*> dest;
+                    vector<Vertex<Airports> *> src;
+                    vector<Vertex<Airports> *> dest;
 
-                        //Decedir a forma de começo
-                        //1- receber o aeroporto, depois perguntar se quer code ou name
-                        src = flights._10AirportsAirport("OPO", true);
+                    cout << "\033[1;34mWhat information would you like to give as origin? \033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " Airport" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
+                    cout << "\033[1;33m[ 4 ]\033[0m" << " Coordinates" << endl;
+                    cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                    cout << endl;
 
-                        //2- receber cidade, depois se quer especificar o pais da cidade escolhida
-                        src = flights._10AirportsCity("Porto", "k");
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> decision;
+                    cout << endl;
 
-                        //3- receber pais
-                        src = flights._10AirportsPais("Portugal");
+                    switch (decision) {
+                        case 1:
 
-                        //4- receber coordenadas, string lat e string long, de seguida vai perguntar se quer raio ou nao, se quiser perguntar pelo raio
-                        src = flights._10AirportsCoord("-13920,2190812093", "281,1291236");
-                        src = flights._10AirportsCoordRaio("-13920,2190812093", "281,1291236", 10);
+                            cout << "\033[1;34mWill you be giving the airport code or name? \033[0m" << endl;
+                            cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                            cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                            cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                            cout << endl;
 
-                        //5- back
+                            cout << "\033[1;34mDecision: \033[0m";
+                            cin >> decision;
+                            cout << endl;
 
+                            switch (decision) {
+                                case 1:
 
-                        //Decedir a forma de fim
-                        //1- receber o aeroporto, depois perguntar se quer code ou name
-                        dest = flights._10AirportsAirport("OPO", true);
+                                    cout << "\033[1;34mWhich code? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
 
-                        //2- receber cidade, depois se quer especificar o pais da cidade escolhida
-                        dest = flights._10AirportsCity("Porto", "k");
+                                    src = flights._10AirportsAirport(code, true);
 
-                        //3- receber pais
-                        dest = flights._10AirportsPais("Portugal");
+                                    break;
 
-                        //4- receber coordenadas, string lat e string long, de seguida vai perguntar se quer raio ou nao, se quiser perguntar pelo raio
-                        //5- back
+                                case 2:
 
-                        //depois destes dois passos fazer o q vem asseguir
+                                    cout << "\033[1;34mWhich name? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
 
-                        dest = flights._10AirportsCoord("-13920,2190812093", "281,1291236");
-                        dest = flights._10AirportsCoordRaio("-13920,2190812093", "281,1291236", 10);
+                                    src = flights._10AirportsAirport(code, false);
 
-                        pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> p = flights._10Montador(src, dest);
-                        auto l = flights._10Commander(p.first, p.second);
+                                    break;
 
+                                case 0:
 
-                        for(auto k : l){
-                            for(auto air : k){
-                                cout << air.src.getCode() << ", " << air.src.getName() << ", " << air.src.getCity() << ", " << air.src.getCountry() << endl;
+                                    break;
+
+                                default:
+
+                                    cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                    break;
+                            }
+
+                            break;
+
+                        case 2:
+
+                            cout << "\033[1;34mWhich city? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mWhich country? \033[0m";
+                                cin >> country;
+                                cout << endl;
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                country = "k";
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                country = "k";
+                                cout << endl;
 
                             }
+
+                            src = flights._10AirportsCity(code, country);
+
+                            break;
+
+                        case 3:
+
+                            cout << "\033[1;34mWhich country? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            src = flights._10AirportsPais(code);
+
+                            break;
+
+                        case 4:
+
+                            cout << "\033[1;34mWhich latitude? \033[0m";
+                            cin >> code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWhich longitude? \033[0m";
+                            cin >> sec_code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mHow long of a radius in kilometers? \033[0m";
+                                cin >> tr_code_aux;
+                                cout << endl;
+
+                                src = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
+                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                cout << endl;
+
+                            }
+
+                            break;
+
+                        case 0:
+
+                            check = true;
+                            break;
+
+                        default:
+
+                            cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                            break;
+                    }
+
+                    if (check) {
+                        check = false;
+                        break;
+                    }
+
+                    cout << "\033[1;34mWhat information would you like to give as destination? \033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " Airport" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
+                    cout << "\033[1;33m[ 4 ]\033[0m" << " Coordinates" << endl;
+                    cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                    cout << endl;
+
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> decision;
+                    cout << endl;
+
+                    switch (decision) {
+                        case 1:
+
+                            cout << "\033[1;34mWill you be giving the airport code or name? \033[0m" << endl;
+                            cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                            cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                            cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                            cout << endl;
+
+                            cout << "\033[1;34mDecision: \033[0m";
+                            cin >> decision;
+                            cout << endl;
+
+                            switch (decision) {
+                                case 1:
+
+                                    cout << "\033[1;34mWhich code? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    dest = flights._10AirportsAirport(code, true);
+
+                                    break;
+
+                                case 2:
+
+                                    cout << "\033[1;34mWhich name? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    dest = flights._10AirportsAirport(code, false);
+
+                                    break;
+
+                                case 0:
+
+                                    break;
+
+                                default:
+
+                                    cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                    break;
+                            }
+
+                            break;
+
+                        case 2:
+
+                            cout << "\033[1;34mWhich city? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mWhich country? \033[0m";
+                                cin >> country;
+                                cout << endl;
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                country = "k";
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                country = "k";
+                                cout << endl;
+
+                            }
+
+                            dest = flights._10AirportsCity(code, country);
+
+                            break;
+
+                        case 3:
+
+                            cout << "\033[1;34mWhich country? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            dest = flights._10AirportsPais(code);
+
+                            break;
+
+                        case 4:
+
+                            cout << "\033[1;34mWhich latitude? \033[0m";
+                            cin >> code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWhich longitude? \033[0m";
+                            cin >> sec_code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mHow long of a radius in kilometers? \033[0m";
+                                cin >> tr_code_aux;
+                                cout << endl;
+
+                                dest = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
+                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                cout << endl;
+
+                            }
+
+                            break;
+
+                        case 0:
+
+                            check = true;
+                            break;
+
+                        default:
+
+                            cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                            break;
+                    }
+
+                    if (check) {
+                        check = false;
+                        break;
+                    }
+
+                    pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
+                    auto stops = flights._10Commander(mount.first, mount.second);
+
+                    for (auto lsts: stops) {
+                        for (auto air: lsts) {
+                            cout << "\033[1;32mFrom airport \033[0m" << air.src.getName() << "\033[1;32m of code \033[0m" << air.src.getCode() << "\033[1;32m in \033[0m" << air.src.getCity() << "\033[1;32m, \033[0m" << air.src.getCountry() << endl;
+                            cout << "\033[1;32mTo airport \033[0m" << air.dest.getName() << "\033[1;32m of code \033[0m" << air.dest.getCode() << "\033[1;32m in \033[0m" << air.dest.getCity() << "\033[1;32m, \033[0m" << air.dest.getCountry() << endl;
                         }
+                    }
+
+                } else if (answer == "y" || answer == "Y") {
 
 
-                        break;
-
-                    case 2:
-
-
-                        break;
-
+                } else {
+                    cout << "\033[0;31mUnrecognized option - Going back\033[0m" << endl;
                 }
 
                 break;
