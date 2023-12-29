@@ -1041,8 +1041,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                     for (auto lsts: stops) {
                         for (auto air: lsts) {
-                            cout << "\033[1;32mFrom airport \033[0m" << air.src->getName() << "\033[1;32m of code \033[0m" << air.src.getCode() << "\033[1;32m in \033[0m" << air.src.getCity() << "\033[1;32m, \033[0m" << air.src.getCountry() << endl;
-                            cout << "\033[1;32mTo airport \033[0m" << air.dest->getName() << "\033[1;32m of code \033[0m" << air.dest.getCode() << "\033[1;32m in \033[0m" << air.dest.getCity() << "\033[1;32m, \033[0m" << air.dest.getCountry() << endl;
+                            cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
+                            cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
                         }
                     }
 
