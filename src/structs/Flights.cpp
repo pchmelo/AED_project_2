@@ -282,14 +282,10 @@ int Flights:: _5count_per_air_aux(string code)    {
     return _5Countries_per_airport(code).size();
     }
 
-
-
-
-
-
-vector<Airports> Flights::_4getVecCountriesAirport(string code) {
-    vector<Airports> res;
+set<Airports> Flights::_4getVecCountriesAirport(string code) {
+    set<Airports> res;
     set<string> set_country;
+
     auto airport = this->flights.findVertex(code);
 
     for(auto edge : airport->getAdj()){
@@ -298,19 +294,19 @@ vector<Airports> Flights::_4getVecCountriesAirport(string code) {
 
         if(it_1 == set_country.end()){
             set_country.insert(country_t->getInfo().getCountry());
-            res.push_back(airport->getInfo());
+            res.insert(airport->getInfo());
         }
     }
     return res;
 }
 
 int Flights::_4getNumCountriesAirport(string code) {
-    vector<Airports> res = _4getVecCountriesAirport(code);
+    set<Airports> res = _4getVecCountriesAirport(code);
     return res.size();
 }
 
-vector<Airports> Flights::_4getVecCountriesCity(string city, string country) {
-    vector<Airports> res;
+set<Airports> Flights::_4getVecCountriesCity(string city, string country) {
+    set<Airports> res;
     set<string> set_country;
     vector<Vertex<Airports>*> vertex_v;
 
@@ -335,7 +331,7 @@ vector<Airports> Flights::_4getVecCountriesCity(string city, string country) {
 
             if(it_1 == set_country.end()){
                 set_country.insert(country_t->getInfo().getCountry());
-                res.push_back(country_t->getInfo());
+                res.insert(country_t->getInfo());
             }
         }
     }
@@ -343,12 +339,12 @@ vector<Airports> Flights::_4getVecCountriesCity(string city, string country) {
 }
 
 int Flights::_4getNumCountriesCity(string city, string country) {
-    vector<Airports> res = _4getVecCountriesCity(city, country);
+    set<Airports> res = _4getVecCountriesCity(city, country);
     return res.size();
 }
 
-vector<Airports> Flights::_4getVecCountriesCountry(std::string country) {
-    vector<Airports> res;
+set<Airports> Flights::_4getVecCountriesCountry(std::string country) {
+    set<Airports> res;
     set<string> set_country;
     vector<Vertex<Airports>*> vertex_v;
 
@@ -365,7 +361,7 @@ vector<Airports> Flights::_4getVecCountriesCountry(std::string country) {
 
             if(it_1 == set_country.end()){
                 set_country.insert(country_t->getInfo().getCountry());
-                res.push_back(country_t->getInfo());
+                res.insert(country_t->getInfo());
             }
         }
     }
@@ -373,7 +369,7 @@ vector<Airports> Flights::_4getVecCountriesCountry(std::string country) {
 }
 
 int Flights::_4getNumCountriesCountry(std::string country ) {
-    vector<Airports> res = _4getVecCountriesCountry(country);
+    set<Airports> res = _4getVecCountriesCountry(country);
     return res.size();
 }
 

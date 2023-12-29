@@ -37,9 +37,9 @@ class Flights {
         int _3getFlightsPerCompany(string airline);
 
         //3.4
-        vector<Airports> _4getVecCountriesAirport(string code );
-        vector<Airports> _4getVecCountriesCity(string city, string country);
-        vector<Airports> _4getVecCountriesCountry(string country);
+        set<Airports> _4getVecCountriesAirport(string code );
+        set<Airports> _4getVecCountriesCity(string city, string country);
+        set<Airports> _4getVecCountriesCountry(string country);
 
         int _4getNumCountriesAirport(string code);
         int _4getNumCountriesCity(string city, string country);
