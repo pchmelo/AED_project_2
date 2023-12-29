@@ -92,9 +92,9 @@ class Flights {
         pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> _10Montador(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
 
         //5.all
-        vector<vector<AirportStop2>> _11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest);
+        vector<vector<AirportStop2>> _11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest, set<string> list, int set);
         void _11AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag);
-        vector<vector<AirportStop2>> _11AllCommander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest);
+        vector<vector<AirportStop2>> _11AllCommander(vector<Vertex<Airports>*> src, vector<Vertex<Airports>*> dest, set<string> list, int set);
 
         vector<vector<AirportStop>> _11Separator(vector<vector<AirportStop2>> input);
         vector<vector<AirportStop>> _11FilterMinimizer(vector<vector<AirportStop2>> input, int &num);

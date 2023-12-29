@@ -776,7 +776,7 @@ vector<list<AirportStop2>> Flights::_10Commander(vector<Vertex<Airports> *> src,
 
     for(int i = 0; i < src.size(); i++){
         auto a = src.at(i);
-        auto b = src.at(i);
+        auto b = dest.at(i);
 
         if(flag){
             t_1 = _10BestPathEntreDoisAeroportos(a, b);
@@ -946,7 +946,7 @@ double Flights::_10Haversine(double lat_1, double log_1, double lat_2, double lo
 }
 
 
-vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest) {
+vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest, set<string> lista, int set_up) {
     vector<vector<AirportStop2>> res;
     AirportStop2 t;
 
@@ -973,6 +973,21 @@ vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<A
         }
 
         for(auto &edge : vertex->getAdj()){
+            if(set_up != 0){
+                auto f = lista.find(edge.getDest()->getInfo().getCode());
+
+                if(set_up == 1){
+                    if(f == lista.end()){
+                        continue;
+                    }
+                }
+                else{
+                    if(f != lista.end()){
+                        continue;
+                    }
+                }
+            }
+
             auto w = edge.getDest();
             int paragem_nova = paragens[vertex] + 1;
 
@@ -1033,21 +1048,21 @@ void Flights::_11AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,
     caminhoAtual.pop_back();
 }
 
-vector<vector<AirportStop2>> Flights::_11AllCommander(vector<Vertex<Airports> *> src, vector<Vertex<Airports> *> dest) {
+vector<vector<AirportStop2>> Flights::_11AllCommander(vector<Vertex<Airports> *> src, vector<Vertex<Airports> *> dest, set<string> lista, int set) {
     bool flag = true;
     vector<vector<AirportStop2>> t;
     vector<vector<AirportStop2>> res;
 
     for(int i = 0; i < src.size(); i++){
         auto a = src.at(i);
-        auto b = src.at(i);
+        auto b = dest.at(i);
 
         if(flag){
-            res = _11AllBestPathEntreDoisAeroportos(a, b);
+            res = _11AllBestPathEntreDoisAeroportos(a, b, lista, set);
             flag = false;
         }
         else{
-            t = _11AllBestPathEntreDoisAeroportos(a, b);
+            t = _11AllBestPathEntreDoisAeroportos(a, b, lista, set);
 
             if(t.size() != 0){
                  if(res.size() != 0){

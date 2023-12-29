@@ -217,7 +217,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> answer;
                                 cout << endl;
 
-                                vec = flights._4getVecCountriesAirport(code);
+                                port = flights._4getVecCountriesAirport(code);
 
                                 if (answer == "y" || answer == "Y") {
 
@@ -269,7 +269,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 }
 
-                                vec = flights._4getVecCountriesCity(code, country);
+                                port = flights._4getVecCountriesCity(code, country);
 
                                 cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
                                 cin >> answer;
@@ -303,7 +303,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> code;
                                 cout << endl;
 
-                                vec = flights._4getVecCountriesCountry(code);
+                                port = flights._4getVecCountriesCountry(code);
 
                                 cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
                                 cin >> answer;
@@ -1043,6 +1043,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         for (auto air: lsts) {
                             cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
                             cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                            cout << air.airlines.front().getCode() << ", " << air.airlines.front().getName() << ", " << air.airlines.front().getCallSign() << ", " << air.airlines.front().getCountry() << endl;
+                            cout<<endl;
                         }
                     }
 
