@@ -155,11 +155,11 @@ vector<Airports> Flights::_5Airports_per_airport(string code ){
     auto v = q.front();
     q.pop();
 
-        auto airport = flights.findVertex(v->getInfo());
-        auto it = set_t.find(airport->getInfo().getCode());
+        auto airport = v->getInfo();
+        auto it = set_t.find(airport.getCode());
         if(it == set_t.end()){
-            set_t.insert(airport->getInfo().getCode());
-            res.push_back(airport->getInfo().getName());
+            set_t.insert(airport.getCode());
+            res.push_back(airport);
         }
 
 
@@ -203,17 +203,17 @@ vector<Airports> Flights::_5Cities_per_airport(string code, string country)
             auto v = q.front();
             q.pop();
             if(v.second != 0){
-                auto airport = flights.findVertex(v.first->getInfo());
-                auto it_1 = set_cidades.find(airport->getInfo().getCity());
+                auto airport = v.first->getInfo();
+                auto it_1 = set_cidades.find(airport.getCity());
                 if(it_1 == set_cidades.end()){
-                    set_cidades.insert(airport->getInfo().getCity());
-                    res.push_back(airport->getInfo());
+                    set_cidades.insert(airport.getCity());
+                    res.push_back(airport);
                 }
                 else{
-                    auto it_2 = set_paises.find(airport->getInfo().getCountry());
+                    auto it_2 = set_paises.find(airport.getCountry());
                     if(it_2 == set_paises.end()){
-                        set_paises.insert(airport->getInfo().getCountry());
-                        res.push_back(airport->getInfo());
+                        set_paises.insert(airport.getCountry());
+                        res.push_back(airport);
                     }
                 }
             }
@@ -259,11 +259,11 @@ vector<Airports>Flights::_5Countries_per_airport(string code){
 
 
             if(v.second != 0){
-                auto airport = flights.findVertex(v.first->getInfo());
-                auto it = set_t.find(airport->getInfo().getCountry());
+                auto airport = v.first->getInfo();
+                auto it = set_t.find(airport.getCountry());
                 if(it == set_t.end()){
-                    set_t.insert(airport->getInfo().getCountry());
-                    res.push_back(airport->getInfo());
+                    set_t.insert(airport.getCountry());
+                    res.push_back(airport);
                 }
             }
 
@@ -289,12 +289,12 @@ set<Airports> Flights::_4getVecCountriesAirport(string code) {
     auto airport = this->flights.findVertex(code);
 
     for(auto edge : airport->getAdj()){
-        auto country_t = flights.findVertex(edge.getDest()->getInfo());
-        auto it_1 = set_country.find(country_t->getInfo().getCountry());
+        auto country_t =edge.getDest()->getInfo();
+        auto it_1 = set_country.find(country_t.getCountry());
 
         if(it_1 == set_country.end()){
-            set_country.insert(country_t->getInfo().getCountry());
-            res.insert(airport->getInfo());
+            set_country.insert(country_t.getCountry());
+            res.insert(country_t);
         }
     }
     return res;
@@ -399,12 +399,12 @@ vector<Airports> Flights::_6getVecStopsAirports(string code, int x) {
         }
 
         if(v.second != 0){
-            auto airport = flights.findVertex(v.first->getInfo());
-            auto it = set_t.find(airport->getInfo().getCode());
+            auto airport = v.first->getInfo();
+            auto it = set_t.find(airport.getCode());
 
             if(it == set_t.end()){
-                set_t.insert(airport->getInfo().getCode());
-                res.push_back(airport->getInfo().getName());
+                set_t.insert(airport.getCode());
+                res.push_back(airport);
             }
         }
 
@@ -451,17 +451,17 @@ vector<Airports> Flights::_6getVecStopsCities(std::string code, int x, string co
         }
 
         if(v.second != 0){
-            auto airport = flights.findVertex(v.first->getInfo());
-            auto it_1 = set_cidades.find(airport->getInfo().getCity());
+            auto airport = v.first->getInfo();
+            auto it_1 = set_cidades.find(airport.getCity());
             if(it_1 == set_cidades.end()){
-                set_cidades.insert(airport->getInfo().getCity());
-                res.push_back(airport->getInfo());
+                set_cidades.insert(airport.getCity());
+                res.push_back(airport);
             }
             else{
-                auto it_2 = set_cidades.find(airport->getInfo().getCountry());
+                auto it_2 = set_cidades.find(airport.getCountry());
                 if(it_2 == set_cidades.end()){
-                    set_cidades.insert(airport->getInfo().getCountry());
-                    res.push_back(airport->getInfo());
+                    set_cidades.insert(airport.getCountry());
+                    res.push_back(airport);
                 }
             }
         }
@@ -509,11 +509,11 @@ vector<Airports> Flights::_6getVecStopsCountries(std::string code, int x ) {
         }
 
         if(v.second != 0){
-            auto airport = flights.findVertex(v.first->getInfo());
-            auto it = set_t.find(airport->getInfo().getCountry());
+            auto airport = v.first->getInfo();
+            auto it = set_t.find(airport.getCountry());
             if(it == set_t.end()){
-                set_t.insert(airport->getInfo().getCountry());
-                res.push_back(airport->getInfo().getCountry());
+                set_t.insert(airport.getCountry());
+                res.push_back(airport);
             }
         }
 
@@ -567,17 +567,17 @@ list<AirportsGreatDistance> Flights::_7getAirportsGreat() {
                 res.clear();
                 diameter = pair.second;
 
-                auto air_1 = flights.findVertex(vertex->getInfo());
-                auto air_2 = flights.findVertex(pair.first->getInfo());
+                auto air_1 = vertex->getInfo();
+                auto air_2 = pair.first->getInfo();
 
-                t = AirportsGreatDistance(air_2->getInfo(), air_1->getInfo(), diameter);
+                t = AirportsGreatDistance(air_2, air_1, diameter);
                 res.push_back(t);
             }
             else if(pair.second == diameter){
-                auto air_1 =flights.findVertex(vertex->getInfo());
-                auto air_2 = flights.findVertex(pair.first->getInfo());
+                auto air_1 =vertex->getInfo();
+                auto air_2 = pair.first->getInfo();
 
-                t = AirportsGreatDistance(air_1->getInfo(), air_2->getInfo(), diameter);
+                t = AirportsGreatDistance(air_1, air_2, diameter);
                 res.push_back(t);
             }
         }
@@ -595,24 +595,24 @@ vector<AirportsTrafic> Flights::_8getTopVecAirports( ) {
     vector<AirportsTrafic> res;
 
     for(auto vertex : flights.getVertexSet()){
-        auto airport_1 = flights.findVertex(vertex->getInfo());
-        auto it_1 = find(res.begin(), res.end(), airport_1->getInfo());
+        auto airport_1 = vertex->getInfo();
+        auto it_1 = find(res.begin(), res.end(), airport_1);
 
         if(it_1 == res.end()){
-            AirportsTrafic airportsTrafic_1 = AirportsTrafic(airport_1->getInfo(), 0);
+            AirportsTrafic airportsTrafic_1 = AirportsTrafic(airport_1, 0);
             res.push_back(airportsTrafic_1);
         }
         for(auto edge : vertex->getAdj()){
-            auto airport_2 = flights.findVertex(edge.getDest()->getInfo());
-            auto it_2 = std::find(res.begin(), res.end(), airport_2->getInfo());
+            auto airport_2 = edge.getDest()->getInfo();
+            auto it_2 = std::find(res.begin(), res.end(), airport_2);
 
             if(it_2 == res.end()){
-                AirportsTrafic airportsTrafic_2 = AirportsTrafic(airport_2->getInfo(), 0);
+                AirportsTrafic airportsTrafic_2 = AirportsTrafic(airport_2, 0);
                 res.push_back(airportsTrafic_2);
             }
 
-            it_1 = std::find(res.begin(), res.end(), airport_1->getInfo());
-            it_2 = std::find(res.begin(), res.end(), airport_2->getInfo());
+            it_1 = std::find(res.begin(), res.end(), airport_1);
+            it_2 = std::find(res.begin(), res.end(), airport_2);
 
             it_1->trafic.second = it_1->trafic.second + 1;
             it_2->trafic.second = it_2->trafic.second + 1;

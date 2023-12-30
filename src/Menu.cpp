@@ -46,6 +46,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
     vector<AirportsTrafic> top;
     set<Airports> port;
     bool check = false;
+    int ddd = 0;
 
     while (true) {
 
@@ -234,7 +235,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 if (answer == "y" || answer == "Y") {
 
                                     for(auto air : port){
-                                        cout << air.getCountry() << endl;
+                                        cout << air.getCountry() << endl; //Pode haver países repetidos, a 4 na descrição do projeto é mostrar países não aeroportos
                                     }
                                     cout <<endl;
 
@@ -252,7 +253,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << port.size() << endl;
                                 cout << endl;
-
                                 break;
 
                             case 2:
@@ -293,7 +293,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 if (answer == "y" || answer == "Y") {
 
                                     for(auto air : port){
-                                        cout << air.getCountry() << endl;
+                                        cout << air.getCountry() << endl; //Pode haver países repetidos, a 4 na descrição do projeto é mostrar países não aeroportos
                                     }
                                     cout <<endl;
 
@@ -310,7 +310,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 }
 
                                 cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << port.size() << endl;
-                                cout << endl;
 
                                 break;
 
@@ -347,7 +346,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 cout << "\033[1;32mTotal number of possible countries of destination is \033[0m" << port.size() << endl;
                                 cout << endl;
-
                                 break;
 
                             case 0:
@@ -668,20 +666,19 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         grt = flights._7getAirportsGreat();
 
+                        code_aux = grt.size();
                         for(auto air : grt){
 
                             cout << "\033[1;32mFrom airport \033[0m" << air.airport_source.getName() << "\033[1;32m of code \033[0m" << air.airport_source.getCode() << "\033[1;32m in \033[0m" << air.airport_source.getCity() << "\033[1;32m, \033[0m" << air.airport_source.getCountry() << endl;
                             cout << "\033[1;32mTo airport \033[0m" << air.airport_dest.getName() << "\033[1;32m of code \033[0m" << air.airport_dest.getCode() << "\033[1;32m in \033[0m" << air.airport_dest.getCity() << "\033[1;32m, \033[0m" << air.airport_dest.getCountry() << endl;
+                            ddd = air.distance;
                             cout << endl;
+                            }
 
-                        }
-
-                        cout << "\033[1;33m-----------------------------------------------------------------\033[0m" << endl;
-                        cout << "\033[1;32mTotal number of flights \033[0m" << grt.size();
-
+                        cout << "\033[1;32mWith a total of \033[0m" << code_aux  << "\033[1;32m airports\033[0m" << endl;
+                        cout << "\033[1;32mWith a diameter of \033[0m" << ddd << endl;
                         cout << endl;
-                        cout << "\033[1;32mWith a total distance of \033[0m" << grt.begin()->distance << endl;
-                        cout << endl;
+
 
                         break;
 
@@ -716,9 +713,11 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         for (int i = 0; i < code_aux; i++) {
 
+
                             cout << i+1 << "º" << "\033[1;33m- \033[0m";
                             cout << top.at(i).trafic.first.getName() << "\033[1;32m airport of code \033[0m" << top.at(i).trafic.first.getCode();
                             cout << "\033[1;32m with \033[0m" << top.at(i).trafic.second << "\033[1;32m flights\033[0m" << endl << endl;
+                            cout << endl;
                         }
 
                         break;
