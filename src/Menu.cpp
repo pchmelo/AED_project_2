@@ -241,8 +241,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
-
                                 } else {
 
                                     cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
@@ -299,7 +297,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -334,7 +331,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -396,8 +392,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
-
                                 } else {
 
                                     cout << "\033[1;31mUnrecognised option - Continuing with no list\033[0m";
@@ -450,7 +444,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -481,7 +474,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -547,7 +539,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -602,7 +593,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -634,7 +624,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                                 } else if (answer == "n" || answer == "N") {
 
-                                    continue;
 
                                 } else {
 
@@ -742,7 +731,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         } else if (answer == "n" || answer == "N") {
 
-                            continue;
 
                         } else {
 
@@ -1099,62 +1087,729 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         for (auto air: lsts) {
                             cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
                             cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
-                            cout << air.airlines.front().getCode() << ", " << air.airlines.front().getName() << ", " << air.airlines.front().getCallSign() << ", " << air.airlines.front().getCountry() << endl;
+                            cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName() << "\033[1;32m of code \033[0m" << air.airlines.front().getCode() << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign() << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
                             cout<<endl;
                         }
                     }
 
                 } else if (answer == "y" || answer == "Y") {
-                    //fazer aquilo que esta anterior com o src e dest
 
-                    //qual filtro desejas adicionar
-                    //1-whitelist airlines
-                    //quais airlines desejas usar pode entregar o nome ou o codigo da airline
-                    //preencher uma lista com as airlines
-                    //no final perguntar se ele quer adicionar o filtro 3
+                    vector<Vertex<Airports> *> src;
+                    vector<Vertex<Airports> *> dest;
 
-                    //2-blacklist airlines
-                    //quais airlines deseja não usar pode entregar o nome ou o codigo da airline
-                    //preencher uma lista com as airlines
-                    //no final perguntar se ele quer adicionar o filtro 3
+                    cout << "\033[1;34mWhat information would you like to give as origin? \033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " Airport" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
+                    cout << "\033[1;33m[ 4 ]\033[0m" << " Coordinates" << endl;
+                    cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                    cout << endl;
 
-                    //3-Minimo numero de airlines
-                    //perguntar se ele quer adicionar o filtro 2 ou 3
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> decision;
+                    cout << endl;
 
+                    switch (decision) {
+                        case 1:
 
-                    auto scr = flights.flights.findVertex(Airports("THU"));
-                    auto dest = flights.flights.findVertex(Airports("CDG"));
+                            cout << "\033[1;34mWill you be giving the airport code or name? \033[0m" << endl;
+                            cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                            cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                            cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                            cout << endl;
+
+                            cout << "\033[1;34mDecision: \033[0m";
+                            cin >> decision;
+                            cout << endl;
+
+                            switch (decision) {
+                                case 1:
+
+                                    cout << "\033[1;34mWhich code? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    src = flights._10AirportsAirport(code, true);
+
+                                    break;
+
+                                case 2:
+
+                                    cout << "\033[1;34mWhich name? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    src = flights._10AirportsAirport(code, false);
+
+                                    break;
+
+                                case 0:
+
+                                    break;
+
+                                default:
+
+                                    cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                    cout <<endl;
+                                    break;
+                            }
+
+                            break;
+
+                        case 2:
+
+                            cout << "\033[1;34mWhich city? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mWhich country? \033[0m";
+                                cin >> country;
+                                cout << endl;
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                country = "k";
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                cout <<endl;
+                                country = "k";
+                                cout << endl;
+
+                            }
+
+                            src = flights._10AirportsCity(code, country);
+
+                            break;
+
+                        case 3:
+
+                            cout << "\033[1;34mWhich country? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            src = flights._10AirportsPais(code);
+
+                            break;
+
+                        case 4:
+
+                            cout << "\033[1;34mWhich latitude? \033[0m";
+                            cin >> code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWhich longitude? \033[0m";
+                            cin >> sec_code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mHow long of a radius in kilometers? \033[0m";
+                                cin >> tr_code_aux;
+                                cout << endl;
+
+                                src = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
+                                cout <<endl;
+                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                cout << endl;
+
+                            }
+
+                            break;
+
+                        case 0:
+
+                            check = true;
+                            break;
+
+                        default:
+
+                            cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                            cout <<endl;
+                            break;
+                    }
+
+                    if (check) {
+                        check = false;
+                        break;
+                    }
+
+                    cout << "\033[1;34mWhat information would you like to give as destination? \033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " Airport" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " City" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " Country" << endl;
+                    cout << "\033[1;33m[ 4 ]\033[0m" << " Coordinates" << endl;
+                    cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                    cout << endl;
+
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> decision;
+                    cout << endl;
+
+                    switch (decision) {
+                        case 1:
+
+                            cout << "\033[1;34mWill you be giving the airport code or name? \033[0m" << endl;
+                            cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                            cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                            cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                            cout << endl;
+
+                            cout << "\033[1;34mDecision: \033[0m";
+                            cin >> decision;
+                            cout << endl;
+
+                            switch (decision) {
+                                case 1:
+
+                                    cout << "\033[1;34mWhich code? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    dest = flights._10AirportsAirport(code, true);
+
+                                    break;
+
+                                case 2:
+
+                                    cout << "\033[1;34mWhich name? \033[0m";
+                                    cin >> code;
+                                    cout << endl;
+
+                                    dest = flights._10AirportsAirport(code, false);
+
+                                    break;
+
+                                case 0:
+
+                                    break;
+
+                                default:
+
+                                    cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                    cout <<endl;
+                                    break;
+                            }
+
+                            break;
+
+                        case 2:
+
+                            cout << "\033[1;34mWhich city? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mWhich country? \033[0m";
+                                cin >> country;
+                                cout << endl;
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                country = "k";
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
+                                cout <<endl;
+                                country = "k";
+                                cout << endl;
+
+                            }
+
+                            dest = flights._10AirportsCity(code, country);
+
+                            break;
+
+                        case 3:
+
+                            cout << "\033[1;34mWhich country? \033[0m";
+                            cin >> code;
+                            cout << endl;
+
+                            dest = flights._10AirportsPais(code);
+
+                            break;
+
+                        case 4:
+
+                            cout << "\033[1;34mWhich latitude? \033[0m";
+                            cin >> code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWhich longitude? \033[0m";
+                            cin >> sec_code_aux;
+                            cout << endl;
+
+                            cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                            cin >> answer;
+                            cout << endl;
+
+                            if (answer == "y" || answer == "Y") {
+
+                                cout << "\033[1;34mHow long of a radius in kilometers? \033[0m";
+                                cin >> tr_code_aux;
+                                cout << endl;
+
+                                dest = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+
+                            } else if (answer == "n" || answer == "N") {
+
+                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+
+                            } else {
+
+                                cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
+                                cout <<endl;
+                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                cout << endl;
+
+                            }
+
+                            break;
+
+                        case 0:
+
+                            check = true;
+                            break;
+
+                        default:
+
+                            cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                            cout <<endl;
+                            break;
+                    }
+
+                    if (check) {
+                        check = false;
+                        break;
+                    }
+
                     set<string> lista_air;
                     int input = 0;
                     int num = 0;
+                    bool min_check = false;
 
-                    //se input = 0, sem list filter
-                    //se input = 1, com whitelist filter
-                    //se input = 2, com blacklist filter
+                    cout << "\033[1;34mWhat filter would you like to use? \033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " Whitelist airlines" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " Blacklist airlines" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " Minimizer" << endl;
+                    cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                    cout << endl;
 
-                    auto res = flights._11AllBestPathEntreDoisAeroportos(scr, dest, lista_air, input);
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> decision;
+                    cout << endl;
 
-                    //caso chame o filtro minimo
-                    auto fim = flights._11FilterMinimizer(res, num);
+                    switch (decision) {
+                        case 1:
 
-                    int i = 1;
+                            input = 1;
 
-                    //se ele selecionou o minimizer, o res = fim
-                    for(auto apoio : res){
-                        for(auto air : apoio){
-                            cout << i << "º opção\n";
-                            cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
-                            cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
-                            cout << air.airlines.front().getCode() << ", " << air.airlines.front().getName() << ", " << air.airlines.front().getCallSign() << ", " << air.airlines.front().getCountry() << endl;
-                            cout<<endl;
+                            while (true) {
+
+                                cout << "\033[1;34mWill you be giving the airline code or name? \033[0m" << endl;
+                                cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                                cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                                cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                                cout << endl;
+
+                                cout << "\033[1;34mDecision: \033[0m";
+                                cin >> decision;
+                                cout << endl;
+
+                                switch (decision) {
+                                    case 1:
+
+                                        cout << "\033[1;34mWhich code? \033[0m";
+                                        cin >> code;
+                                        cout << endl;
+
+                                        lista_air.insert(code);
+
+                                        break;
+
+                                    case 2:
+
+                                        cout << "\033[1;34mWhich name? \033[0m";
+                                        cin >> code;
+                                        cout << endl;
+
+                                        lista_air.insert(code);
+
+                                        break;
+
+                                    case 0:
+
+                                        break;
+
+                                    default:
+
+                                        cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                        cout << endl;
+                                        break;
+                                }
+
+                                cout << "\033[1;34mWould you like to whitelist another airline, use the minimizer filter or proceed to the result? \033[0m" << endl;
+                                cout << "\033[1;33m[ 1 ]\033[0m" << " Whitelist airline" << endl;
+                                cout << "\033[1;33m[ 2 ]\033[0m" << " Minimizer" << endl;
+                                cout << "\033[1;33m[ 3 ]\033[0m" << " Result" << endl;
+                                cout << endl;
+
+                                cout << "\033[1;34mDecision: \033[0m";
+                                cin >> decision;
+                                cout << endl;
+
+                                if (decision == 1) {
+
+                                } else if (decision == 2) {
+                                    min_check = true;
+                                    break;
+                                } else if (decision == 3) {
+                                    break;
+                                }
+
+                            }
+
+                            break;
+
+                        case 2:
+
+                            input = 2;
+
+                            while (true) {
+
+                                cout << "\033[1;34mWill you be giving the airline code or name? \033[0m" << endl;
+                                cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                                cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                                cout << "\033[1;31m[ 0 ]\033[0m" << "\033[0;31m Go back\033[0m" << endl;
+                                cout << endl;
+
+                                cout << "\033[1;34mDecision: \033[0m";
+                                cin >> decision;
+                                cout << endl;
+
+                                switch (decision) {
+                                    case 1:
+
+                                        cout << "\033[1;34mWhich code? \033[0m";
+                                        cin >> code;
+                                        cout << endl;
+
+                                        lista_air.insert(code);
+
+                                        break;
+
+                                    case 2:
+
+                                        cout << "\033[1;34mWhich name? \033[0m";
+                                        cin >> code;
+                                        cout << endl;
+
+                                        lista_air.insert(code);
+
+                                        break;
+
+                                    case 0:
+
+                                        break;
+
+                                    default:
+
+                                        cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                        cout << endl;
+                                        break;
+                                }
+
+                                cout << "\033[1;34mWould you like to blacklist another airline, use the minimizer filter or proceed to the result? \033[0m" << endl;
+                                cout << "\033[1;33m[ 1 ]\033[0m" << " Blacklist airline" << endl;
+                                cout << "\033[1;33m[ 2 ]\033[0m" << " Minimizer" << endl;
+                                cout << "\033[1;33m[ 3 ]\033[0m" << " Result" << endl;
+                                cout << endl;
+
+                                cout << "\033[1;34mDecision: \033[0m";
+                                cin >> decision;
+                                cout << endl;
+
+                                if (decision == 1) {
+
+                                } else if (decision == 2) {
+                                    min_check = true;
+                                    break;
+                                } else if (decision == 3) {
+                                    break;
+                                }
+
+                            }
+
+                            break;
+
+                        case 3:
+
+                            min_check = true;
+                            cout << "\033[1;34mWould you like to blacklist or whitelist airlines or proceed to result? \033[0m" << endl;
+                            cout << "\033[1;33m[ 1 ]\033[0m" << " Blacklist airlines" << endl;
+                            cout << "\033[1;33m[ 2 ]\033[0m" << " Whitelist airlines" << endl;
+                            cout << "\033[1;33m[ 3 ]\033[0m" << " Result" << endl;
+                            cout << endl;
+
+                            cout << "\033[1;34mDecision: \033[0m";
+                            cin >> decision;
+                            cout << endl;
+
+                            switch (decision) {
+                                case 1:
+
+                                    input = 2;
+
+                                    while (true) {
+
+                                        cout << "\033[1;34mWill you be giving the airline code or name? \033[0m" << endl;
+                                        cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                                        cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                                        cout << endl;
+
+                                        cout << "\033[1;34mDecision: \033[0m";
+                                        cin >> decision;
+                                        cout << endl;
+
+                                        switch (decision) {
+                                            case 1:
+
+                                                cout << "\033[1;34mWhich code? \033[0m";
+                                                cin >> code;
+                                                cout << endl;
+
+                                                lista_air.insert(code);
+
+                                                break;
+
+                                            case 2:
+
+                                                cout << "\033[1;34mWhich name? \033[0m";
+                                                cin >> code;
+                                                cout << endl;
+
+                                                lista_air.insert(code);
+
+                                                break;
+
+                                            default:
+
+                                                cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                                cout << endl;
+                                                break;
+                                        }
+
+                                        cout << "\033[1;34mWould you like to blacklist another airline or proceed to the result? \033[0m" << endl;
+                                        cout << "\033[1;33m[ 1 ]\033[0m" << " Blacklist airline" << endl;
+                                        cout << "\033[1;33m[ 2 ]\033[0m" << " Result" << endl;
+                                        cout << endl;
+
+                                        cout << "\033[1;34mDecision: \033[0m";
+                                        cin >> decision;
+                                        cout << endl;
+
+                                        if (decision == 1) {
+
+                                        } else if (decision == 2) {
+                                            break;
+                                        }
+
+                                    }
+
+                                    break;
+
+                                case 2:
+
+                                    input = 1;
+
+                                    while (true) {
+
+                                        cout << "\033[1;34mWill you be giving the airline code or name? \033[0m" << endl;
+                                        cout << "\033[1;33m[ 1 ]\033[0m" << " Code" << endl;
+                                        cout << "\033[1;33m[ 2 ]\033[0m" << " Name" << endl;
+                                        cout << endl;
+
+                                        cout << "\033[1;34mDecision: \033[0m";
+                                        cin >> decision;
+                                        cout << endl;
+
+                                        switch (decision) {
+                                            case 1:
+
+                                                cout << "\033[1;34mWhich code? \033[0m";
+                                                cin >> code;
+                                                cout << endl;
+
+                                                lista_air.insert(code);
+
+                                                break;
+
+                                            case 2:
+
+                                                cout << "\033[1;34mWhich name? \033[0m";
+                                                cin >> code;
+                                                cout << endl;
+
+                                                lista_air.insert(code);
+
+                                                break;
+
+                                            default:
+
+                                                cout << "\033[0;31mUnrecognized option\033[0m" << endl;
+                                                cout << endl;
+                                                break;
+                                        }
+
+                                        cout << "\033[1;34mWould you like to whitelist another airline or proceed to the result? \033[0m" << endl;
+                                        cout << "\033[1;33m[ 1 ]\033[0m" << " Whitelist airline" << endl;
+                                        cout << "\033[1;33m[ 2 ]\033[0m" << " Result" << endl;
+                                        cout << endl;
+
+                                        cout << "\033[1;34mDecision: \033[0m";
+                                        cin >> decision;
+                                        cout << endl;
+
+                                        if (decision == 1) {
+
+                                        } else if (decision == 2) {
+                                            break;
+                                        }
+
+                                    }
+
+                                    break;
+
+                                case 3:
+
+                                    break;
+
+                                default:
+
+                                    cout << "\033[0;31mUnrecognized option - Proceeding without any whitelisted or blacklisted airlines\033[0m" << endl;
+                                    cout << endl;
+                                    break;
+                            }
+
+                            break;
+
+                        case 0:
+
+                            check = true;
+                            break;
+
+                        default:
+
+                            cout << "\033[0;31mUnrecognized option - using no filters\033[0m" << endl;
+                            cout <<endl;
+                            break;
+                    }
+
+                    if (check) {
+                        check = false;
+                        break;
+                    }
+
+                    pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
+                    auto res = flights._11AllCommander(mount.first, mount.second, lista_air, input);
+
+                    if (min_check) {
+                        auto fim = flights._11FilterMinimizer(res, num);
+
+                        int i = 1;
+
+                        for (auto apoio: fim) {
+                            for (auto air: apoio) {
+                                cout << i << "º opção\n";
+                                cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
+                                     << air.src->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity()
+                                     << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mWith airline \033[0m" << air.airlines.getName()
+                                     << "\033[1;32m of code \033[0m" << air.airlines.getCode()
+                                     << "\033[1;32m with call sign \033[0m" << air.airlines.getCallSign()
+                                     << "\033[1;32m and from \033[0m" << air.airlines.getCountry() << endl;
+                                cout << endl;
+                                i++;
+                            }
+                        }
+
+                        if (res.size() == 1) {
+                            cout << "\033[1;32mThere is \033[0m" << res.size() << "\033[1;32m option\033[0m\n";
+                        } else {
+                            cout << "\033[1;32mThere are \033[0m" << res.size() << "\033[1;32m options\033[0m\n";
+                        }
+
+                        if (num == 1 && res.size() == 1) {
+                            cout << "\033[1;32mThe option shown uses \033[0m" << num << "\033[1;32m airline\033[0m\n" << endl;
+                        } else if (num > 1 && res.size() == 1) {
+                            cout << "\033[1;32mThe option shown uses \033[0m" << num << "\033[1;32m different airlines\033[0m\n" << endl;
+                        } else if (num == 1 && res.size() > 1) {
+                            cout << "\033[1;32mThe options shown use \033[0m" << num << "\033[1;32m airline\033[0m\n" << endl;
+                        } else {
+                            cout << "\033[1;32mThe options shown use \033[0m" << num << "\033[1;32m different airlines\033[0m\n" << endl;
+                        }
+
+                    } else {
+
+                        int i = 1;
+
+                        for (auto apoio: res) {
+                            for (auto air: apoio) {
+                                cout << i << "º opção\n";
+                                cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
+                                     << air.src->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity()
+                                     << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName()
+                                     << "\033[1;32m of code \033[0m" << air.airlines.front().getCode()
+                                     << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign()
+                                     << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
+                                cout << endl;
+                                i++;
+                            }
+                        }
+
+                        if (res.size() == 1) {
+                            cout << "\033[1;32mThere is \033[0m" << res.size() << "\033[1;32m option\033[0m\n";
+                        } else {
+                            cout << "\033[1;32mThere are \033[0m" << res.size() << "\033[1;32m options\033[0m\n";
                         }
                     }
-                    cout << "---------------------\n";
-                    cout << "Existem " << res.size() << " opcoes\n";
-                    //se selecionou a opção de minimizer mostrar o seguinte cout
-                    cout << "As opcoes mostradas usam " << num << " companhias diferentes\n";
-
-
 
                 } else {
                     cout << "\033[0;31mUnrecognized option - Going back\033[0m" << endl;
