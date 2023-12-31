@@ -89,7 +89,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                     case 2:
 
                         cout << "\033[1;34mWhich airport? \033[0m";
-                        cin >> code;
+                        getline(cin >> ws, code);
                         cout << endl;
 
                         code_aux = flights._2numViajensDeAirport(code);
@@ -120,7 +120,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 1:
 
                                 cout << "\033[1;34mWhich airline? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 code_aux = flights._3getFlightsPerCompany(code);
@@ -138,7 +138,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 2:
 
                                 cout << "\033[1;34mWhich city? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -178,7 +178,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 3:
 
                                 cout << "\033[1;34mWhich country? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 code_aux = flights._3getFlightsPerCountry(code);
@@ -223,7 +223,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 1:
 
                                 cout << "\033[1;34mWhich airport? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 cout << "\033[1;34mWould you like to be presented with a list of the possible countries of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -256,7 +256,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 2:
 
                                 cout << "\033[1;34mWhich city? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -313,7 +313,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                             case 3:
 
                                 cout << "\033[1;34mWhich country? \033[0m";
-                                cin >> code;
+                                getline(cin >> ws, code);
                                 cout << endl;
 
                                 port = flights._4getVecCountriesCountry(code);
@@ -360,7 +360,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                     case 5:
 
                         cout << "\033[1;34mWhich airport as origin? \033[0m";
-                        cin >> code;
+                        getline(cin >> ws, code);
                         cout << endl;
 
                         cout << "\033[1;34mWhich elements would you like to see as available destinations? \033[0m" << endl;
@@ -503,7 +503,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                     case 6:
 
                         cout << "\033[1;34mWhich airport as origin? \033[0m";
-                        cin >> code;
+                        getline(cin >> ws, code);
                         cout << endl;
 
                         cout << "\033[1;34mHow many lay-overs? \033[0m";
@@ -795,7 +795,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 1:
 
                                     cout << "\033[1;34mWhich code? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     src = flights._10AirportsAirport(code, true);
@@ -805,7 +805,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 2:
 
                                     cout << "\033[1;34mWhich name? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     src = flights._10AirportsAirport(code, false);
@@ -828,7 +828,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 2:
 
                             cout << "\033[1;34mWhich city? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -861,7 +861,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 3:
 
                             cout << "\033[1;34mWhich country? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             src = flights._10AirportsPais(code);
@@ -951,7 +951,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 1:
 
                                     cout << "\033[1;34mWhich code? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     dest = flights._10AirportsAirport(code, true);
@@ -961,7 +961,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 2:
 
                                     cout << "\033[1;34mWhich name? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     dest = flights._10AirportsAirport(code, false);
@@ -984,7 +984,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 2:
 
                             cout << "\033[1;34mWhich city? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1017,7 +1017,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 3:
 
                             cout << "\033[1;34mWhich country? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             dest = flights._10AirportsPais(code);
@@ -1078,18 +1078,53 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         break;
                     }
 
+                    cout << "\033[1;32mPossible airports used as origin: \033[0m" << endl << endl;
+                    for (auto v : src) {
+                        cout << v->getInfo().getName() << "\033[1;32m of code \033[0m" << v->getInfo().getCode() << endl;
+                    }
+                    cout << endl;
+
+                    cout << "\033[1;32mPossible airports used as destinations: \033[0m" << endl << endl;
+                    for (auto v : dest) {
+                        cout << v->getInfo().getName() << "\033[1;32m of code \033[0m" << v->getInfo().getCode() << endl;
+                    }
+                    cout << endl;
+
+                    bool chk;
+
+                    cout << "\033[1;34mWould you like to have only the best option for each pair of airports? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
+                    cin >> answer;
+                    cout << endl;
+
+                    if (answer == "y" || answer == "Y") {
+                        chk = true;
+                    } else if (answer == "n" || answer == "N") {
+                        chk = false;
+                    } else {
+                        cout << "\033[0;31mUnrecognized option - Proceeding with all options\033[0m" << endl;
+                        chk = false;
+                        cout <<endl;
+                    }
+
                     //perguntar se ele quer todas as opções ou apenas uma
 
                     pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
                     auto stops = flights._10Commander(mount.first, mount.second);
 
+                    int index = 1;
+
                     for (auto lsts: stops) {
+
+                        cout << index << "\033[1;32mª opção\033[0m" << endl << endl;
+
                         for (auto air: lsts) {
                             cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
                             cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
                             cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName() << "\033[1;32m of code \033[0m" << air.airlines.front().getCode() << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign() << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
                             cout<<endl;
                         }
+
+                        index++;
                     }
 
                 } else if (answer == "y" || answer == "Y") {
@@ -1126,7 +1161,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 1:
 
                                     cout << "\033[1;34mWhich code? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     src = flights._10AirportsAirport(code, true);
@@ -1136,7 +1171,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 2:
 
                                     cout << "\033[1;34mWhich name? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     src = flights._10AirportsAirport(code, false);
@@ -1159,7 +1194,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 2:
 
                             cout << "\033[1;34mWhich city? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1192,7 +1227,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 3:
 
                             cout << "\033[1;34mWhich country? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             src = flights._10AirportsPais(code);
@@ -1282,7 +1317,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 1:
 
                                     cout << "\033[1;34mWhich code? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     dest = flights._10AirportsAirport(code, true);
@@ -1292,7 +1327,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 case 2:
 
                                     cout << "\033[1;34mWhich name? \033[0m";
-                                    cin >> code;
+                                    getline(cin >> ws, code);
                                     cout << endl;
 
                                     dest = flights._10AirportsAirport(code, false);
@@ -1315,7 +1350,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 2:
 
                             cout << "\033[1;34mWhich city? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1348,7 +1383,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 3:
 
                             cout << "\033[1;34mWhich country? \033[0m";
-                            cin >> code;
+                            getline(cin >> ws, code);
                             cout << endl;
 
                             dest = flights._10AirportsPais(code);
@@ -1446,7 +1481,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                     case 1:
 
                                         cout << "\033[1;34mWhich code? \033[0m";
-                                        cin >> code;
+                                        getline(cin >> ws, code);
                                         cout << endl;
 
                                         lista_air.insert(code);
@@ -1456,7 +1491,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                     case 2:
 
                                         cout << "\033[1;34mWhich name? \033[0m";
-                                        cin >> code;
+                                        getline(cin >> ws, code);
                                         cout << endl;
 
                                         lista_air.insert(code);
@@ -1517,7 +1552,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                     case 1:
 
                                         cout << "\033[1;34mWhich code? \033[0m";
-                                        cin >> code;
+                                        getline(cin >> ws, code);
                                         cout << endl;
 
                                         lista_air.insert(code);
@@ -1527,7 +1562,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                     case 2:
 
                                         cout << "\033[1;34mWhich name? \033[0m";
-                                        cin >> code;
+                                        getline(cin >> ws, code);
                                         cout << endl;
 
                                         lista_air.insert(code);
@@ -1601,7 +1636,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                             case 1:
 
                                                 cout << "\033[1;34mWhich code? \033[0m";
-                                                cin >> code;
+                                                getline(cin >> ws, code);
                                                 cout << endl;
 
                                                 lista_air.insert(code);
@@ -1611,7 +1646,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                             case 2:
 
                                                 cout << "\033[1;34mWhich name? \033[0m";
-                                                cin >> code;
+                                                getline(cin >> ws, code);
                                                 cout << endl;
 
                                                 lista_air.insert(code);
@@ -1663,7 +1698,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                             case 1:
 
                                                 cout << "\033[1;34mWhich code? \033[0m";
-                                                cin >> code;
+                                                getline(cin >> ws, code);
                                                 cout << endl;
 
                                                 lista_air.insert(code);
@@ -1673,7 +1708,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                             case 2:
 
                                                 cout << "\033[1;34mWhich name? \033[0m";
-                                                cin >> code;
+                                                getline(cin >> ws, code);
                                                 cout << endl;
 
                                                 lista_air.insert(code);
@@ -1736,6 +1771,18 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         break;
                     }
 
+                    cout << "\033[1;32mPossible airports used as origin: \033[0m" << endl << endl;
+                    for (auto v : src) {
+                        cout << v->getInfo().getName() << "\033[1;32m of code \033[0m" << v->getInfo().getCode() << endl;
+                    }
+                    cout << endl;
+
+                    cout << "\033[1;32mPossible airports used as destinations: \033[0m" << endl << endl;
+                    for (auto v : dest) {
+                        cout << v->getInfo().getName() << "\033[1;32m of code \033[0m" << v->getInfo().getCode() << endl;
+                    }
+                    cout << endl;
+
                     pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
                     auto res = flights._11AllCommander(mount.first, mount.second, lista_air, input);
 
@@ -1746,7 +1793,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         for (auto apoio: fim) {
                             for (auto air: apoio) {
-                                cout << i << "º opção\n";
+                                cout << i << "ª opção\n";
                                 cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
                                      << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
                                      << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
@@ -1786,7 +1833,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                         for (auto apoio: res) {
                             for (auto air: apoio) {
-                                cout << i << "º opção\n";
+                                cout << i << "ª opção\n";
                                 cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
                                      << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
                                      << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
@@ -1841,3 +1888,5 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
         cout << endl;
     }
 }
+
+// perguntar se quer todas as opções possiveis ou a melhor opção para cada pair de aeroportos  -  4  - fazer bool
