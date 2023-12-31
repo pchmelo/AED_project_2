@@ -36,6 +36,9 @@ class Flights {
     * The function extracts relevant information from each line, looks up corresponding airport
     * and airline objects in the provided hash tables, and adds an edge to the graph.
     *
+    * Complexity = O(n * m) = O(n), where n is the number of lines in the file, and m is the maximum number of values in a line.
+    * Note: m is insignificant compared to n.
+    *
     * @param hashAirlines A hash table containing airline information.
     * @param hashAirports A hash table containing airport information.
     *
