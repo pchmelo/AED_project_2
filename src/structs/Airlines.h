@@ -172,6 +172,8 @@ class HashAirlines{
     */
         void readLines();
 
+        string _11CodeAirline(string name);
+
 };
 
 #endif //PROJECT_2_AIRLINES_H

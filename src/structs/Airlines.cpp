@@ -92,3 +92,16 @@
             this->airlinesTable.insert(airlines);
         }
     }
+
+string HashAirlines::_11CodeAirline(std::string name) {
+    auto it = this->airlinesTable.begin();
+
+    while(it != airlinesTable.end()){
+        if(it->getName() == name){
+            return it->getCode();
+        }
+
+        it++;
+    }
+    return "0";
+}

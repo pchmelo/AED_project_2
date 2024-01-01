@@ -82,6 +82,9 @@ void HashAirports::readLines(Flights &flights) {
 
 }
 
+
+
 int HashAirports::_1numAirports() {
     return this->airportTable.size();
 }
+
