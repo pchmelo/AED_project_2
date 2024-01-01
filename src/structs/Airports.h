@@ -254,7 +254,6 @@ struct AirportsGreatDistance{
 
 
 
-
     /**
       * @brief Parameterized constructor for AirportsGreatDistance.
       *

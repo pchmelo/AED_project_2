@@ -405,7 +405,7 @@ class Flights {
      *
      * This function iterates through multiple pairs of source and destination airports and finds the best paths
      * between them using the fewest stops (edges) based on the `_10BestPathEntreDoisAeroportos` function.
-     * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+     * Complexity = O(V * E * N), where V is the number of vertexes, E is the number of edges in the graph and N is the size of the source vector
      *
      * @param src A vector of source airport vertices.
      * @param dest A vector of destination airport vertices. The size of this vector should match the size of the 'src' vector.
