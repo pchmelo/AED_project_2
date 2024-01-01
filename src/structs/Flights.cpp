@@ -1008,7 +1008,7 @@ vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<A
     bool flag = true;
 
     vector<AirportStop2> caminho_atual;
-    _11AuxReconstructor(src, dest, previo, caminho_atual, res, t, flag);
+    _11AuxReconstructor(src, dest, previo, caminho_atual, res, t, flag, lista, set_up);
 
     for(auto& p : res){
         p.erase(p.begin());
@@ -1017,7 +1017,7 @@ vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<A
     return res;
 }
 
-void Flights::_11AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,unordered_map<Vertex<Airports> *, set<Vertex<Airports> *>> &previo,vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag) {
+void Flights::_11AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,unordered_map<Vertex<Airports> *, set<Vertex<Airports> *>> &previo,vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag, set<string> lista, int set_up) {
     if(flag){
         t.setB(dest);
         caminhoAtual.push_back(t);
@@ -1027,6 +1027,20 @@ void Flights::_11AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,
         t.airlines.clear();
         for(auto edge : dest->getAdj()){
             if(edge.getDest()->getInfo().getCode() == caminhoAtual.back().dest->getInfo().getCode()){
+                if(set_up != 0){
+                    auto f = lista.find(edge.getAirline().getCode());
+                    if(set_up == 1){
+                        if(f == lista.end()){
+                            continue;
+                        }
+                    }
+                    else{
+                        if(f != lista.end()){
+                            continue;
+                        }
+                    }
+                }
+
                 t.airlines.push_back(edge.getAirline());
             }
         }
@@ -1044,7 +1058,7 @@ void Flights::_11AuxReconstructor(Vertex<Airports> *src, Vertex<Airports> *dest,
     else{
         set<Vertex<Airports>*> &prevs = previo.at(dest);
         for(Vertex<Airports>* prev : prevs){
-            _11AuxReconstructor(src, prev, previo, caminhoAtual, res, t, flag);
+            _11AuxReconstructor(src, prev, previo, caminhoAtual, res, t, flag, lista, set_up);
         }
     }
 

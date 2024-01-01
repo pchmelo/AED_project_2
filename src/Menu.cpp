@@ -1024,6 +1024,7 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                             dest = flights._10AirportsPais(code);
 
+
                             break;
 
                         case 4:

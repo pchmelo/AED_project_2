@@ -520,7 +520,7 @@ class Flights {
     * @param t The AirportStop2 object used for storing information about the path.
     * @param flag A boolean flag indicating the first iteration in the reconstruction process.
     */
-        void _11AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag);
+        void _11AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag, set<string> lista, int set_up);
 
 
 
