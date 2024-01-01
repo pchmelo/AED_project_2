@@ -167,7 +167,7 @@ class HashAirlines{
     * It parses each line of the file, extracts the necessary information (code, name, call sign, country),
     * and inserts the corresponding `Airlines` object into the hash table.
     *
-    *Complexity = O(n * m) = O(n), where n is the number of lines in the file, and m is the maximum number of values in a line.
+    * Complexity = O(n * m) = O(n), where n is the number of lines in the file, and m is the maximum number of values in a line.
     * Note: m is insignificant compared to n.
     */
         void readLines();

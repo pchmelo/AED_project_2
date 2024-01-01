@@ -141,6 +141,7 @@ Public Attributes</h2></td></tr>
 
 <p>Reads airport data from a CSV file and populates the flights graph and airport hash table. </p>
 <p>This function reads airport information from a CSV file, creates <a class="el" href="class_airports.html">Airports</a> objects, adds them to the flights graph, and inserts them into the airport hash table.</p>
+<p>Complexity = O(n * m) = O(n), where n is the number of lines in the file, and m is the maximum number of values in a line. Note: m is insignificant compared to n.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">flights</td><td>The <a class="el" href="class_flights.html">Flights</a> object representing the flights graph to which the airports will be added. </td></tr>

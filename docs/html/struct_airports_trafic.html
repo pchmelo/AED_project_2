@@ -106,7 +106,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Represents the traffic information for an airport. </p>
 <p>The <code><a class="el" href="struct_airports_trafic.html" title="Represents the traffic information for an airport.">AirportsTrafic</a></code> struct stores information about the traffic at an airport, including the airport itself and the corresponding traffic count. </p>
 
-<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00279">279</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00282">282</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ad0b4e957b5169903678d9fd0be959928" name="ad0b4e957b5169903678d9fd0be959928"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad0b4e957b5169903678d9fd0be959928">&#9670;&#160;</a></span>AirportsTrafic()</h2>
@@ -145,11 +145,11 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00290">290</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  290</span>                                            {</div>
-<div class="line"><span class="lineno">  291</span>        pair&lt;Airports, int&gt; res = pair(airports, n);</div>
-<div class="line"><span class="lineno">  292</span>        this-&gt;trafic = res;</div>
-<div class="line"><span class="lineno">  293</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00293">293</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  293</span>                                            {</div>
+<div class="line"><span class="lineno">  294</span>        pair&lt;Airports, int&gt; res = pair(airports, n);</div>
+<div class="line"><span class="lineno">  295</span>        this-&gt;trafic = res;</div>
+<div class="line"><span class="lineno">  296</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -187,10 +187,10 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the traffic count of the current object is less than that of <code>a</code>, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00313">313</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  313</span>                                          {</div>
-<div class="line"><span class="lineno">  314</span>        <span class="keywordflow">return</span> this-&gt;trafic.second &lt; a.trafic.second;</div>
-<div class="line"><span class="lineno">  315</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00316">316</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  316</span>                                          {</div>
+<div class="line"><span class="lineno">  317</span>        <span class="keywordflow">return</span> this-&gt;trafic.second &lt; a.trafic.second;</div>
+<div class="line"><span class="lineno">  318</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -227,10 +227,10 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the airport codes are equal, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00302">302</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  302</span>                                            {</div>
-<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">return</span> this-&gt;trafic.first.getCode() == airports.<a class="code hl_function" href="class_airports.html#a45d58caf7005474d8ba49bf0b325b53d">getCode</a>();</div>
-<div class="line"><span class="lineno">  304</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00305">305</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>                                            {</div>
+<div class="line"><span class="lineno">  306</span>        <span class="keywordflow">return</span> this-&gt;trafic.first.getCode() == airports.<a class="code hl_function" href="class_airports.html#a45d58caf7005474d8ba49bf0b325b53d">getCode</a>();</div>
+<div class="line"><span class="lineno">  307</span>    }</div>
 <div class="ttc" id="aclass_airports_html_a45d58caf7005474d8ba49bf0b325b53d"><div class="ttname"><a href="class_airports.html#a45d58caf7005474d8ba49bf0b325b53d">Airports::getCode</a></div><div class="ttdeci">string getCode() const</div><div class="ttdoc">Get the airport code.</div><div class="ttdef"><b>Definition</b> <a href="_airports_8cpp_source.html#l00038">Airports.cpp:38</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -248,7 +248,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00281">281</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_airports_8h_source.html#l00284">284</a> of file <a class="el" href="_airports_8h_source.html">Airports.h</a>.</p>
 
 </div>
 </div>

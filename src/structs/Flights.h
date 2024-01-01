@@ -58,6 +58,8 @@ class Flights {
     *
     * This function iterates through all vertices in the graph and counts the total number
     * of flights (edges) by summing the adjacency lists of each vertex.
+    * Complexity = O(V * E) = O(V), where V is the number of vertices in the graph, and E is the number of edges in the graph.
+    *Note: E is insignificant compared to V, assuming the graph is not overly dense.
     *
     * @return The total number of flights in the graph.
     */
@@ -71,6 +73,7 @@ class Flights {
     *
     * This function takes an airport code as input, finds the corresponding vertex
     * in the graph, and returns the number of outgoing flights from that airport.
+     * Complexity = O(V), where V is the number of vertices in the graph.
     *
     * @param code The code of the airport for which the number of outgoing flights is calculated.
     * @return The number of outgoing flights from the specified airport.
@@ -87,6 +90,7 @@ class Flights {
     * This function takes an airline code as input, finds the corresponding vertex
     * in the graph, and counts the number of unique airlines associated with flights
     * departing from that airport.
+    * Complexity = O(V + E) = O(E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param code The code of the airport for which the number of unique airlines is calculated.
     * @return The number of unique airlines associated with flights departing from the specified airport.
@@ -103,6 +107,9 @@ class Flights {
     *
     * This function takes a country name as input, iterates through all vertices in the graph,
     * and counts the number of flights associated with airports from the specified country.
+    * Both indegree and outdegree were considered.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param country The name of the country for which the number of flights is calculated.
     * @return The number of flights associated with airports from the specified country.
@@ -117,6 +124,9 @@ class Flights {
     *
     * This function takes a city and an optional country name as input, iterates through all vertices in the graph,
     * and counts the number of flights associated with airports from the specified city.
+    * Both indegree and outdegree were considered.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param city The name of the city for which the number of flights is calculated.
     * @param country The optional name of the country for additional filtering. Use "k" for no country filtering.
@@ -132,6 +142,9 @@ class Flights {
     *
     * This function takes an airline company code as input, iterates through all vertices in the graph,
     * and counts the number of flights associated with the specified airline company.
+    * Both indegree and outdegree were considered.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param airline The code of the airline company for which the number of flights is calculated.
     * @return The number of flights associated with the specified airline company.
@@ -146,6 +159,7 @@ class Flights {
     *
     * This function takes the code of a starting airport, finds the corresponding vertex in the graph,
     * and retrieves a set of unique airports representing countries connected to the specified airport.
+    * Complexity = O(E), where E is the number of edges in the graph
     *
     * @param code The code of the starting airport.
     * @return A set containing unique airports representing countries connected to the specified starting airport.
@@ -161,6 +175,7 @@ class Flights {
      * This function takes the name of a city and an optional country name as input, finds the corresponding vertices in the graph
      * representing airports in the specified city(and country), and retrieves a set of unique airports representing
      * countries connected to the specified city or city and country combination.
+     * Complexity = O(V + E), where V is the number of vertexes and E is the number of edges in the graph
      *
      * @param city The name of the city for which the set of connected countries is retrieved.
      * @param country The optional name of the country for additional filtering. Use "k" for no country filtering.
@@ -178,6 +193,7 @@ class Flights {
     * This function takes the name of a country as input, finds the corresponding vertices in the graph
     * representing airports in the specified country, and retrieves a set of unique airports representing
     * countries connected to airports in the specified country.
+    * Complexity = O(V + E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param country The name of the country for which the set of connected countries is retrieved.
     * @return A set containing unique airports representing countries connected to airports in the specified country.
@@ -194,6 +210,8 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code
     * and retrieves a list of unique airports that are reachable from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param code The code of the starting airport.
     * @return A vector containing unique airports reachable from the specified starting airport.
@@ -210,6 +228,8 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code
     * and retrieves a list of unique cities that are reachable from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param code The code of the starting airport.
     * @param country The optional name of the country for additional filtering. Use an empty string for no country filtering.
@@ -226,10 +246,12 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code
     * and retrieves a list of unique countries that are reachable from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+    * Note: the time complexity is slightly lower than E², as the number of vertexes is lower than the number of edges.
     *
     * @param code The code of the starting airport.
     * @return A vector containing unique countries reachable from the specified starting airport.
-     *         If the starting airport code is not found in the graph, an empty vector is returned.
+    *         If the starting airport code is not found in the graph, an empty vector is returned.
     */
         vector<Airports> _5Countries_per_airport(string code);
         int _5count_per_air_aux(string code);
@@ -243,6 +265,7 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code and retrieves a vector
     * of unique airports that are reachable within the specified number of stops from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param code The code of the starting airport.
     * @param x The maximum number of stops allowed to reach airports from the starting airport.
@@ -259,6 +282,7 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code and retrieves a vector
     * of unique airports that are reachable within the specified number of stops from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param code The code of the starting airport.
     * @param x The maximum number of stops allowed to reach airports from the starting airport.
@@ -274,6 +298,7 @@ class Flights {
     *
     * This function performs a breadth-first search starting from the specified airport code and retrieves a vector
     * of unique airports that represent countries reachable within the specified number of stops from the starting airport.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param code The code of the starting airport.
     * @param x The maximum number of stops allowed to reach airports from the starting airport.
@@ -293,6 +318,7 @@ class Flights {
     *
     * This function calculates the diameter of the graph, which represents the greatest distance between two airports,
     * and retrieves a list of airports with the greatest distance between them along with the calculated diameter.
+    * Complexity = O(V * (V + E)), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @return A list of `AirportsGreatDistance` objects representing pairs of airports with the greatest distance between them.
     *         If the graph is empty or contains a single airport, an empty list is returned.
@@ -308,6 +334,7 @@ class Flights {
     * This function calculates the traffic for each airport in the graph, considering the number of connections
     * (edges) associated with each airport. It then retrieves a vector of airports ranked by traffic along with
     * the corresponding traffic values.
+    * Complexity = O(V + E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @return A vector of `AirportsTrafic` objects representing airports ranked by traffic (number of connections).
     *         If the graph is empty or contains a single airport, an empty vector is returned.
@@ -326,6 +353,8 @@ class Flights {
     *
     * This function identifies articulation points in the graph using a modified depth-first search (DFS) algorithm.
     * It then retrieves a set of airports that are identified as articulation points.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
+
     *
     * @return A set of `Airports` objects representing articulation points in the graph.
     *         If the graph is empty or contains a single airport, an empty set is returned.
@@ -339,6 +368,7 @@ class Flights {
     * This function is a helper function used in identifying articulation points in the graph. It performs a modified
     * depth-first search (DFS) algorithm, updating information about the vertices and edges. The articulation points
     * are identified based on the low and num values of the vertices.
+    * Complexity = O(V*E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param vertex The current vertex being processed during the DFS.
     * @param res A set to store identified articulation points.
@@ -356,6 +386,7 @@ class Flights {
     *
     * This function performs a breadth-first search (BFS) algorithm to find the best path between two airports,
     * considering the fewest stops (edges) required to reach the destination airport from the source airport.
+    *  Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param src The source airport vertex.
     * @param dest The destination airport vertex.
@@ -374,6 +405,7 @@ class Flights {
      *
      * This function iterates through multiple pairs of source and destination airports and finds the best paths
      * between them using the fewest stops (edges) based on the `_10BestPathEntreDoisAeroportos` function.
+     * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
      *
      * @param src A vector of source airport vertices.
      * @param dest A vector of destination airport vertices. The size of this vector should match the size of the 'src' vector.
@@ -390,6 +422,7 @@ class Flights {
      * @brief Retrieves airport vertices based on a specified airport code in the graph.
      *
      * This function searches for airport vertices in the graph based on a specified airport code or name.
+     * Complexity = O(N * (V * E)), where N is the number of pairs, V is the number of vertices, and E is the number of edges.
      *
      * @param code The airport code to search for in the graph.
      * @param flag A boolean flag indicating whether the provided 'code' parameter represents an airport code (true) or name (false).
@@ -405,6 +438,7 @@ class Flights {
      * @brief Retrieves airport vertices based on a specified city in the graph.
      *
      * This function searches for airport vertices in the graph based on a specified city.
+     * Complexity = O(V), where V is the number of vertices.
      *
      * @param city The city name to search for in the graph.
      * @param pais The country name to search for in the graph. If set to "k," the search will only consider the city.
@@ -419,6 +453,7 @@ class Flights {
      * @brief Retrieves airport vertices based on a specified country in the graph.
      *
      * This function searches for airport vertices in the graph based on a specified country.
+     * Complexity =  O(V), where V is the number of vertices.
      *
      * @param country The country name to search for in the graph.
      * @return A vector of airport vertices matching the specified country. If no vertices are found, an empty vector is returned.
@@ -433,6 +468,7 @@ class Flights {
      * @brief Retrieves airport vertices based on geographical coordinates in the graph.
      *
      * This function searches for airport vertices in the graph based on geographical coordinates.
+     * Complexity = O(V), where V is the number of vertices.
      *
      * @param lat The latitude of the target location.
      * @param log The longitude of the target location.
@@ -448,6 +484,7 @@ class Flights {
     * @brief Retrieves airport vertices within a specified radius of geographical coordinates in the graph.
     *
     * This function searches for airport vertices in the graph that are within a specified radius of geographical coordinates.
+    * Complexity = O(V), where V is the number of vertices.
     *
     * @param lat The latitude of the center location.
     * @param log The longitude of the center location.
@@ -463,6 +500,7 @@ class Flights {
      * @brief Calculates the Haversine distance between two geographical coordinates.
      *
      * The Haversine formula is used to calculate the great-circle distance between two points on the surface of a sphere (e.g., Earth) given their latitude and longitude.
+     * Complexity = O(1)
      *
      * @param lat_1 The latitude of the first point (in radians).
      * @param log_1 The longitude of the first point (in radians).
@@ -480,6 +518,7 @@ class Flights {
     * @brief Constructs pairs of source and destination vectors for airport vertices.
     *
     * This function constructs pairs of source and destination vectors for airport vertices. Each pair consists of a source vertex from the 'src' vector and a destination vertex from the 'dest' vector.
+    * Complexity: O(N), where N is the product between the sizes of the input vectors.
     *
     * @param src A vector of source airport vertices.
     * @param dest A vector of destination airport vertices.
@@ -495,11 +534,12 @@ class Flights {
     * @brief Finds all best paths between two airports considering a set of restrictions.
     *
     * The function uses a modified BFS algorithm to find the best paths between two airports, considering the given set of restrictions.
+    * Complexity = O(V * E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param src The source airport vertex.
     * @param dest The destination airport vertex.
-    * @param lista A set of airport codes representing restrictions.
-    * @param set_up The type of restriction setup: 0 for exclusion, 1 for inclusion.
+    * @param list A set of airport codes representing restrictions.
+    * @param set The type of restriction setup: 0 for exclusion, 1 for inclusion.
     * @return A vector of vectors of AirportStop2 representing all best paths between the source and destination airports.
     */
         vector<vector<AirportStop2>> _11AllBestPathEntreDoisAeroportos(Vertex<Airports>* src, Vertex<Airports>* dest, set<string> list, int set);
@@ -511,6 +551,7 @@ class Flights {
     * @brief Auxiliary function to reconstruct all best paths between two airports considering a set of restrictions.
     *
     * The function is used as an auxiliary helper to reconstruct all best paths between two airports based on the given set of restrictions.
+    * Complexity = O(V + E), where V is the number of vertexes and E is the number of edges in the graph
     *
     * @param src The source airport vertex.
     * @param dest The destination airport vertex.
@@ -519,6 +560,8 @@ class Flights {
     * @param res The vector of vectors of AirportStop2 representing all best paths.
     * @param t The AirportStop2 object used for storing information about the path.
     * @param flag A boolean flag indicating the first iteration in the reconstruction process.
+    * @param list A set of airport codes representing restrictions.
+    * @param set_up The type of restriction setup: 0 for exclusion, 1 for inclusion.
     */
         void _11AuxReconstructor(Vertex <Airports>* src, Vertex <Airports>* dest, unordered_map<Vertex<Airports>*, set<Vertex<Airports>*>> &previo, vector<AirportStop2> &caminhoAtual, vector<vector<AirportStop2>> &res, AirportStop2 &t, bool &flag, set<string> lista, int set_up);
 
@@ -530,6 +573,7 @@ class Flights {
     * @brief Commander function to find all best paths between sets of source and destination airports.
     *
     * The function serves as a commander for finding all best paths between sets of source and destination airports based on a set of restrictions.
+    * Complexity = O(P * (V + E)), where P is the number of pairs, and V and E are the number of vertices and edges.
     *
     * @param src Vector containing pointers to source airport vertices.
     * @param dest Vector containing pointers to destination airport vertices.
@@ -547,6 +591,7 @@ class Flights {
      * @brief Separator function to generate combinations of airlines for each segment in a vector of AirportStop2.
      *
      * The function separates the input vector of AirportStop2 into combinations of airlines for each segment and generates all possible combinations.
+     * Complexity: O(L * N * 2^M), where L is the number of paths, N is the number of lists, and M is the maximum number of airlines in a list.
      *
      * @param input Vector of vectors of AirportStop2 representing the input data.
      * @return Vector of vectors of AirportStop representing all combinations of airlines for each segment.
@@ -560,6 +605,7 @@ class Flights {
      * @brief Filter and minimize combinations of airlines for each segment in a vector of AirportStop2.
      *
      * The function separates the input vector of AirportStop2 into combinations of airlines for each segment and filters out the combinations based on the minimum number of different airlines.
+     * Complexity = O(L * N * 2^M), where L is the number of paths, N is the number of lists, and M is the maximum number of airlines in a list
      *
      * @param input Vector of vectors of AirportStop2 representing the input data.
      * @param num Reference to an integer variable to store the minimum number of different airlines.

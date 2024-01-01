@@ -111,7 +111,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Read airline data from a CSV file and populate the hash table. </p>
-<p>This member function reads airline data from a CSV file located at "../src/structs/dataset/airlines.csv". It parses each line of the file, extracts the necessary information (code, name, call sign, country), and inserts the corresponding <code><a class="el" href="class_airlines.html">Airlines</a></code> object into the hash table. </p>
+<p>This member function reads airline data from a CSV file located at "../src/structs/dataset/airlines.csv". It parses each line of the file, extracts the necessary information (code, name, call sign, country), and inserts the corresponding <code><a class="el" href="class_airlines.html">Airlines</a></code> object into the hash table.</p>
+<p>Complexity = O(n * m) = O(n), where n is the number of lines in the file, and m is the maximum number of values in a line. Note: m is insignificant compared to n. </p>
 
 <p class="definition">Definition at line <a class="el" href="_airlines_8cpp_source.html#l00072">72</a> of file <a class="el" href="_airlines_8cpp_source.html">Airlines.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   72</span>                                 {</div>

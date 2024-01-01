@@ -101,19 +101,18 @@ $(function() { codefold.init(0); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    flights.<a class="code hl_function" href="class_flights.html#afda8b3b24f4858f52ef8c0bb412f9e61">ReadLines</a>(hashAirlines, hashAirports);</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="comment">/*</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">    auto scr = flights.flights.findVertex(Airports(&quot;THU&quot;));</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">    auto dest = flights.flights.findVertex(Airports(&quot;CDG&quot;));</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">    auto scr = flights.flights.findVertex(Airports(&quot;PTJ&quot;));</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">    auto dest = flights.flights.findVertex(Airports(&quot;YHO&quot;));</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"></span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">    int num = 0;</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">    auto res = flights._11AllBestPathEntreDoisAeroportos(scr, dest);</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">    auto t = flights._11Separator(res);</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">    auto fim = flights._11FilterMinimizer(res, num);</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">    */</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    Menu::Terminal(flights, hashAirports, hashAirlines);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">    auto res = flights._11AllBestPathEntreDoisAeroportos(scr, dest, {}, 0);</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">    auto fim = flights._11FilterMinimizer(res, num);</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    Menu::Terminal(flights, hashAirports, hashAirlines);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
 <div class="ttc" id="aclass_flights_html"><div class="ttname"><a href="class_flights.html">Flights</a></div><div class="ttdef"><b>Definition</b> <a href="_flights_8h_source.html#l00022">Flights.h:22</a></div></div>
 <div class="ttc" id="aclass_flights_html_afda8b3b24f4858f52ef8c0bb412f9e61"><div class="ttname"><a href="class_flights.html#afda8b3b24f4858f52ef8c0bb412f9e61">Flights::ReadLines</a></div><div class="ttdeci">void ReadLines(HashAirlines hashAirlines, HashAirports hashAirports)</div><div class="ttdoc">Reads flight data from a CSV file and adds corresponding edges to the graph.</div><div class="ttdef"><b>Definition</b> <a href="_flights_8cpp_source.html#l00013">Flights.cpp:13</a></div></div>
 <div class="ttc" id="aclass_hash_airlines_html"><div class="ttname"><a href="class_hash_airlines.html">HashAirlines</a></div><div class="ttdef"><b>Definition</b> <a href="_airlines_8h_source.html#l00159">Airlines.h:159</a></div></div>
