@@ -172,6 +172,18 @@ class HashAirlines{
     */
         void readLines();
 
+
+
+    /**
+    * @brief Get the airline code based on the airline name.
+    *
+    * This function searches for the airline with the specified name in the airlinesTable
+    * and returns its code. If no match is found, it returns "0".
+    * Complexity = O(n), where n is the number of airlines in the hashtable.
+    *
+    * @param name The name of the airline to search for.
+    * @return The airline code if found, "0" otherwise.
+    */
         string _11CodeAirline(string name);
 
 };

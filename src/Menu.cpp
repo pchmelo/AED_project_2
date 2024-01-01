@@ -1493,8 +1493,9 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                         cout << "\033[1;34mWhich name? \033[0m";
                                         getline(cin >> ws, code);
                                         cout << endl;
-
+                                        code= hashAirlines._11CodeAirline(code);
                                         lista_air.insert(code);
+
 
                                         break;
 
