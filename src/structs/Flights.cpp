@@ -35,6 +35,7 @@ void Flights::ReadLines(HashAirlines hashAirlines, HashAirports hashAirports) {
     }
 }
 
+
 int Flights::_1numViajens() {
     int res = 0;
     for(auto vertex : this->flights.getVertexSet()){
@@ -46,10 +47,12 @@ int Flights::_1numViajens() {
     return res;
 }
 
+
 int Flights::_2numViajensDeAirport(string code) {
     auto it = this->flights.findVertex(code);
     return it->getAdj().size();
 }
+
 
 int Flights::_2numViajensDeAirlines(string code) {
     int res = 0;
