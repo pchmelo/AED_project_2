@@ -640,16 +640,23 @@ set<Airports > Flights::_9Articulations() {
     set<Airports> res;
     int i = 1;
 
-    for (auto &vertex : flights.getVertexSet()) {
+    Flights f;
+    f.flights = this->flights;
+
+    for (auto &vertex : f.flights.getVertexSet()) {
+        for(auto edge : vertex->getAdj()){
+            f.flights.addEdge(edge.getDest()->getInfo(), vertex->getInfo(), edge.getAirline());
+        }
+
         vertex->setVisited(false);
         vertex->setLow(0);
         vertex->setNum(0);
         vertex->setProcessing(false);
     }
 
-    for (auto vertex : flights.getVertexSet()) {
+    for (auto vertex : f.flights.getVertexSet()) {
         if(!vertex->isVisited()) {
-            _9Auxiliar(vertex, res, i);
+            f._9Auxiliar(vertex, res, i);
         }
     }
 
