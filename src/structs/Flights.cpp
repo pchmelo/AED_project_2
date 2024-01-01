@@ -974,7 +974,7 @@ vector<vector<AirportStop2>> Flights::_11AllBestPathEntreDoisAeroportos(Vertex<A
 
         for(auto &edge : vertex->getAdj()){
             if(set_up != 0){
-                auto f = lista.find(edge.getDest()->getInfo().getCode());
+                auto f = lista.find(edge.getAirline().getCode());
 
                 if(set_up == 1){
                     if(f == lista.end()){

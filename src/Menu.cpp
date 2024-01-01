@@ -39,6 +39,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
     int code_aux;
     int sec_code_aux;
     int tr_code_aux;
+    string lat;
+    string lon;
     string country;
     string answer;
     vector<Airports> vec;
@@ -871,11 +873,11 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 4:
 
                             cout << "\033[1;34mWhich latitude? \033[0m";
-                            cin >> code_aux;
+                            cin >> lat;
                             cout << endl;
 
                             cout << "\033[1;34mWhich longitude? \033[0m";
-                            cin >> sec_code_aux;
+                            cin >> lon;
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -888,17 +890,17 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> tr_code_aux;
                                 cout << endl;
 
-                                src = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+                                src = flights._10AirportsCoordRaio(lat, lon, tr_code_aux);
 
                             } else if (answer == "n" || answer == "N") {
 
-                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                src = flights._10AirportsCoord(lat,lon);
 
                             } else {
 
                                 cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
                                 cout <<endl;
-                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                src = flights._10AirportsCoord(lat,lon);
                                 cout << endl;
 
                             }
@@ -1027,11 +1029,11 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 4:
 
                             cout << "\033[1;34mWhich latitude? \033[0m";
-                            cin >> code_aux;
+                            cin >> lat;
                             cout << endl;
 
                             cout << "\033[1;34mWhich longitude? \033[0m";
-                            cin >> sec_code_aux;
+                            cin >> lon;
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1044,17 +1046,17 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> tr_code_aux;
                                 cout << endl;
 
-                                dest = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+                                dest = flights._10AirportsCoordRaio(lat, lon, tr_code_aux);
 
                             } else if (answer == "n" || answer == "N") {
 
-                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                dest = flights._10AirportsCoord(lat, lon);
 
                             } else {
 
                                 cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
                                 cout <<endl;
-                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                dest = flights._10AirportsCoord(lat, lon);
                                 cout << endl;
 
                             }
@@ -1237,11 +1239,11 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 4:
 
                             cout << "\033[1;34mWhich latitude? \033[0m";
-                            cin >> code_aux;
+                            cin >> lat;
                             cout << endl;
 
                             cout << "\033[1;34mWhich longitude? \033[0m";
-                            cin >> sec_code_aux;
+                            cin >> lon;
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1254,17 +1256,17 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> tr_code_aux;
                                 cout << endl;
 
-                                src = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+                                src = flights._10AirportsCoordRaio(lat, lon, tr_code_aux);
 
                             } else if (answer == "n" || answer == "N") {
 
-                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                src = flights._10AirportsCoord(lat, lon);
 
                             } else {
 
                                 cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
                                 cout <<endl;
-                                src = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                src = flights._10AirportsCoord(lat,lon);
                                 cout << endl;
 
                             }
@@ -1393,11 +1395,11 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         case 4:
 
                             cout << "\033[1;34mWhich latitude? \033[0m";
-                            cin >> code_aux;
+                            cin >> lat;
                             cout << endl;
 
                             cout << "\033[1;34mWhich longitude? \033[0m";
-                            cin >> sec_code_aux;
+                            cin >> lon;
                             cout << endl;
 
                             cout << "\033[1;34mWould you like to specify a radius of search? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -1410,17 +1412,17 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 cin >> tr_code_aux;
                                 cout << endl;
 
-                                dest = flights._10AirportsCoordRaio(to_string(code_aux), to_string(sec_code_aux), tr_code_aux);
+                                dest = flights._10AirportsCoordRaio(lat, lon, tr_code_aux);
 
                             } else if (answer == "n" || answer == "N") {
 
-                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                dest = flights._10AirportsCoord(lat, lon);
 
                             } else {
 
                                 cout << "\033[1;31mUnrecognised option - Continuing with no radius\033[0m";
                                 cout <<endl;
-                                dest = flights._10AirportsCoord(to_string(code_aux), to_string(sec_code_aux));
+                                dest = flights._10AirportsCoord(lat,lon);
                                 cout << endl;
 
                             }
