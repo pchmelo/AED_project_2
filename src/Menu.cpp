@@ -408,29 +408,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
 
                             case 2:
 
-                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
-                                cin >> answer;
-                                cout << endl;
-
-                                if (answer == "y" || answer == "Y") {
-
-                                    cout << "\033[1;34mWhich country? \033[0m";
-                                    cin >> country;
-                                    cout << endl;
-
-                                } else if (answer == "n" || answer == "N") {
-
-                                    country = "k";
-
-                                } else {
-
-                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
-                                    cout <<endl;
-                                    country = "k";
-                                    cout << endl;
-
-                                }
-
                                 vec = flights._5Cities_per_airport(code, country);
 
                                 cout << "\033[1;34mWould you like to be presented with a list of the available cities of destination? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
@@ -556,29 +533,6 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                 break;
 
                             case 2:
-
-                                cout << "\033[1;34mWould you like to specify a country? \033[0m" << "\033[1;33m[ Y / N ] \033[0m" << endl;
-                                cin >> answer;
-                                cout << endl;
-
-                                if (answer == "y" || answer == "Y") {
-
-                                    cout << "\033[1;34mWhich country? \033[0m";
-                                    cin >> country;
-                                    cout << endl;
-
-                                } else if (answer == "n" || answer == "N") {
-
-                                    country = "k";
-
-                                } else {
-
-                                    cout << "\033[1;31mUnrecognised option - Continuing with no country specification\033[0m";
-                                    cout <<endl;
-                                    country = "k";
-                                    cout << endl;
-
-                                }
 
                                 vec = flights._6getVecStopsCities(code, code_aux, country);
 
@@ -1109,25 +1063,68 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         cout <<endl;
                     }
 
+
+
                     //perguntar se ele quer todas as opções ou apenas uma
 
+
                     pair<vector<Vertex<Airports> *>, vector<Vertex<Airports> *>> mount = flights._10Montador(src, dest);
-                    auto stops = flights._10Commander(mount.first, mount.second);
 
-                    int index = 1;
+                    if (chk) {
+                        auto stops = flights._10Commander(mount.first, mount.second);
 
-                    for (auto lsts: stops) {
 
-                        cout << index << "\033[1;32mª opção\033[0m" << endl << endl;
 
-                        for (auto air: lsts) {
-                            cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
-                            cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
-                            cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName() << "\033[1;32m of code \033[0m" << air.airlines.front().getCode() << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign() << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
-                            cout<<endl;
+                        int index = 1;
+
+                        for (auto lsts: stops) {
+
+                            cout << index << "\033[1;32mª opção\033[0m" << endl << endl;
+
+                            for (auto air: lsts) {
+                                cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName() << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode() << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m" << air.src->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName() << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode() << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity() << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName() << "\033[1;32m of code \033[0m" << air.airlines.front().getCode() << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign() << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
+                                cout<<endl;
+                            }
+
+                            index++;
+                        }
+                    } else if (!chk) {
+                        auto res = flights._11AllCommander(mount.first, mount.second, {} , 0);
+
+                        int ia = 1;
+
+                        for (auto apoio: res) {
+                            cout << ia << "ª opção\n";
+                            for (auto air: apoio) {
+                                cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
+                                     << air.src->getInfo().getCountry() << endl;
+                                cout << "\033[1;32mTo airport \033[0m" << air.dest->getInfo().getName()
+                                     << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode()
+                                     << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity()
+                                     << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
+                                cout << endl << "\033[1;33mAvailable airlines for this trip: \033[0m" << endl;
+                                for (auto b : air.airlines) {
+                                    cout << "\033[1;32mWith airline \033[0m" << b.getName()
+                                         << "\033[1;32m of code \033[0m" << b.getCode()
+                                         << "\033[1;32m with call sign \033[0m" << b.getCallSign()
+                                         << "\033[1;32m and from \033[0m" << b.getCountry() << endl;
+                                }
+                                cout << endl;
+                            }
+                            ia++;
                         }
 
-                        index++;
+                        if (res.size() == 1) {
+                            cout << "\033[1;32mThere is \033[0m" << res.size() << "\033[1;32m option\033[0m\n";
+                        } else {
+                            cout << "\033[1;32mThere are \033[0m" << res.size() << "\033[1;32m options\033[0m\n";
+                        }
+
+
                     }
 
                 } else if (answer == "y" || answer == "Y") {
@@ -1795,8 +1792,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         int i = 1;
 
                         for (auto apoio: fim) {
+                            cout << i << "ª opção\n";
                             for (auto air: apoio) {
-                                cout << i << "ª opção\n";
                                 cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
                                      << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
                                      << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
@@ -1810,21 +1807,21 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                      << "\033[1;32m with call sign \033[0m" << air.airlines.getCallSign()
                                      << "\033[1;32m and from \033[0m" << air.airlines.getCountry() << endl;
                                 cout << endl;
-                                i++;
                             }
+                            i++;
                         }
 
-                        if (res.size() == 1) {
-                            cout << "\033[1;32mThere is \033[0m" << res.size() << "\033[1;32m option\033[0m\n";
+                        if (fim.size() == 1) {
+                            cout << "\033[1;32mThere is \033[0m" << fim.size() << "\033[1;32m option\033[0m\n";
                         } else {
-                            cout << "\033[1;32mThere are \033[0m" << res.size() << "\033[1;32m options\033[0m\n";
+                            cout << "\033[1;32mThere are \033[0m" << fim.size() << "\033[1;32m options\033[0m\n";
                         }
 
-                        if (num == 1 && res.size() == 1) {
+                        if (num == 1 && fim.size() == 1) {
                             cout << "\033[1;32mThe option shown uses \033[0m" << num << "\033[1;32m airline\033[0m\n" << endl;
-                        } else if (num > 1 && res.size() == 1) {
+                        } else if (num > 1 && fim.size() == 1) {
                             cout << "\033[1;32mThe option shown uses \033[0m" << num << "\033[1;32m different airlines\033[0m\n" << endl;
-                        } else if (num == 1 && res.size() > 1) {
+                        } else if (num == 1 && fim.size() > 1) {
                             cout << "\033[1;32mThe options shown use \033[0m" << num << "\033[1;32m airline\033[0m\n" << endl;
                         } else {
                             cout << "\033[1;32mThe options shown use \033[0m" << num << "\033[1;32m different airlines\033[0m\n" << endl;
@@ -1835,8 +1832,8 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                         int i = 1;
 
                         for (auto apoio: res) {
+                            cout << i << "ª opção\n";
                             for (auto air: apoio) {
-                                cout << i << "ª opção\n";
                                 cout << "\033[1;32mFrom airport \033[0m" << air.src->getInfo().getName()
                                      << "\033[1;32m of code \033[0m" << air.src->getInfo().getCode()
                                      << "\033[1;32m in \033[0m" << air.src->getInfo().getCity() << "\033[1;32m, \033[0m"
@@ -1845,13 +1842,16 @@ int Menu::Terminal(Flights flights, HashAirports hashAirports, HashAirlines hash
                                      << "\033[1;32m of code \033[0m" << air.dest->getInfo().getCode()
                                      << "\033[1;32m in \033[0m" << air.dest->getInfo().getCity()
                                      << "\033[1;32m, \033[0m" << air.dest->getInfo().getCountry() << endl;
-                                cout << "\033[1;32mWith airline \033[0m" << air.airlines.front().getName()
-                                     << "\033[1;32m of code \033[0m" << air.airlines.front().getCode()
-                                     << "\033[1;32m with call sign \033[0m" << air.airlines.front().getCallSign()
-                                     << "\033[1;32m and from \033[0m" << air.airlines.front().getCountry() << endl;
+                                cout << endl << "\033[1;33mAvailable airlines for this trip: \033[0m" << endl;
+                                for (auto b : air.airlines) {
+                                    cout << "\033[1;32mWith airline \033[0m" << b.getName()
+                                         << "\033[1;32m of code \033[0m" << b.getCode()
+                                         << "\033[1;32m with call sign \033[0m" << b.getCallSign()
+                                         << "\033[1;32m and from \033[0m" << b.getCountry() << endl;
+                                }
                                 cout << endl;
-                                i++;
                             }
+                            i++;
                         }
 
                         if (res.size() == 1) {
